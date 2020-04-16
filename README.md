@@ -12,11 +12,13 @@ Should give you a rough idea of stacks needed for your next run and roughly the 
 ### Settings
 Should help getting Bootch's Script, Montrose's Script, and the included (modified Bootch's script, GemFarm.ahk and EventFarm.ahk to work).
 
-![Settings For Scripts to Follow](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/SettingsUsed.PNG)
+![Settings For Scripts to Follow](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/SettingsUsed.PNG)
 
 ## What this repository was really created for
 GemFarm.ahk and EventFarm.ahk please understand something about AHK scripts (google is your friend), if you do not I will point you to other scripts on Discord. They both need about e20 favor to run, but should be able to get away with lower favor I am just not sure how much is needed for both. They just need to get to the spec choices by the area to end, if this does not happen there is at least a time out in GemFarm to restart.
 These scripts should be relatively simple to make work for you. They are very much image based and need the images to do what they do for the most part.
+
+![Diretory for Mad Wizard](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/MadWizardDirectory.PNG)
 
 ### GemFarm.ahk
 Is a script that tries to speed through Mad Wizard with the best champs allowed to me depending on patrons. It can pretty much be started for outside of adventures or inside and detects the patron that it should run. In all versions of Mad Wizard, not named Strahd, it uses Briv and is mostly designed around his speed up mechanic. Please read/edit the script if you want to use it and/or are lacking any of the champs.  Should not be to hard to figure out how to make it work for you as long as you get a few things about AHK.
