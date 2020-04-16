@@ -18,7 +18,7 @@ This can work with only 1 familar on leveling click damage
 	but the more you have the better
 Most likely need to change WaitForResults() based on who you have
 	if you have & use Havilar & Deekin
-	You will want to also look at FindInterfaceCue("z14_text.png", i, j, 1)
+	You will want to also look at FindInterfaceCue("z14text.png", i, j, 1)
 	and change what ults are cast
 Deatho0ne does not plan to maintain this for you
 	I will make updates though based on my needs
@@ -155,10 +155,10 @@ ResetStep(filename, k, l) {
 }
 
 ResetTest() {
-	If FindInterfaceCue("noneAdventure\sword_coast_correct.png", i, j, 1) {
+	If FindInterfaceCue("noneAdventure\swordCoastCorrect.png", i, j, 1) {
 		Return False
 	}
-	If FindInterfaceCue("noneAdventure\sword_coast_wrong.png", i, j, 1) {
+	If FindInterfaceCue("noneAdventure\swordCoastWrong.png", i, j, 1) {
 		SafetyCheck()
 		MouseClick, L, i+55, j+14
 		Return False
@@ -202,7 +202,7 @@ ResetAdventure() {
 		}
 	}
 	
-	If (Not ZoomedOut) And FindInterfaceCue("noneAdventure\sword_coast_correct.png", i, j, 1) {
+	If (Not ZoomedOut) And FindInterfaceCue("noneAdventure\swordCoastCorrect.png", i, j, 1) {
 		SafetyCheck()
 		MouseClick, L, i+200, j+14
 		Loop 15	 {
@@ -217,7 +217,7 @@ ResetAdventure() {
 
 StartAdventure() {
 	ResetStep("noneAdventure\location.png", 10, 35)
-	ResetStep("noneAdventure\mad_wizard.png", 40, 40)
+	ResetStep("noneAdventure\madWizard.png", 40, 40)
 	ResetStep("noneAdventure\start.png", 60, 10)
 }
 
@@ -329,8 +329,8 @@ WaitForResults() {
 	DirectedInput("q")
 	
 	areaNum := StrahdVariant ? AreaHigh : AreaLow
-	workingArea := "areas\" . areaNum . "_working.PNG" ;meant to stop on areaNum
-	completeArea := "areas\" . areaNum . "_complete.PNG" ;meant if skip areaNum
+	workingArea := "areas\" . areaNum . "working.PNG" ;meant to stop on areaNum
+	completeArea := "areas\" . areaNum . "complete.PNG" ;meant if skip areaNum
 	cancel2 := True
 	countLoops := 0
 	Loop {
@@ -374,7 +374,7 @@ WaitForResults() {
 				DirectedInput("g")
 			}
 			
-			If FindInterfaceCue("runAdventure\z14_text.png", i, j, 1) {
+			If FindInterfaceCue("runAdventure\z14text.png", i, j, 1) {
 				;numbers are based on what I am doing, I put familars on a few champs to get them to their specs fast
 				If MirtVariant
 					DirectedInput("123")
@@ -459,12 +459,12 @@ SimulateBriv(i) {
 
 BuyChests() {
 	Loop {
-		If FindInterfaceCue("chests\chest_price.png", i, j, 1) Or FindInterfaceCue("chests\chest_price_s.png", i, j, 1) {
+		If FindInterfaceCue("chests\chestPrice.png", i, j, 1) Or FindInterfaceCue("chests\chestPriceS.png", i, j, 1) {
 			MouseClick, L, i+60, j+30
 			Sleep 100
 			MouseClick, L, i+60, j+30
 		}
-		If FindInterfaceCue("chests\buy_now.png", i, j, 1) Or FindInterfaceCue("chests\buy_now_s.png", i, j, 1) {
+		If FindInterfaceCue("chests\buyNow.png", i, j, 1) Or FindInterfaceCue("chests\buyNowS.png", i, j, 1) {
 			MouseClick, L, i+60, j+30
 			Sleep 100
 			MouseClick, L, i+60, j+30
@@ -478,7 +478,7 @@ CaptureResultsScreen() {
     SafetyCheck()
     FormatTime, CurrentTime, %A_Now%, yyyy-MM-dd HH:mm:ss
 	gemsFound := "gemsFound\"
-    FindInterfaceCue("gemsFound\gems_found.png", i, j)
+    FindInterfaceCue("gemsFound\gemsFound.png", i, j)
     GemsEarned := ""
     x := i+103
     y := j-3
