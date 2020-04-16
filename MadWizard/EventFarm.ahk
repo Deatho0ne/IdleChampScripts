@@ -19,7 +19,7 @@ SetMouseDelay, 30
 Global ChampToRun := 3
 
 ;Variables not needed to be changed
-Global AreaWorking := "events\level_" . 51 . "_working.PNG", AreaComplete := "events\level_" . 51 . "_complete.PNG"
+Global AreaWorking := "events\area" . 51 . "working.PNG", AreaComplete := "events\area" . 51 . "complete.PNG"
 Global Specialized := 1, LevelKey := 2, SliceName := 3
 Global ZoomedOut := False
 
@@ -105,7 +105,7 @@ ResetStep(filename, k, l) {
 }
 
 ResetTest() {
-	If FindInterfaceCue("noneAdventure\sword_coast_correct.png", i, j, 1) Or FindInterfaceCue("noneAdventure\sword_coast_wrong.png", i, j, 1) {
+	If FindInterfaceCue("noneAdventure\swordCoastCorrect.png", i, j, 1) Or FindInterfaceCue("noneAdventure\swordCoastWrong.png", i, j, 1) {
 		SafetyCheck()
 		MouseClick, L, i+55, j+14
 		Return False
@@ -132,7 +132,7 @@ ResetAdventure() {
 		}
 	}
 	
-	If (Not ZoomedOut) And FindInterfaceCue("noneAdventure\sword_coast_correct.png", i, j, 1) {
+	If (Not ZoomedOut) And FindInterfaceCue("noneAdventure\swordCoastCorrect.png", i, j, 1) {
 		SafetyCheck()
 		MouseClick, L, i+200, j+14
 		Loop 15	 {
@@ -143,31 +143,31 @@ ResetAdventure() {
 		ZoomedOut := True
 	}
 	
-	ResetStep("noneAdventure\sword_coast_correct.png", 55, 280)
+	ResetStep("noneAdventure\swordCoastCorrect.png", 55, 280)
 }
 
 StartAdventure() {
-	If FindInterfaceCue("noneAdventure\sword_coast_wrong.png", i, j, 1) {
-		ResetStep("noneAdventure\sword_coast_wrong.png", 652, 270)
+	If FindInterfaceCue("noneAdventure\swordCoastWrong.png", i, j, 1) {
+		ResetStep("noneAdventure\swordCoastWrong.png", 652, 270)
 	}
 	
 	firstY := 0, secondY := 75, thirdY := 150
 	If (ChampToRun = 1) {
-		ResetStep("events\sword_coast.PNG", 250, firstY)
+		ResetStep("events\swordCoast.PNG", 250, firstY)
 	}
 	Else If (ChampToRun = 2) {
-		ResetStep("events\sword_coast.PNG", 250, secondY)
+		ResetStep("events\swordCoast.PNG", 250, secondY)
 	}
 	Else If (ChampToRun = 3) {
-		ResetStep("events\sword_coast.PNG", 250, thirdY)
+		ResetStep("events\swordCoast.PNG", 250, thirdY)
 	}
 	Else {
 		Random, rand, 1, 3
 		ySpot := (rand = 1) ? firstY : (rand = 2) ? secondY : (rand = 3) ? thirdY : thirdY
-		ResetStep("events\sword_coast.PNG", 250, ySpot)
+		ResetStep("events\swordCoast.PNG", 250, ySpot)
 	}
 	
-	ResetStep("events\sword_coast.PNG", 750, 515)
+	ResetStep("events\swordCoast.PNG", 750, 515)
 }
 
 WaitForLoading() {
