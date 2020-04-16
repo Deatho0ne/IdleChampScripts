@@ -1,6 +1,6 @@
 ### Idle Champion Scripts and stuff
 ## General Info
-These are scripts to get you along your way in the happy way in the world of Idle Champions. Scripts by Deatho0ne and others on https://discord.gg/idlechampions. Please do not bug the others mentioned for help with these scripts. Other discord members and I shall help you only in #scripting, if we feel inclined to do so. There is a good chance someone will help you, since we were most likely in your shoes at one point.
+These are scripts to help you in Idle Champions. Scripts by Deatho0ne and others on https://discord.gg/idlechampions. Please do not bug the others mentioned for help with these scripts. Other discord members and I shall help you only in #scripting, if we feel inclined to do so. There is a good chance someone will help you, since we were most likely in your shoes at one point.
 
 ## Basic Scripts and other helpers
 ### GeneralLeveling.ahk
