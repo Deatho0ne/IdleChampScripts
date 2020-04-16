@@ -10,7 +10,8 @@ Should work no matter the favor you have: pushing, run variants, or do almost an
 Should give you a rough idea of stacks needed for your next run and roughly the time needed to get those stacks on a portal area before you reset. Need to edit to get your numbers.
 
 ### Settings
-Should help getting Bootch's Script, Montrose's Script, and the included (modified Bootch's script, GemFarm.ahk and EventFarm.ahk to work). 
+Should help getting Bootch's Script, Montrose's Script, and the included (modified Bootch's script, GemFarm.ahk and EventFarm.ahk to work).
+
 ![Settings For Scripts to Follow](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/SettingsUsed.PNG)
 
 ## What this repository was really created for
