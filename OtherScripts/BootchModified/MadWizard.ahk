@@ -1,7 +1,8 @@
 #SingleInstance force
 ;Mad Wizard Gem Farming Script
-;by Bootch
-;version: 191010 (10/10/19)
+;by Deatho0ne
+;last major update was around Feb 2020
+;based on Bootch version 191010 (10/10/19)
 ;original script by Hikibla 
 
 ;LEVEL DETECTOR GEM FARM

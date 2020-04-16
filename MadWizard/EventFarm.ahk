@@ -1,4 +1,6 @@
-;Original version by Gladio Stricto - https://pastebin.com/Rd8wWSVC
+;By Deatho0ne
+;	version 04.15.2020
+;based on Deatho0ne's GemFarm script
 ;Please make sure your Steam does not take screen shots with F12
 ;I run this with about e20 favor
 ;	all specs are done by about area 25
@@ -103,7 +105,7 @@ ResetStep(filename, k, l) {
 }
 
 ResetTest() {
-	If FindInterfaceCue("sword_coast_correct.png", i, j, 1) Or FindInterfaceCue("sword_coast_wrong.png", i, j, 1) {
+	If FindInterfaceCue("noneAdventure\sword_coast_correct.png", i, j, 1) Or FindInterfaceCue("noneAdventure\sword_coast_wrong.png", i, j, 1) {
 		SafetyCheck()
 		MouseClick, L, i+55, j+14
 		Return False
@@ -113,12 +115,12 @@ ResetTest() {
 
 ResetAdventure() {
 	If ResetTest() {
-		ResetStep("reset.png", 10, 10)
+		ResetStep("runAdventure\reset.png", 10, 10)
 		Sleep 500
-		ResetStep("complete.png", 40, 10)
-		ResetStep("skip.png", 20, 10)
+		ResetStep("runAdventure\complete.png", 40, 10)
+		ResetStep("noneAdventure\skip.png", 20, 10)
 		
-		ResetStep("continue.png", 50, 10)
+		ResetStep("noneAdventure\continue.png", 50, 10)
 
 		Loop {
 			If (A_Index > 480) {
@@ -130,7 +132,7 @@ ResetAdventure() {
 		}
 	}
 	
-	If (Not ZoomedOut) And FindInterfaceCue("sword_coast_correct.png", i, j, 1) {
+	If (Not ZoomedOut) And FindInterfaceCue("noneAdventure\sword_coast_correct.png", i, j, 1) {
 		SafetyCheck()
 		MouseClick, L, i+200, j+14
 		Loop 15	 {
@@ -141,12 +143,12 @@ ResetAdventure() {
 		ZoomedOut := True
 	}
 	
-	ResetStep("sword_coast_correct.png", 55, 280)
+	ResetStep("noneAdventure\sword_coast_correct.png", 55, 280)
 }
 
 StartAdventure() {
-	If FindInterfaceCue("sword_coast_wrong.png", i, j, 1) {
-		ResetStep("sword_coast_wrong.png", 652, 270)
+	If FindInterfaceCue("noneAdventure\sword_coast_wrong.png", i, j, 1) {
+		ResetStep("noneAdventure\sword_coast_wrong.png", 652, 270)
 	}
 	
 	firstY := 0, secondY := 75, thirdY := 150
@@ -169,10 +171,10 @@ StartAdventure() {
 }
 
 WaitForLoading() {
-	FindInterfaceCue("loading.png", i, j, 20)
+	FindInterfaceCue("runAdventure\loading.png", i, j, 20)
 
 	Loop 360 {
-		If Not FindInterfaceCue("loading.png", i, j, 1) {
+		If Not FindInterfaceCue("runAdventure\loading.png", i, j, 1) {
 			Break
 		}
 	}
@@ -180,7 +182,7 @@ WaitForLoading() {
 	DirectedInput("q")
 	Sleep 1500
 	
-	If FindInterfaceCue("wait.png", i, j, 1) {
+	If FindInterfaceCue("runAdventure\wait.png", i, j, 1) {
 		SafetyCheck()
         MouseClick, L, i+5, j+5,, D
         Sleep 150
@@ -237,15 +239,15 @@ FullySpecialized(HeroData) {
 
 WaitForResults() {
 	HeroData := []
-	HeroData.push([ False, "{F6}", "shandie.png" ])
-	HeroData.push([ False, "{F12}", "melf.PNG" ])
-	HeroData.push([ False, "{F8}", "hitch.png"  ])
-	HeroData.push([ False, "{F4}", "sentry.png" ])
-	;HeroData.push([ False, "{F5}", "briv.png" ])
-	HeroData.push([ False, "{F7}", "minsc.png" ])
-	HeroData.push([ False, "{F1}", "deekin.png" ])
-	;HeroData.push([ False, "{F2}", "celeste.PNG" ])
-	HeroData.push([ False, "{F10}", "havilar.png" ])
+	HeroData.push([ False, "{F6}", "specChoices\shandie.png" ])
+	HeroData.push([ False, "{F12}", "specChoices\melf.PNG" ])
+	HeroData.push([ False, "{F8}", "specChoices\hitch.png"  ])
+	HeroData.push([ False, "{F4}", "specChoices\sentry.png" ])
+	;HeroData.push([ False, "{F5}", "specChoices\briv.png" ])
+	HeroData.push([ False, "{F7}", "specChoices\minsc.png" ])
+	HeroData.push([ False, "{F1}", "specChoices\deekin.png" ])
+	;HeroData.push([ False, "{F2}", "specChoices\celeste.PNG" ])
+	HeroData.push([ False, "{F10}", "specChoices\havilar.png" ])
 	
 	LoopedInput := ""
 	
@@ -278,13 +280,13 @@ WaitForResults() {
 				Break
 			}
 
-			If FindInterfaceCue("cancel.png", i, j, 1) {
+			If FindInterfaceCue("runAdventure\cancel.png", i, j, 1) {
 				SafetyCheck()
 				MouseClick, L, i+15, j+15
 				Sleep 50
 			}
 
-			If FindInterfaceCue("progress.png", i, j, 1) {
+			If FindInterfaceCue("runAdventure\progress.png", i, j, 1) {
 				DirectedInput("g")
 			}
 

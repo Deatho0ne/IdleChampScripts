@@ -1,19 +1,33 @@
-;Original version by Gladio Stricto - https://pastebin.com/Rd8wWSVC
-;This is roughly an e20 favor script for Torm, it might be lower
-;	Most likely need to be able to level at least once every seat in area 1
-;	Also need to be able to get to the specs of the champs you use before the areas you put in
-;	If you can not do this yet, I would say try Bootch's script
-;Please make sure your Steam does not take screen shots with F12
-;This can work with only 1 familar on leveling click damage
-;	but the more you have the better
-;Most likely need to change WaitForResults() based on who you have
-;	if you have & use Havilar & Deekin
-;	You will want to also look at FindInterfaceCue("z14_text.png", i, j, 1)
-;	and change what ults are cast
-;Deatho0ne does not plan to maintain this for you
-;	I will make updates though based on what I see is most effective for me
+/*
+By Deatho0ne
+	version 04.15.2020
+Based on Gladio Stricto's https://pastebin.com/Rd8wWSVC
+	have mentioned a few other things he has created in here
+A few things on Deatho0ne's Modified Bootch Script
+	which is based on Bootch's script
+*/
+
+/*
+Please make sure your Steam does not take screen shots with F12
+This is roughly an e20 favor script for Torm, it might be lower
+	Most likely need to be able to level at least once every seat in area 1
+	Also need to be able to get to the specs of the champs you use before the areas you put in
+	If you can not do this yet, I would say try Bootch's script
+Please make sure your Steam does not take screen shots with F12
+This can work with only 1 familar on leveling click damage
+	but the more you have the better
+Most likely need to change WaitForResults() based on who you have
+	if you have & use Havilar & Deekin
+	You will want to also look at FindInterfaceCue("z14_text.png", i, j, 1)
+	and change what ults are cast
+Deatho0ne does not plan to maintain this for you
+	I will make updates though based on my needs
+*/
 SetWorkingDir, %A_ScriptDir%
 SetMouseDelay, 30
+
+;kills the app, I cannot find a key I like it on yet, maybe one of these days
+;$Esc::ExitApp
 
 ;Variables to change
 Global slot4percent := 200.0 ;your Briv slot gear %
@@ -31,10 +45,11 @@ Global AreaHigh := 266
 Global TimeTillFailLow := 23 ;based on the time I see
 Global TimeTillFailHigh := 45 ;just a total guess
 
-;True trys reading the gem count at the end of a run
+;True tries reading the gem count at the end of a run
 ;	This will add about .5secs to 3secs depending on speed of your computer to all runs
 ;	Might not work if there is a 1 in the gem count or it is over 1k
 ;		Over 1k most likely will not happen and 1 should be okay for the most part
+;	Only tested what this does after area 11, if gems are over 1k this might not get the right data
 Global RunStatsCapture := False
 
 ;Variables not needed to be changed
@@ -157,7 +172,7 @@ ResetAdventure() {
 		Sleep 500
 		ResetStep("runAdventure\complete.png", 40, 10)
 		ResetStep("noneAdventure\skip.png", 20, 10)
-		If RunStatsCapture {
+		If ((RunCount > 0) And RunStatsCapture) {
 			CaptureResultsScreen()
 		}
 		ResetStep("noneAdventure\continue.png", 50, 10)
@@ -314,8 +329,8 @@ WaitForResults() {
 	DirectedInput("q")
 	
 	areaNum := StrahdVariant ? AreaHigh : AreaLow
-	workingArea := "areas\level_" . areaNum . "_working.PNG" ;meant to stop on areaNum
-	completeArea := "areas\level_" . areaNum . "_complete.PNG" ;meant if skip areaNum
+	workingArea := "areas\" . areaNum . "_working.PNG" ;meant to stop on areaNum
+	completeArea := "areas\" . areaNum . "_complete.PNG" ;meant if skip areaNum
 	cancel2 := True
 	countLoops := 0
 	Loop {
@@ -399,6 +414,8 @@ BuildBrivStacks() {
 }
 
 SimulateBriv(i) {
+	;Original version by Gladio Stricto - https://pastebin.com/Rd8wWSVC
+	;	this is modified to work within the GemFarm
 	chance := ((slot4percent / 100) + 1) * 0.25
 	trueChance := chance
 	skipLevels := Floor(chance + 1)
@@ -457,6 +474,7 @@ BuyChests() {
 }
 
 CaptureResultsScreen() {
+	;based on Gladio Strico's https://discordapp.com/channels/357247482247380994/474639469916454922/700022596833640459
     SafetyCheck()
     FormatTime, CurrentTime, %A_Now%, yyyy-MM-dd HH:mm:ss
 	gemsFound := "gemsFound\"
@@ -468,30 +486,32 @@ CaptureResultsScreen() {
     Loop {
         Found := False
 
-        Found |= FindGemsCue("gemsFound\1", x, y, GemsEarned)
-        Found |= FindGemsCue("gemsFound\2", x, y, GemsEarned)
-        Found |= FindGemsCue("gemsFound\3", x, y, GemsEarned)
-        Found |= FindGemsCue("gemsFound\4", x, y, GemsEarned)
-        Found |= FindGemsCue("gemsFound\5", x, y, GemsEarned)
-        Found |= FindGemsCue("gemsFound\6", x, y, GemsEarned)
-        Found |= FindGemsCue("gemsFound\7", x, y, GemsEarned)
-        Found |= FindGemsCue("gemsFound\8", x, y, GemsEarned)
-        Found |= FindGemsCue("gemsFound\9", x, y, GemsEarned)
-        Found |= FindGemsCue("gemsFound\0", x, y, GemsEarned)
+        Found |= FindGemsCue("1", x, y, GemsEarned)
+        Found |= FindGemsCue("2", x, y, GemsEarned)
+        Found |= FindGemsCue("3", x, y, GemsEarned)
+        Found |= FindGemsCue("4", x, y, GemsEarned)
+        Found |= FindGemsCue("5", x, y, GemsEarned)
+        Found |= FindGemsCue("6", x, y, GemsEarned)
+        Found |= FindGemsCue("7", x, y, GemsEarned)
+        Found |= FindGemsCue("8", x, y, GemsEarned)
+        Found |= FindGemsCue("9", x, y, GemsEarned)
+        Found |= FindGemsCue("0", x, y, GemsEarned)
 
         If Not Found {
             Break
         }
     }
 
-    FileAppend, %CurrentTime%`t`t%GemsEarned%`n, _log.txt
+    FileAppend, %CurrentTime%`t`t%GemsEarned%`n, MadWizard-Gems.txt
 }
 
 FindGemsCue(filename, ByRef x, ByRef y, ByRef GemsEarned) {
+	;based on Gladio Strico's https://discordapp.com/channels/357247482247380994/474639469916454922/700022596833640459
     SafetyCheck()
     
     MouseMove, x+14, y+16, 0
-    ImageSearch, i,, x, y, x+14, y+16, *30 %filename%.png
+	fileToSearch := "gemsFound\" . filename
+    ImageSearch, i,, x, y, x+14, y+16, *30 %fileToSearch%.png
     If (ErrorLevel = 0) {
         x := i + 5
         GemsEarned .= filename
@@ -500,7 +520,6 @@ FindGemsCue(filename, ByRef x, ByRef y, ByRef GemsEarned) {
 }
 
 DataOut() {
-	;not a fan of images being saved over and over again
 	FormatTime, currentDateTime,, MM/dd/yyyy HH:mm:ss
 	dtNow := A_Now
 	toWallRunTime := DateTimeDiff(dtStartTime, dtLastRunTime)
@@ -508,7 +527,7 @@ DataOut() {
 	totBosses := Floor(AreaLow / 5) * RunCount
 	currentPatron := NpVariant ? "NP" : MirtVariant ? "Mirt" : VajraVariant ? "Vajra" : StrahdVariant ? "Strahd" : "How?"
 	;meant for Google Sheets/Excel/Open Office
-	FileAppend,%currentDateTime%`t%AreaLow%`t%toWallRunTime%`t%lastRunTime%`t%RunCount%`t%totBosses%`t%currentPatron%`n, MadWizard.txt
+	FileAppend,%currentDateTime%`t%AreaLow%`t%toWallRunTime%`t%lastRunTime%`t%RunCount%`t%totBosses%`t%currentPatron%`n, MadWizard-Bosses.txt
 }
 
 ;time HELPERS

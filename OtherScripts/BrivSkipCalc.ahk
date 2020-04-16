@@ -1,3 +1,5 @@
+;Original version by Gladio Stricto - https://pastebin.com/Rd8wWSVC
+;	actually has is most of the data
 Global slot4percent := 228.8, zone := 226
 ;130.8% is 127.8 secs vs 228.8 is 206.82
 $Esc::ExitApp

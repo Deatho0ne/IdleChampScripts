@@ -1,3 +1,8 @@
+;by Deatho0ne
+;last major update was around Feb 2020
+;based on Bootch version 191010 (10/10/19)
+;original script by Hikibla 
+
 ;NOTES / Potential Issues
 ;these values are based on the gaming running at 1280x720 (windowed)
 ;Having Title Bar turned off will create a shift in the Y values and Script wont be able find several Locations (Jadisero)
