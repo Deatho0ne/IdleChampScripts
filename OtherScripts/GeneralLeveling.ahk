@@ -1,25 +1,27 @@
 #SingleInstance force
 target = IdleDragons.exe
-;there are some issues with allowing multi instances of this script, but not all the time
-;	and not 100% sure why
+/*
+there are some issues with allowing multi instances of this script, but not all the time
+	and not 100% sure why
 
-;Script for Idle Champions
-;This is a very basic script for the most part and just helps you get to your wall
-;	This does not pick Specilations as of yet and not sure, if I plan to due to a future update
-;		at e18ish favor you should be able to past most specs, Avren's 2nd needs about e26 and 15 areas though
-;		so that should not matter to much
-;	There are 3 modes that this can go through ult/level, just ult, and just level
-;		ults do not go off based on area, but almost as soon as they can
-;	1 familiar would help with leveling click damage, which cost 1k gems, but not needed
-;	Any after the first familiar on click can just go to the field or ults
-;	This script can take care of clicking if needed in 2 different spots
-;	Advice is once you start to not really move the mouse away from Idle Champions
-;		due to clicking and sending keys for the game can/will mess up other things
-;		It does try to prevent that, but if the game errors out or something pops up it can still happen
-;	some of this is taken from booth's script, but with my flair on things
+Script for Idle Champions
+This is a very basic script for the most part and just helps you get to your wall
+	This does not pick Specilations as of yet and not sure, if I plan to due to a future update
+		at e18ish favor you should be able to past most specs, Avren's 2nd needs about e26 and 15 areas though
+		so that should not matter to much
+	There are 3 modes that this can go through ult/level, just ult, and just level
+		ults do not go off based on area, but almost as soon as they can
+	1 familiar would help with leveling click damage, which cost 1k gems, but not needed
+	Any after the first familiar on click can just go to the field or ults
+	This script can take care of clicking if needed in 2 different spots
+	Advice is once you start to not really move the mouse away from Idle Champions
+		due to clicking and sending keys for the game can/will mess up other things
+		It does try to prevent that, but if the game errors out or something pops up it can still happen
+	some of this is taken from booth's script, but with my flair on things
 
-;Some globals for Editing
-;If not using Deekin set to 1 else set to 0 or lower
+Some globals for Editing
+If not using Deekin set to 1 else set to 0 or lower
+*/
 global noDeekin := 0
 
 ;champs to level and there specilizations, if doing specs
@@ -42,7 +44,7 @@ ShowHelpTip()
 return
 
 ;HotKeys
-{	
+{
 	#IfWinActive Idle Champions
 	F1::
 	{
