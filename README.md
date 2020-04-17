@@ -23,7 +23,7 @@ Should help getting Bootch's Script, Montrose's Script, and the included (modifi
 ## What this repository was really created for
 
 GemFarm.ahk and EventFarm.ahk please understand something about AHK scripts (google is your friend), if you do not I will point you to other scripts on Discord. They both need about e20 favor to run, but should be able to get away with lower favor I am just not sure how much is needed for both. They just need to get to the spec choices by the area to end, if this does not happen there is at least a time out in GemFarm to restart.
-These scripts should be relatively simple to make work for you. They are very much image based and need the images to do what they do for the most part.
+These scripts should be relatively simple to make work for you. They are very much image based and need the images to do what they do for the most part. Most images need to be pixel perfect for this to work, if failing at some point after the start use something like Snipping Tool to grab a new image and replace the ones provided. The settings should help with most of this, but all computers are differnt.
 
 ![Diretory for Mad Wizard](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/MadWizardDirectory.PNG)
 
