@@ -31,6 +31,8 @@ These scripts should be relatively simple to make work for you. They are very mu
 
 Is a script that tries to speed through Mad Wizard with the best champs allowed to me depending on patrons. It can pretty much be started for outside of adventures or inside and detects the patron that it should run. In all versions of Mad Wizard, not named Strahd, it uses Briv and is mostly designed around his speed up mechanic. Please read/edit the script if you want to use it and/or are lacking any of the champs.  Should not be to hard to figure out how to make it work for you as long as you get a few things about AHK.
 
+- There is a buy silver or gold chest in this Script. It only works from their respective screens and you hit F6. It will buy keep buying till it runs out of gems.
+
 ### EventFarm.ahk
 
 Is a script built off of GemFarm's images, but is built to run any event champ Free Play to area 51 and repeat. I do not use Briv in this, since it is way harder to build stacks on him at area 51 to 54 after picking his Spec. This script works mostly off of clicking a spot relative to one image to start an event FP. Please read/edit the script to get it do what you want.
