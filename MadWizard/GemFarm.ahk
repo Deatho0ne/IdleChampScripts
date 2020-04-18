@@ -339,6 +339,19 @@ WaitForResults() {
             currentRunTime := MinuteTimeDiff(dtLastRunTime, A_Now)
             ;ToolTip, % "currentRunTime: " currentRunTime "", 50, 250, 4
             If ((Strahd And (currentRunTime > TimeTillFailHigh)) Or (currentRunTime > TimeTillFailLow)) {
+                ;hard to test this
+                ;   if it works you should never have bad nights
+                ;   if it ever fails I will come back to it
+                Loop, 10 {
+                    DirectedInput("{ESC}")
+                }
+                Loop, 10 {
+                    ;this image should work just in case
+                    If FindInterfaceCue("runAdventure\escMenu.PNG", i, j, 1) {
+                        DirectedInput("{ESC}")
+                        Break
+                    }
+                }
                 Break
             }
             countLoops := 0
