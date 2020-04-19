@@ -11,8 +11,8 @@ These are scripts to help you in Idle Champions. Scripts by Deatho0ne and others
 Should work no matter the favor you have: pushing, run variants, or do almost anything you want in the game without doing to much. Can edit it to make it click and even not level champs.
 
 - To get F12 not to take screen shots go to...
--- Steam > Settings > In-Game > Screenshot shortcut keys
--- Set mine to Shift+F12, but most things you would not do in any game will work
+ -- Steam > Settings > In-Game > Screenshot shortcut keys
+ -- Set mine to Shift+F12, but most things you would not do in any game will work
 
 ### BrivSkipCalc.ahk
 
