@@ -35,10 +35,10 @@ Global slot4percent := 200.0 ;your Briv slot gear %
 ;AreaLow used for None Strahd Patrons, does use Briv has a stop at the final area to build up his stacks
 Global AreaLow := 176 ;z26 to z30 has portals, z41 & z16 has a portal also
 
-;AreaHigh used for Strahd, does not use Briv. Is based mostly on my Click damage level of 270
+;AreaHigh used for Strahd, does not use Briv. Is based mostly on Click damage level of 320
 ;	if you lack Briv this might not be the script for you
 ;	It can work, but you shall have to modify
-Global AreaHigh := 266
+Global AreaHigh := 306
 
 ;both of these variables are used incase something breaks during running
 ;numbers are in minutes, change this based on how fast you run areas
