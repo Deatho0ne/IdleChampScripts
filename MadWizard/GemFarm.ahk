@@ -472,12 +472,12 @@ return (brivWaitMinutes > 3) ? 3 : brivWaitMinutes
 
 BuyChests() {
     Loop {
-        If FindInterfaceCue("chests\chestPrice.png", i, j, 1) Or FindInterfaceCue("chests\chestPriceS.png", i, j, 1) {
+        If FindInterfaceCue("chestBuying\chestPrice.png", i, j, 1) Or FindInterfaceCue("chestBuying\chestPriceS.png", i, j, 1) {
             MouseClick, L, i+60, j+30
             Sleep 100
             MouseClick, L, i+60, j+30
         }
-        If FindInterfaceCue("chests\buyNow.png", i, j, 1) Or FindInterfaceCue("chests\buyNowS.png", i, j, 1) {
+        If FindInterfaceCue("chestBuying\buyNow.png", i, j, 1) Or FindInterfaceCue("chestBuying\buyNowS.png", i, j, 1) {
             MouseClick, L, i+60, j+30
             Sleep 100
             MouseClick, L, i+60, j+30
