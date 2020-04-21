@@ -467,7 +467,7 @@ SimulateBriv(i) {
     roughTime := (multiplier * avgStacks) + additve
     brivWaitMinutes := roughTime / 60
     ;Briv normally dies if over 3 minutes
-return (brivWaitMinutes > 3) ? 3 : brivWaitMinutes
+    Return (brivWaitMinutes > 3) ? 3 : brivWaitMinutes
 }
 
 BuyChests() {
@@ -483,7 +483,7 @@ BuyChests() {
             MouseClick, L, i+60, j+30
         }
     }
-Return
+    Return
 }
 
 CaptureResultsScreen() {
