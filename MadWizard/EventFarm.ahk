@@ -16,19 +16,30 @@ SetMouseDelay, 30
 
 ;Varibale to change based on current event
 ;PrevPrevYear is 1, PrevYear is 2, CurrentChamp is 3, anything else is random
-Global ChampToRun := 3
+Global ChampToRun := 4
 
 ;Variables not needed to be changed
 Global AreaWorking := "events\area" . 51 . "working.PNG", AreaComplete := "events\area" . 51 . "complete.PNG"
 Global Specialized := 1, LevelKey := 2, SliceName := 3
 Global ZoomedOut := False
 
-$Del::ExitApp
+;$Del::ExitApp
 
 $F1::
     While GetKeyState("F1", "P") {
         MouseClick
         Sleep 0
+    }
+Return
+
+$F2::
+    Menu, Tray, Icon, %SystemRoot%\System32\setupapi.dll, 10
+    ResetAdventure()
+    Loop {
+        StartAdventure()
+        WaitForLoading()
+        WaitForResults()
+        ResetAdventure()
     }
 Return
 
@@ -42,17 +53,6 @@ Return
 
 $F9::
     Reload
-Return
-
-$F2::
-    Menu, Tray, Icon, %SystemRoot%\System32\setupapi.dll, 10
-    ResetAdventure()
-    Loop {
-        StartAdventure()
-        WaitForLoading()
-        WaitForResults()
-        ResetAdventure()
-    }
 Return
 
 $`::Pause
@@ -105,12 +105,12 @@ ResetStep(filename, k, l) {
 }
 
 ResetTest() {
-    If FindInterfaceCue("noneAdventure\swordCoastCorrect.png", i, j, 1) Or FindInterfaceCue("noneAdventure\swordCoastWrong.png", i, j, 1) {
+    If (FindInterfaceCue("noneAdventure\swordCoastCorrect.png", i, j, 1) Or FindInterfaceCue("noneAdventure\swordCoastWrong.png", i, j, 1)) {
         SafetyCheck()
         MouseClick, L, i+55, j+14
         Return False
     }
-Return True
+    Return True
 }
 
 ResetAdventure() {
@@ -147,9 +147,8 @@ ResetAdventure() {
 }
 
 StartAdventure() {
-    If FindInterfaceCue("noneAdventure\swordCoastWrong.png", i, j, 1) {
-        ResetStep("noneAdventure\swordCoastWrong.png", 652, 270)
-    }
+    ;Hope this works for the town
+    ResetStep("events\townOfPain.PNG", 10, 10)
     
     firstY := 0, secondY := 75, thirdY := 150
     If (ChampToRun = 1) {

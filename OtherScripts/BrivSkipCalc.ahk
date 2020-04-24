@@ -47,7 +47,7 @@ SimulateBriv(i) {
     avgSkipRate := Round((avgSkipped / avgZones) * 100, 2)
     
     avgStacks := Round((1.032**avgSkips) * 48, 2)
-    multiplier := 0.1343575531, additve := 41.27234204
+    multiplier := 0.1346894362, additve := 41.86396406
     roughTime := Round(((multiplier * avgStacks) + additve), 2)
     
     message = With Briv skip %chance% until zone %zone%`n(%trueChance%`% chance to skip %skipLevels% zones)`n`n%i% simulations produced an average:`n%avgSkips% skips (%avgSkipped% zones skipped)`n%avgZones% end zone`n%avgSkipRate%`% true skip rate`n%avgStacks% required stacks with`n%roughTime% time in secs to build said stacks very rough guess
