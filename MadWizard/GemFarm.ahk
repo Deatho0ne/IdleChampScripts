@@ -34,16 +34,19 @@ Global slot4percent := 200.0 ;your Briv slot gear %
 
 ;AreaLow used for None Strahd Patrons, does use Briv has a stop at the final area to build up his stacks
 Global AreaLow := 176 ;z26 to z30 has portals, z41 & z16 has a portal also
+;This variable is in minutes and you need to see how fast you run the above
+;   it is a saftey net incase something breaks during a FP
+;   the script will build Briv stacks even if it fails
+;   this is to try to maintain the best speed the script can
+Global TimeTillFailLow := 23 ;based on the time I see of about 17mins
 
 ;AreaHigh used for Strahd, does not use Briv. Is based mostly on Click damage level of 320
 ;	if you lack Briv this might not be the script for you
 ;	It can work, but you shall have to modify
-Global AreaHigh := 306
-
-;both of these variables are used incase something breaks during running
-;numbers are in minutes, change this based on how fast you run areas
-Global TimeTillFailLow := 23 ;based on the time I see
-Global TimeTillFailHigh := 45 ;just a total guess
+Global AreaHigh := 266
+;Same as TimeTillFailLow, but for Strahd
+;   I do challenges first so only run the script after done with them
+Global TimeTillFailHigh := 50 ;this is a total guess
 
 ;True tries reading the gem count at the end of a run
 ;	This will add about .5secs to 3secs depending on speed of your computer to all runs
@@ -147,7 +150,7 @@ ResetStep(filename, k, l) {
     If FindInterfaceCue(filename, i, j) {
         If FindInterfaceCue(filename, i, j) {
             SafetyCheck()
-            MouseClick, L, i+k, j+l
+            MouseClick, L, i+k, j+l, 2
             Return
         }
     }
@@ -160,7 +163,7 @@ ResetTest() {
     }
     If FindInterfaceCue("noneAdventure\swordCoastWrong.png", i, j, 1) {
         SafetyCheck()
-        MouseClick, L, i+55, j+14
+        MouseClick, L, i+55, j+14, 2
         Return False
     }
 Return True
@@ -204,7 +207,7 @@ ResetAdventure() {
     
     If (Not ZoomedOut) And FindInterfaceCue("noneAdventure\swordCoastCorrect.png", i, j, 1) {
         SafetyCheck()
-        MouseClick, L, i+200, j+14
+        MouseClick, L, i+200, j+14, 2
         Loop 15	 {
             MouseClick, WheelDown
             Sleep 5
@@ -235,7 +238,7 @@ WaitForLoading() {
     
     If FindInterfaceCue("runAdventure\wait.png", i, j, 1) {
         SafetyCheck()
-        MouseClick, L, i+5, j+5,, D
+        MouseClick, L, i+5, j+5, 2, D
         Sleep 150
         MouseClick,,,,, U
         Sleep 100
@@ -255,7 +258,7 @@ SearchHero(ByRef HeroData) {
         }
         
         SafetyCheck()
-        MouseClick, L, i+32, j+162,, D
+        MouseClick, L, i+32, j+162, 2, D
         Sleep 150
         MouseClick,,,,, U
         Sleep 250
@@ -263,7 +266,7 @@ SearchHero(ByRef HeroData) {
         If FindInterfaceCue(HeroData[SliceName], x, y, 1) {
             If (i = x And j = y) {
                 SafetyCheck()
-                MouseClick, L, i+32, j+162,, D
+                MouseClick, L, i+32, j+162, 2, D
                 Sleep 150
                 MouseClick,,,,, U
                 Sleep 150
@@ -295,10 +298,13 @@ WaitForResults() {
     If Not VajraVariant {
         HeroData.push([ False, "{F8}", "specChoices\hitch.png" ])
     }
+    Else if VajraVariant {
+        HeroData.push([ False, "{F7}", "specChoices\minsc.png" ])
+    }
     If Not StrahdVariant {
         HeroData.push([ False, "{F4}", "specChoices\sentry.png" ])
         HeroData.push([ False, "{F5}", "specChoices\briv.png" ])
-        HeroData.push([ False, "{F7}", "specChoices\minsc.png" ])
+        HeroData.push([ False, "{F3}", "specChoices\binwin.png" ])
     }
     If Not (MirtVariant Or StrahdVariant) {
         HeroData.push([ False, "{F1}", "specChoices\deekin.png" ])
@@ -360,7 +366,7 @@ WaitForResults() {
         If FullySpecialized(HeroData) {
             ;simple click incase of fire
             SafetyCheck()
-            MouseClick, L, 650, 450
+            MouseClick, L, 650, 450, 2
             
             If (FindInterfaceCue(workingArea, i, j, 1) Or ((Not Strahd) And FindInterfaceCue(completeArea, i, j, 1))) {
                 Break
@@ -368,14 +374,14 @@ WaitForResults() {
             
             If FindInterfaceCue("runAdventure\cancel.png", i, j, 1) {
                 SafetyCheck()
-                MouseClick, L, i+15, j+15
+                MouseClick, L, i+15, j+15, 2
                 Sleep 50
             }
             If cancel2 {
                 ;only exist to deal with the pop ups
                 If FindInterfaceCue("runAdventure\cancel2.PNG", i, j, 1) {
                     SafetyCheck()
-                    MouseClick, L, i+15, j+15
+                    MouseClick, L, i+15, j+15, 2
                     Sleep 50
                 }
                 Else {
@@ -387,18 +393,19 @@ WaitForResults() {
                 DirectedInput("g")
             }
             
-            If FindInterfaceCue("runAdventure\z14text.png", i, j, 1) {
+            If StrahdVariant And FindInterfaceCue("runAdventure\z14text.png", i, j, 1) {
                 ;numbers are based on what I am doing, I put familars on a few champs to get them to their specs fast
-                If MirtVariant
+                If StrahdVariant
+                    DirectedInput("123456789") ;all
+                /*If MirtVariant
                     DirectedInput("123")
                 Else If VajraVariant
                     DirectedInput("23456789") ;not 1
-                Else If StrahdVariant
-                    DirectedInput("123456789") ;all
                 Else
                     DirectedInput("2346789") ;not 1 or 5
+                */
             }
-            
+
             Loop 4 {
                 DirectedInput("{right}")
                 Sleep 250
@@ -421,7 +428,8 @@ BuildBrivStacks() {
         DirectedInput("w")
         ;10000 takes awhile, but should add a second or more before the sleep
         ;I actually like this, could have it be calculated once though, if you want
-        Sleep % SimulateBriv(10000)*60*1000
+        ;1.15 is just meant to add a few secs on top of the stacks
+        Sleep % SimulateBriv(10000) * 60 * 1000 * 1.15
     }
     RunCount += 1
 }
@@ -460,10 +468,8 @@ SimulateBriv(i) {
     avgSkips := Round(totalSkips / i, 2)
     avgStacks := Round((1.032**avgSkips) * 48, 2)
     ;want to make these numbers better, based on real time to stack
-    ;	they are based on a small data set by kyle
-    ;	https://discordapp.com/channels/357247482247380994/474639469916454922/698194507937873983
-    ;	please read around that message
-    multiplier := 0.1343575531, additve := 41.27234204
+    ;	these are based on a small data set by kyle & theMickey_
+    multiplier := 0.1346894362, additve := 41.86396406
     roughTime := (multiplier * avgStacks) + additve
     brivWaitMinutes := roughTime / 60
     ;Briv normally dies if over 3 minutes
@@ -473,14 +479,14 @@ SimulateBriv(i) {
 BuyChests() {
     Loop {
         If FindInterfaceCue("chestBuying\chestPrice.png", i, j, 1) Or FindInterfaceCue("chestBuying\chestPriceS.png", i, j, 1) {
-            MouseClick, L, i+60, j+30
+            MouseClick, L, i+60, j+30, 2
             Sleep 100
-            MouseClick, L, i+60, j+30
+            MouseClick, L, i+60, j+30, 2
         }
         If FindInterfaceCue("chestBuying\buyNow.png", i, j, 1) Or FindInterfaceCue("chestBuying\buyNowS.png", i, j, 1) {
-            MouseClick, L, i+60, j+30
+            MouseClick, L, i+60, j+30, 2
             Sleep 100
-            MouseClick, L, i+60, j+30
+            MouseClick, L, i+60, j+30, 2
         }
     }
     Return
