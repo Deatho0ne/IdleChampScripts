@@ -52,7 +52,7 @@ Is a script that tries to speed through Mad Wizard with the best champs allowed 
 
 	 - This is why you see Deekin has his Ult, he does not need it at all
 
- - If you go the ult route Havilar is going to be a pain in the neck  to make sure you get it right
+  - If you go the ult route Havilar is going to be a pain in the neck  to make sure you get it right
 
 - There is also a Briv, Celeste, and maybe Melf/Sentry on slot 2 for building stacks
 
