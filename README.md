@@ -44,7 +44,7 @@ Is a script that tries to speed through Mad Wizard with the best champs allowed 
 
 - Basic Formation I run in a None Patron that does not use ults.
 
-  - This is saved to formation slot 1 and can be changed
+  - This is saved to formation slot 1/Q and can be changed
 
     - I use Binwin in this image, he is 100% not needed, but is in the script
 
@@ -54,9 +54,19 @@ Is a script that tries to speed through Mad Wizard with the best champs allowed 
 
   - If you go the ult route Havilar is going to be a pain in the neck  to make sure you get it right
 
-- There is also a Briv, Celeste, and maybe Melf/Sentry on slot 2 for building stacks
-
 ![Diretory for Mad Wizard](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/NonePatronsNoUltsFormation.PNG)
+
+- There is also a Briv, Celeste, and maybe Melf/Sentry on slot 2/W for building stacks
+
+  - I have a familiar on both Briv and Celeste
+  
+  - Depending what area you want stop at should change your slot 2/W formation
+  
+    - This formation should work at a relatively low area, which you will have to test
+    
+    - You do not want anyone killing ultimately at this point
+
+![Diretory for Mad Wizard](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/BrivStacking.png)
 
 ### EventFarm.ahk
 
