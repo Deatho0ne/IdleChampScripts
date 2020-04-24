@@ -46,7 +46,15 @@ Is a script that tries to speed through Mad Wizard with the best champs allowed 
 
   - This is saved to formation slot 1 and can be changed
 
-  - There is also a Briv, Celeste, and maybe Melf/Sentry on slot 2 for building stacks
+    - I use Binwin in this image, he is 100% not needed, but is in the script
+
+	- Changing up your formation is where you will get most of your speed up
+
+	 - This is why you see Deekin has his Ult, he does not need it at all
+
+ - If you go the ult route Havilar is going to be a pain in the neck  to make sure you get it right
+
+- There is also a Briv, Celeste, and maybe Melf/Sentry on slot 2 for building stacks
 
 ![Diretory for Mad Wizard](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/NonePatronsNoUltsFormation.PNG)
 
