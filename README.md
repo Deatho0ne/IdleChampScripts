@@ -1,16 +1,15 @@
 ### Idle Champion Scripts and stuff
 
-I have written a [guide](https://docs.google.com/document/d/1V3vviSagVLMXZ-pCFpraEnMpOIv9QlgFQY7J55tBt6s/edit#) which will explain some things about the game and some champs to get. This should help you understand why some of the things to follow.
+I have written a [guide](https://docs.google.com/document/d/1V3vviSagVLMXZ-pCFpraEnMpOIv9QlgFQY7J55tBt6s/edit#) which will explain some things about the game and some champs to get. This should help you understand why some of the coding that is done to follow.
+I do enjoy this game not only for scripting purposes, but the game itself. Making formations, talking about the game in general, and the community are something I enjoy. I do support this game with real money and suggest if you are reading this do so also.
 
 ## General Info
 
-These are scripts to help you in Idle Champions. Scripts by Deatho0ne and others on <https://discord.gg/idlechampions>. Please do not bug the others mentioned for help with these scripts. Other discord members and I shall help you only in #scripting, if we feel inclined to do so. There is a good chance someone will help you, since we were most likely in your shoes at one point.
+These are scripts to help you in Idle Champions. Scripts by Deatho0ne and others on <https://discord.gg/idlechampions>. Please do not bug the others mentioned or me for help with these scripts. Other discord members and I shall help you only in #scripting, if we feel inclined to do so. There is a good chance someone will help you, since we were most likely in your shoes at one point.
 
 ## Basic Scripts and other helpers
 
-### GeneralLeveling.ahk
-
-Should work no matter the favor you have: pushing, run variants, or do almost anything you want in the game without doing to much. Can edit it to make it click and even not level champs.
+Most scripts use F12
 
 - To get F12 not to take screen shots go to...
 
@@ -24,7 +23,7 @@ Should give you a rough idea of stacks needed for your next run and roughly the 
 
 ### Settings
 
-Should help getting Bootch's Script, Montrose's Script, and the included (modified Bootch's script, GemFarm.ahk and EventFarm.ahk to work).
+Should help getting Pokota's Scripts, Bootch's Script, Montrose's Script, and the included (modified Bootch's script, GemFarm.ahk and EventFarm.ahk to work).
 
 ![Settings For Scripts to Follow](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/SettingsUsed.PNG)
 
