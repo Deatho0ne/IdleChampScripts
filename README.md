@@ -20,15 +20,36 @@ Most scripts use F12
 
 - Set mine to Shift+F12, but most things you would not do in any game will work
 
-### BrivSkipCalc.ahk
-
-Should give you a rough idea of stacks needed for your next run and roughly the time needed to get those stacks on a portal area before you reset. Need to edit to get your numbers.
-
 ### Settings
 
 Should help getting Pokota's Scripts, Bootch's Script, Montrose's Script, and the included (modified Bootch's script, GemFarm.ahk and EventFarm.ahk to work).
 
 ![Settings For Scripts to Follow](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/SettingsUsed.PNG)
+
+### BrivSkipCalc.ahk
+
+Should give you a rough idea of stacks needed for your next run and roughly the time needed to get those stacks on a portal area before you reset. Need to edit to get your numbers.
+
+### GeneralUiStuff.ahk
+
+There are some user interface (UI) stuff that just feels none user experience (UX) to me and I have seen others mention some of these also. So I decided to make a script that trys to make it less of a bother to deal with these UX design choices. I would love to remove them if CNE ever makes the UX better in the areas this script deals with.
+
+- Buy Chest with gems
+  - You have to be on either the Silver or Gold Chest screens for this to work
+    - Buys either SCs in 50 increments and GC in 1 increments
+      - Does this till out of gems
+  - Uses F1 to start
+- Open Silver/Gold Chest
+  - As long as you are on the screen to open chest this should work
+    - Not sure if this will work on one chest of either type
+  - Uses F2 for silvers and F3 for golds
+- Use Bounty Contracts
+  - Uses bounty contracts of whatever type in groups of 10
+    - not sure what happens if you only have one left
+  - There are some input boxes that should direct
+  - Uses F4
+
+PS: I made some changes I have not been fully test yet in this script, but just watch them for a bit. I do think they should work for the most though.
 
 ## What this repository was really created for
 
