@@ -26,21 +26,23 @@ Deatho0ne does not plan to maintain this for you
 SetWorkingDir, %A_ScriptDir%
 SetMouseDelay, 30
 
-;kills the app, I cannot find a key I like it on yet, maybe one of these days
-;$Esc::ExitApp
+;VARIABLES BASED NEEDED TO BE CHANGED
 
-;Variables to change
-Global slot4percent := 200.0 ;your Briv slot gear %
+;your Briv slot gear %
+Global slot4percent := 200.0
 
-;AreaLow used for None Strahd Patrons, does use Briv has a stop at the final area to build up his stacks
-Global AreaLow := 176 ;z26 to z30 has portals, z41 & z16 has a portal also
+;AreaLow used for None Strahd Patrons
+;   Does use Briv has a stop at the final area to build up his stacks
+;   11 complete is purely used for testing by me
+Global AreaLow := 226 ;z26 to z29 has portals, z41 & z16 has a portal also
 ;This variable is in minutes and you need to see how fast you run the above
-;   it is a saftey net incase something breaks during a FP
-;   the script will build Briv stacks even if it fails
-;   this is to try to maintain the best speed the script can
-Global TimeTillFailLow := 23 ;based on the time I see of about 17mins
+;   It is a saftey net incase something breaks during a FP
+;   The script will build Briv stacks even if it fails
+;   This is to try to maintain the best speed the script can
+Global TimeTillFailLow := 25 ;based on the time I see, plus some
 
-;AreaHigh used for Strahd, does not use Briv. Is based mostly on Click damage level of 320
+;AreaHigh used for Strahd, does not use Briv.
+;   Is based on Click damage
 ;	if you lack Briv this might not be the script for you
 ;	It can work, but you shall have to modify
 Global AreaHigh := 266
@@ -48,25 +50,44 @@ Global AreaHigh := 266
 ;   I do challenges first so only run the script after done with them
 Global TimeTillFailHigh := 50 ;this is a total guess
 
-;True tries reading the gem count at the end of a run
+;This allows for gem count at the end of each run
 ;	This will add about .5secs to 3secs depending on speed of your computer to all runs
-;	Might not work if there is a 1 in the gem count or it is over 1k
-;		Over 1k most likely will not happen and 1 should be okay for the most part
-;	Only tested what this does after area 11, if gems are over 1k this might not get the right data
+;	Might not work if the gem count over 999
+;		This is due to 1 is chopped wierd
+;	Only tested what this does after area 11
 Global RunStatsCapture := False
 
-;Variables not needed to be changed
+;VARIABLES NOT NEEDED TO BE CHANGED
+;   If you make no major changes to the script
 Global Specialized := 1, LevelKey := 2, SliceName := 3
 Global ZoomedOut = False, ResetTest := False
 Global NpVariant := False, MirtVariant := False, VajraVariant := False, StrahdVariant := False
 Global RunCount := 0
 Global dtStartTime := "00:00:00", dtLastRunTime := "00:00:00"
 
+;kills the app, I cannot find a key I like it on yet, maybe one of these days
+;$Esc::ExitApp
+
 ;click while keys are held down
 $F1::
     While GetKeyState("F1", "P") {
         MouseClick
         Sleep 0
+    }
+Return
+
+;start the Mad Wizard gem runs
+$F2::
+    Menu, Tray, Icon, %SystemRoot%\System32\setupapi.dll, 10
+    ResetAdventure()
+    dtStartTime := A_Now
+    Loop {
+        dtLastRunTime := A_Now
+        StartAdventure()
+        WaitForLoading()
+        WaitForResults()
+        BuildBrivStacks()
+        ResetAdventure()
     }
 Return
 
@@ -89,21 +110,6 @@ Return
 $F6::
     ; Used for testing when needed
     ;CaptureResultsScreen()
-Return
-
-;start the Mad Wizard gem runs
-$F2::
-    Menu, Tray, Icon, %SystemRoot%\System32\setupapi.dll, 10
-    ResetAdventure()
-    dtStartTime := A_Now
-    Loop {
-        dtLastRunTime := A_Now
-        StartAdventure()
-        WaitForLoading()
-        WaitForResults()
-        BuildBrivStacks()
-        ResetAdventure()
-    }
 Return
 
 $`::Pause
