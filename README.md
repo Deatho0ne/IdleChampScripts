@@ -37,7 +37,7 @@ These scripts should be relatively simple to make work for you. They are very mu
 
 ### GemFarm.ahk
 
-Is a script that tries to speed through Mad Wizard with the best champs allowed to me depending on patrons. It can pretty much be started for outside of adventures or inside and detects the patron that it should run. In all versions of Mad Wizard, not named Strahd, it uses Briv and is mostly designed around his speed up mechanic. Please read/edit the script if you want to use it and/or are lacking any of the champs. Should not be to hard to figure out how to make it work for you as long as you get a few things about AHK.
+Is a script that tries to speed through Mad Wizard with the best champs allowed to me depending on patrons. It can pretty much be started for outside of adventures or inside and detects the patron that it should run. In all versions of Mad Wizard, not named Strahd, it uses Briv and is mostly designed around his speed up mechanic. Please read/edit the script if you want to use it and/or are lacking any of the champs at all in the game. Should not be to hard to figure out how to make it work for you as long as you get a few things about AHK and the game. You will have to test this to make sure you are getting the best results for you.
 
 - There is a buy silver or gold chest in this Script. It only works from their respective screens and you hit F6. It will buy keep buying till it runs out of gems.
 
@@ -55,9 +55,9 @@ Is a script that tries to speed through Mad Wizard with the best champs allowed 
 
 ![Diretory for Mad Wizard](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/NonePatronsNoUltsFormation.PNG)
 
-- There is also a Briv, Celeste, and maybe Melf/Sentry on slot 2/W for building stacks
+- There is also a Briv, Celeste, Melf, & Sentry on slot 2/W for building stacks
 
-  - I have a familiar on both Briv and Celeste
+  - I have a familiar on Briv, Celeste, and Sentry
   
   - Depending what area you want stop at should change your slot 2/W formation
   
