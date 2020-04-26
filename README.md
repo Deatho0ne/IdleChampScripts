@@ -1,6 +1,6 @@
 ### Idle Champion Scripts and stuff
 
-All images are pulled from Idle Champions and are owned by [Codename Entertainment Inc.](http://www.codenameentertainment.com/)
+All images are pulled from Idle Champions and are owned by [Codename Entertainment Inc.](http://www.codenameentertainment.com/) Only the scripts/readme/logs are under the GPU lisence.
 
 I have written a [guide](https://docs.google.com/document/d/1V3vviSagVLMXZ-pCFpraEnMpOIv9QlgFQY7J55tBt6s/edit#) which will explain some things about the game and some champs to get. This should help you understand why some of the coding is done in the scripts.
 
