@@ -86,10 +86,8 @@ $F9::
     Reload
 Return
 
-;read comments below
 $F6::
     ; Used for testing when needed
-    BuyChests()
     ;CaptureResultsScreen()
 Return
 
@@ -474,22 +472,6 @@ SimulateBriv(i) {
     brivWaitMinutes := roughTime / 60
     ;Briv normally dies if over 3 minutes
     Return (brivWaitMinutes > 3) ? 3 : brivWaitMinutes
-}
-
-BuyChests() {
-    Loop {
-        If FindInterfaceCue("chestBuying\chestPrice.png", i, j, 1) Or FindInterfaceCue("chestBuying\chestPriceS.png", i, j, 1) {
-            MouseClick, L, i+60, j+30, 2
-            Sleep 100
-            MouseClick, L, i+60, j+30, 2
-        }
-        If FindInterfaceCue("chestBuying\buyNow.png", i, j, 1) Or FindInterfaceCue("chestBuying\buyNowS.png", i, j, 1) {
-            MouseClick, L, i+60, j+30, 2
-            Sleep 100
-            MouseClick, L, i+60, j+30, 2
-        }
-    }
-    Return
 }
 
 CaptureResultsScreen() {
