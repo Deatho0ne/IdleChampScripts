@@ -238,15 +238,15 @@ Return True
 
 WaitForResults() {
     HeroData := []
-    HeroData.push([ False, "{F6}", "specChoices\shandie.png" ])
-    HeroData.push([ False, "{F12}", "specChoices\melf.PNG" ])
-    HeroData.push([ False, "{F8}", "specChoices\hitch.png" ])
-    HeroData.push([ False, "{F4}", "specChoices\sentry.png" ])
-    ;HeroData.push([ False, "{F5}", "specChoices\briv.png" ])
-    HeroData.push([ False, "{F7}", "specChoices\minsc.png" ])
     HeroData.push([ False, "{F1}", "specChoices\deekin.png" ])
     ;HeroData.push([ False, "{F2}", "specChoices\celeste.PNG" ])
+    HeroData.push([ False, "{F4}", "specChoices\sentry.png" ])
+    ;HeroData.push([ False, "{F5}", "specChoices\briv.png" ])
+    HeroData.push([ False, "{F6}", "specChoices\shandie.png" ])
+    ;HeroData.push([ False, "{F7}", "specChoices\minsc.png" ])
+    HeroData.push([ False, "{F8}", "specChoices\hitch.png" ])
     HeroData.push([ False, "{F10}", "specChoices\havilar.png" ])
+    HeroData.push([ False, "{F12}", "specChoices\melf.PNG" ])
     
     LoopedInput := ""
     
