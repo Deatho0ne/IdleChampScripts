@@ -1,7 +1,10 @@
 ### Idle Champion Scripts and stuff
 
-I have written a [guide](https://docs.google.com/document/d/1V3vviSagVLMXZ-pCFpraEnMpOIv9QlgFQY7J55tBt6s/edit#) which will explain some things about the game and some champs to get. This should help you understand why some of the coding that is done to follow.
-I do enjoy this game not only for scripting purposes, but the game itself. Making formations, talking about the game in general, and the community are something I enjoy. I do support this game with real money and suggest if you are reading this do so also.
+All images are pulled from Idle Champions and are owned by [Codename Entertainment Inc.](http://www.codenameentertainment.com/)
+
+I have written a [guide](https://docs.google.com/document/d/1V3vviSagVLMXZ-pCFpraEnMpOIv9QlgFQY7J55tBt6s/edit#) which will explain some things about the game and some champs to get. This should help you understand why some of the coding is done in the scripts.
+
+I do support this game with real money and suggest if you are reading this do so also. I do enjoy this game not only for scripting purposes, but the game itself. Making formations, talking about the game in general, and the community are some of the things that make this game fun for me.
 
 ## General Info
 
