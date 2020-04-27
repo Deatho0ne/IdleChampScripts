@@ -32,7 +32,7 @@ Should give you a rough idea of stacks needed for your next run and roughly the 
 
 ### GeneralUiStuff.ahk
 
-There are some user interface (UI) stuff that just feels none user experience (UX) to me and I have seen others mention some of these also. So I decided to make a script that trys to make it less of a bother to deal with these UX design choices. I would love to remove them if CNE ever makes the UX better in the areas this script deals with.
+There are some user interface (UI) stuff that just feels none user experience (UX) to me and I have seen others mention some of these also. So I decided to make a script that trys to make it less of a bother to deal with these UX design choices. I would love to remove them if CNE ever makes the UX better in the areas this script deals with. This Script needs everything in uiWork to be in the same folder to work.
 
 - Buy Chest with gems
   - You have to be on either the Silver or Gold Chest screens for this to work
