@@ -114,9 +114,9 @@ FindInterfaceCue(filename, ByRef i, ByRef j, k = 360) {
 
 ClickBasedFile(filename, x, y) {
     If FindInterfaceCue("" . filename . "", i, j, 1) {
-        MouseClick, L, x+i, y+j, 2
+        MouseClick, L, x+i, y+j, 1
         Sleep 100
-        MouseClick, L, x+i, y+j, 2
+        MouseClick, L, x+i, y+j, 1
         Return True
     }
     Return False
@@ -124,15 +124,11 @@ ClickBasedFile(filename, x, y) {
 
 BuyChests() {
     Loop {
-        If FindInterfaceCue("uiWork\chestBuying\chestPrice.png", i, j, 1) Or FindInterfaceCue("chestBuying\chestPriceS.png", i, j, 1) {
-            MouseClick, L, i+60, j+30, 2
-            Sleep 100
-            MouseClick, L, i+60, j+30, 2
+        If ClickBasedFile("uiWork\chestBuying\chestPrice.png", 60, 30) Or ClickBasedFile("chestBuying\chestPriceS.png", 60, 30) {
+            Sleep 1
         }
-        If FindInterfaceCue("uiWork\chestBuying\buyNow.png", i, j, 1) Or FindInterfaceCue("chestBuying\buyNowS.png", i, j, 1) {
-            MouseClick, L, i+60, j+30, 2
-            Sleep 100
-            MouseClick, L, i+60, j+30, 2
+        If ClickBasedFile("uiWork\chestBuying\buyNow.png", 60, 30) Or ClickBasedFile("chestBuying\buyNowS.png", 60, 30) {
+            Sleep 1
         }
     }
     Return
@@ -176,16 +172,14 @@ BountyContracts() {
         MsgBox, Wrong`nCountract Count`nUser Entered: %contractCount%
         Reload
     }
+
+    MsgBox, Contracts Type to use: %contracts%`nCountract Count User entered: %contractCount%`nHit F9 if this is higher wrong before hitting Enter or clicking OK
+
     contracts := "uiWork\bountyContracts\" . contract . ".png"
     contractCount := floor(contractCount / 10)
     
-    If False { ;used for testing only
-        ;MouseMove, i+20, j+15
-        MsgBox, Correct`ncontractType: %contracts%`nCountractCount: %contractCount%
-        Reload
-    }
-    
     Loop, %contractCount% {
+        ;MouseMove, i+20, j+15 ;more for future reference
         If ClickBasedFile("" . contracts . "", 25, 25) {
             Sleep 100
             If ClickBasedFile("uiWork\rightArrow.png", -20, 10) {
