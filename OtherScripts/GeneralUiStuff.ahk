@@ -61,7 +61,7 @@ Return
         gShowHelpTip := !gShowHelpTip
         
         if (gShowHelpTip) {
-            ToolTip, % "F1: Buy Chest`nF2: Open Silver Chest`nF3: Open Silver Chest`nF4: Use Bounty Contracts`nF9: Reload the Script`nF10: Exit the Script", 25, 325, 3
+            ToolTip, % "F1: Buy Chest`nF2: Open Silver Chest`nF3: Open Gold Chest`nF4: Use Bounty Contracts`nF9: Reload the Script`nF10: Exit the Script", 25, 325, 3
             SetTimer, ClearToolTip, -10000 
         }
         else {
@@ -116,7 +116,6 @@ ClickBasedFile(filename, x, y) {
     If FindInterfaceCue("" . filename . "", i, j, 1) {
         MouseClick, L, x+i, y+j, 1
         Sleep 100
-        MouseClick, L, x+i, y+j, 1
         Return True
     }
     Return False
@@ -143,15 +142,17 @@ OpenChest(chestType) {
                 Sleep 100
                 If ClickBasedFile("uiWork\openingChest\openMultipleChest.png", 20, 10) {
                     Sleep 3000
-                    Loop, 7 {
-                        DirectedInput("Space")
-                        Sleep 100
-                    }
-                    Sleep 3000
-                    If ClickBasedFile("uiWork\openingChest\closeAllLoot.png", 0, 0) {
-                        DirectedInput("Esc")
-                        Sleep 3000
-                    }
+                    If ClickBasedFile("uiWork\openingChest\card.png", 0, 0) {
+                        Loop, 7 {
+                            DirectedInput("Space")
+                            Sleep 100
+                        }
+                        Sleep 5000
+                        If FindInterfaceCue("uiWork\openingChest\closeAllLoot.png", i, j, 1) {
+                            DirectedInput("Esc")
+                            Sleep 9000
+                        }
+                    }                    
                 }
             }
         }
