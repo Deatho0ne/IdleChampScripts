@@ -1,6 +1,6 @@
 /*
 By Deatho0ne
-version 04.15.2020
+version 05.07.2020
 Based on Gladio Stricto's https://pastebin.com/Rd8wWSVC
 have mentioned a few other things he has created in here
 A few things on Deatho0ne's Modified Bootch Script
@@ -15,11 +15,11 @@ Also need to be able to get to the specs of the champs you use before the areas 
 If you can not do this yet, I would say try Bootch's script
     Please make sure your Steam does not take screen shots with F12
 This can work with only 1 familar on leveling click damage
-but the more you have the better
-Most likely need to change WaitForResults() based on who you have
-if you have & use Havilar & Deekin
+    but the more you have the better
+Most likely need to change BuildHeroData() based on who you have
+    if you have and use Havilar & Deekin
     You will want to also look at FindInterfaceCue("z14text.png", i, j, 1)
-and change what ults are cast
+    and change what ults are cast
 Deatho0ne does not plan to maintain this for you
     I will make updates though based on my needs
 */
@@ -39,7 +39,7 @@ Global AreaLow := 226 ;z26 to z29 has portals, z41 & z16 has a portal also
 ;   It is a saftey net incase something breaks during a FP
 ;   The script will build Briv stacks even if it fails
 ;   This is to try to maintain the best speed the script can
-Global TimeTillFailLow := 25 ;based on the time I see, plus some
+Global TimeTillFailLow := 27 ;based on the time I see, plus some for patrons
 
 ;AreaHigh used for Strahd, does not use Briv.
 ;   Is based on Click damage
@@ -48,8 +48,9 @@ Global TimeTillFailLow := 25 ;based on the time I see, plus some
 Global AreaHigh := 266
 ;Same as TimeTillFailLow, but for Strahd
 ;   I do challenges first so only run the script after done with them
-Global TimeTillFailHigh := 50 ;this is a total guess
-
+;   Minutes (area at when recorded)
+;       31 143, 38 178, 41 211, 44 226
+Global TimeTillFailHigh := 70 ;guess based on the above numbers
 ;This allows for gem count at the end of each run
 ;	This will add about .5secs to 3secs depending on speed of your computer to all runs
 ;	Might not work if the gem count over 999
@@ -62,11 +63,11 @@ Global RunStatsCapture := False
 Global Specialized := 1, LevelKey := 2, SliceName := 3
 Global ZoomedOut = False, ResetTest := False
 Global NpVariant := False, MirtVariant := False, VajraVariant := False, StrahdVariant := False
-Global RunCount := 0
+Global HeroData := []
+Global RunCount := 0, FailedCount := 0
 Global dtStartTime := "00:00:00", dtLastRunTime := "00:00:00"
 
-;kills the app, I cannot find a key I like it on yet, maybe one of these days
-;$Esc::ExitApp
+LoadTooltip()
 
 ;click while keys are held down
 $F1::
@@ -74,14 +75,14 @@ $F1::
         MouseClick
         Sleep 0
     }
-Return
+return
 
 ;start the Mad Wizard gem runs
 $F2::
     Menu, Tray, Icon, %SystemRoot%\System32\setupapi.dll, 10
     ResetAdventure()
     dtStartTime := A_Now
-    Loop {
+    loop {
         dtLastRunTime := A_Now
         StartAdventure()
         WaitForLoading()
@@ -89,41 +90,67 @@ $F2::
         BuildBrivStacks()
         ResetAdventure()
     }
-Return
+return
 
 ;click until Reload or Exiting the app
 $F3::
     Menu, Tray, Icon, %SystemRoot%\System32\setupapi.dll, 10
-    Loop {
+    loop {
         MouseClick
         Sleep 0
     }
-Return
+return
 
 ;Reload the script
 $F9::
-    If RunCount > 0
+    if RunCount > 0
         DataOut()
     Reload
-Return
+return
+
+;kills the script
+$F10::ExitApp
 
 $F6::
     ; Used for testing when needed
     ;CaptureResultsScreen()
-Return
+return
 
 $`::Pause
 
 #c::
     WinGetPos, X, Y, Width, Height, A
     WinMove, A,, (Max(Min(Floor((X + (Width / 2)) / A_ScreenWidth), 1), 0) * A_ScreenWidth) + ((A_ScreenWidth - Width) / 2), (A_ScreenHeight - Height) / 2
-Return
+return
+
+BuildHeroData() {
+    HeroData.push([ False, "{F6}", "specChoices\shandie.png" ])
+    HeroData.push([ False, "{F12}", "specChoices\melf.PNG" ])
+    if Not VajraVariant {
+        HeroData.push([ False, "{F8}", "specChoices\hitch.png" ])
+    }
+    else if VajraVariant {
+        ;HeroData.push([ False, "{F7}", "specChoices\minsc.png" ])
+    }
+    if Not StrahdVariant {
+        HeroData.push([ False, "{F4}", "specChoices\sentry.png" ])
+        HeroData.push([ False, "{F5}", "specChoices\briv.png" ])
+        HeroData.push([ False, "{F3}", "specChoices\binwin.png" ])
+    }
+    if Not (MirtVariant Or StrahdVariant) {
+        HeroData.push([ False, "{F1}", "specChoices\deekin.png" ])
+    }
+    if Not (VajraVariant Or StrahdVariant) {
+        HeroData.push([ False, "{F2}", "specChoices\celeste.PNG" ])
+        HeroData.push([ False, "{F10}", "specChoices\havilar.png" ])
+    }
+}
 
 SafetyCheck(Skip := False) {
-    If Not WinExist("ahk_exe IdleDragons.exe") {
+    if Not WinExist("ahk_exe IdleDragons.exe") {
         ExitApp
     }
-    If Not Skip {
+    if Not Skip {
         WinActivate, ahk_exe IdleDragons.exe
     }
 }
@@ -138,81 +165,82 @@ DirectedInput(s) {
 FindInterfaceCue(filename, ByRef i, ByRef j, k = 360) {
     SafetyCheck()
     WinGetPos,,, width, height, A
-    Loop {
+    loop {
         Sleep 333
         ImageSearch, i, j, 0, 0, %width%, %height%, *10 *Trans0x00FF00 %filename%
-        If (ErrorLevel = 0) {
-            Return True
+        if (ErrorLevel = 0) {
+            return True
         }
-        If (A_Index >= k) {
-            Return False
+        if (A_Index >= k) {
+            return False
         }
     }
 }
 
 ResetStep(filename, k, l) {
-    If FindInterfaceCue(filename, i, j) {
-        If FindInterfaceCue(filename, i, j) {
+    if FindInterfaceCue(filename, i, j) {
+        if FindInterfaceCue(filename, i, j) {
             SafetyCheck()
             MouseClick, L, i+k, j+l, 2
-            Return
+            return
         }
     }
     Reload
 }
 
 ResetTest() {
-    If FindInterfaceCue("noneAdventure\swordCoastCorrect.png", i, j, 1) {
-        Return False
+    if FindInterfaceCue("noneAdventure\swordCoastCorrect.png", i, j, 1) {
+        return False
     }
-    If FindInterfaceCue("noneAdventure\swordCoastWrong.png", i, j, 1) {
+    else if FindInterfaceCue("noneAdventure\swordCoastWrong.png", i, j, 1) {
         SafetyCheck()
         MouseClick, L, i+55, j+14, 2
-        Return False
+        return False
     }
-Return True
+    return True
 }
 
 ResetAdventure() {
-    If (ResetTest Or ResetTest()) {
+    if (ResetTest Or ResetTest()) {
         ResetStep("runAdventure\reset.png", 10, 10)
         Sleep 500
         ResetStep("runAdventure\complete.png", 40, 10)
         ResetStep("noneAdventure\skip.png", 20, 10)
-        If ((RunCount > 0) And RunStatsCapture) {
+        if ((RunCount > 0) And RunStatsCapture) {
             CaptureResultsScreen()
         }
         ResetStep("noneAdventure\continue.png", 50, 10)
         
-        Loop {
-            If (A_Index > 480) {
+        loop {
+            if (A_Index > 480) {
                 Reload
             }
-            If Not ResetTest() {
-                Break
+            if Not ResetTest() {
+                break
             }
         }
     }
     
     if Not (NpVariant Or MirtVariant Or VajraVariant Or StrahdVariant) {
-        If FindInterfaceCue("noneAdventure\MirtVariant.PNG", i, j, 1) {
+        if FindInterfaceCue("noneAdventure\MirtVariant.PNG", i, j, 1) {
             MirtVariant := True
         }
-        Else If FindInterfaceCue("noneAdventure\VajraVariant.PNG", i, j, 1) {
+        else if FindInterfaceCue("noneAdventure\VajraVariant.PNG", i, j, 1) {
             VajraVariant := True
         }
-        Else If FindInterfaceCue("noneAdventure\StrahdVariant.PNG", i, j, 1) {
+        else if FindInterfaceCue("noneAdventure\StrahdVariant.PNG", i, j, 1) {
             StrahdVariant := True
         }
-        Else {
+        else {
             NpVariant := True
         }
+        BuildHeroData()
     }
     
-    If (Not ZoomedOut) And FindInterfaceCue("noneAdventure\swordCoastCorrect.png", i, j, 1) {
+    if (Not ZoomedOut) And FindInterfaceCue("noneAdventure\swordCoastCorrect.png", i, j, 1) {
         SafetyCheck()
         MouseClick, L, i+200, j+14, 2
-        Loop 15	 {
+        loop 15	 {
             MouseClick, WheelDown
             Sleep 5
         }
@@ -231,16 +259,16 @@ StartAdventure() {
 WaitForLoading() {
     FindInterfaceCue("runAdventure\loading.png", i, j, 20)
     
-    Loop 360 {
-        If Not FindInterfaceCue("runAdventure\loading.png", i, j, 1) {
-            Break
+    loop 360 {
+        if Not FindInterfaceCue("runAdventure\loading.png", i, j, 1) {
+            break
         }
     }
     
     DirectedInput("q")
     Sleep 1500
     
-    If FindInterfaceCue("runAdventure\wait.png", i, j, 1) {
+    if FindInterfaceCue("runAdventure\wait.png", i, j, 1) {
         SafetyCheck()
         MouseClick, L, i+5, j+5, 2, D
         Sleep 150
@@ -249,14 +277,13 @@ WaitForLoading() {
     }
 }
 
-SearchHero(ByRef HeroData) {
-    If FindInterfaceCue(HeroData[SliceName], i, j, 1) {
-        Loop {
-            FindInterfaceCue(HeroData[SliceName], x, y, 1)
-            If (i = x And j = y) {
-                Break
-            }
-            Else {
+SearchHero(ByRef Hero) {
+    if FindInterfaceCue(Hero[SliceName], i, j, 1) {
+        loop {
+            FindInterfaceCue(Hero[SliceName], x, y, 1)
+            if (i = x And j = y) {
+                break
+            } else {
                 i := x, j := y
             }
         }
@@ -267,8 +294,8 @@ SearchHero(ByRef HeroData) {
         MouseClick,,,,, U
         Sleep 250
         
-        If FindInterfaceCue(HeroData[SliceName], x, y, 1) {
-            If (i = x And j = y) {
+        if FindInterfaceCue(Hero[SliceName], x, y, 1) {
+            if (i = x And j = y) {
                 SafetyCheck()
                 MouseClick, L, i+32, j+162, 2, D
                 Sleep 150
@@ -277,149 +304,150 @@ SearchHero(ByRef HeroData) {
             }
         }
         
-        HeroData[Specialized] := True
+        Hero[Specialized] := True
         WinGetPos,,, Width, Height, A
         MouseMove, Width/2, Height/2
+        return
     }
-    Else {
-        DirectedInput(HeroData[LevelKey])
-    }
+    DirectedInput(Hero[LevelKey])
 }
 
-FullySpecialized(HeroData) {
-    Loop % HeroData.Length() {
-        If Not HeroData[A_Index][Specialized] {
-            Return False
-        }
-    }
-Return True
-}
-
-WaitForResults() {
-    HeroData := []
-    HeroData.push([ False, "{F6}", "specChoices\shandie.png" ])
-    HeroData.push([ False, "{F12}", "specChoices\melf.PNG" ])
-    If Not VajraVariant {
-        HeroData.push([ False, "{F8}", "specChoices\hitch.png" ])
-    }
-    Else if VajraVariant {
-        HeroData.push([ False, "{F7}", "specChoices\minsc.png" ])
-    }
-    If Not StrahdVariant {
-        HeroData.push([ False, "{F4}", "specChoices\sentry.png" ])
-        HeroData.push([ False, "{F5}", "specChoices\briv.png" ])
-        HeroData.push([ False, "{F3}", "specChoices\binwin.png" ])
-    }
-    If Not (MirtVariant Or StrahdVariant) {
-        HeroData.push([ False, "{F1}", "specChoices\deekin.png" ])
-    }
-    If Not (VajraVariant Or StrahdVariant) {
-        HeroData.push([ False, "{F2}", "specChoices\celeste.PNG" ])
-        HeroData.push([ False, "{F10}", "specChoices\havilar.png" ])
-    }
-    
+InitializeRun() {
     LoopedInput := ""
     
-    Loop % HeroData.Length() {
-        If Not HeroData[A_Index][Specialized] {
-            LoopedInput .= HeroData[A_Index][LevelKey]
-        }
+    loop % HeroData.Length() {
+        HeroData[A_Index][Specialized] := False
+        LoopedInput .= HeroData[A_Index][LevelKey]
     }
     
     DirectedInput("q")
-    Loop 10 {
+    loop 10 {
         DirectedInput(LoopedInput)
     }
     DirectedInput("{F1}{F2}{F3}{F4}{F5}{F6}{F7}{F8}{F9}{F10}{F11}{F12}")
     Sleep 100
     DirectedInput("q")
     Sleep 100
-    DirectedInput("123456789")
+    DirectedInput("12345678") ;assuming Melf is used, since have seen him still have his MM
     Sleep 100
     DirectedInput("q")
-    
+}
+
+FailureWork(variants) {
+    currentRunTime := round(MinuteTimeDiff(dtLastRunTime, A_Now), 2)
+    timeFail := StrahdVariant ? (currentRunTime > TimeTillFailHigh) : (currentRunTime > TimeTillFailLow)
+    LoopedTooltip(variants, currentRunTime)
+    if timeFail {
+        ;hard to test this
+        ;   if it works you should never have super bad nights
+        ;   if it ever fails I will come back to it
+        loop, 10 {
+            DirectedInput("{ESC}")
+        }
+        FailedCount += 1
+        loop, 10 {
+            ;this image should work just in case
+            if FindInterfaceCue("runAdventure\escMenu.PNG", i, j, 1) {
+                DirectedInput("{ESC}")
+                break
+            }
+        }
+        return True
+    }
+    return False
+}
+
+FullySpecialized() {
+    loop % HeroData.Length() {
+        if Not HeroData[A_Index][Specialized] {
+            return False
+        }
+    }
+    return True
+}
+
+SendRight() {
+    Sleep 10
+    DirectedInput("{Right}")
+    Sleep 10
+    Send {Right}
+}
+
+WaitForResults() {  
+    InitializeRun()
+
     areaNum := StrahdVariant ? AreaHigh : AreaLow
     workingArea := "areas\" . areaNum . "working.PNG" ;meant to stop on areaNum
     completeArea := "areas\" . areaNum . "complete.PNG" ;meant if skip areaNum
+    variants := "" . NpVariant . "" . MirtVariant . "" . VajraVariant . "" . StrahdVariant
     cancel2 := True
     countLoops := 0
-    Loop {
+    loop {
         countLoops += 1
-        If (countLoops > 6) {
-            currentRunTime := MinuteTimeDiff(dtLastRunTime, A_Now)
-            ;ToolTip, % "currentRunTime: " currentRunTime "", 50, 250, 4
-            If ((Strahd And (currentRunTime > TimeTillFailHigh)) Or (currentRunTime > TimeTillFailLow)) {
-                ;hard to test this
-                ;   if it works you should never have bad nights
-                ;   if it ever fails I will come back to it
-                Loop, 10 {
-                    DirectedInput("{ESC}")
-                }
-                Loop, 10 {
-                    ;this image should work just in case
-                    If FindInterfaceCue("runAdventure\escMenu.PNG", i, j, 1) {
-                        DirectedInput("{ESC}")
-                        Break
-                    }
-                }
-                Break
+        if (countLoops > 6) {
+            if FailureWork(variants) {
+                return
             }
             countLoops := 0
         }
         
-        If FullySpecialized(HeroData) {
+        if FullySpecialized() {
             ;simple click incase of fire
             SafetyCheck()
             MouseClick, L, 650, 450, 2
             
-            If (FindInterfaceCue(workingArea, i, j, 1) Or ((Not Strahd) And FindInterfaceCue(completeArea, i, j, 1))) {
-                Break
+            if (FindInterfaceCue(workingArea, i, j, 1) Or ((Not Strahd) And FindInterfaceCue(completeArea, i, j, 1))) {
+                break
             }
+
+            SendRight()
             
-            If FindInterfaceCue("runAdventure\cancel.png", i, j, 1) {
+            if FindInterfaceCue("runAdventure\cancel.png", i, j, 1) {
                 SafetyCheck()
                 MouseClick, L, i+15, j+15, 2
                 Sleep 50
             }
-            If cancel2 {
+            if cancel2 {
                 ;only exist to deal with the pop ups
-                If FindInterfaceCue("runAdventure\cancel2.PNG", i, j, 1) {
+                if FindInterfaceCue("runAdventure\cancel2.PNG", i, j, 1) {
                     SafetyCheck()
-                    MouseClick, L, i+15, j+15, 2
+                    MouseClick, L, i+7, j+7, 2
                     Sleep 50
-                }
-                Else {
+                } else {
                     cancel2 := False
                 }
             }
             
-            If FindInterfaceCue("runAdventure\progress.png", i, j, 1) {
+            SendRight()
+            
+            if FindInterfaceCue("runAdventure\progress.png", i, j, 1) {
                 DirectedInput("g")
             }
-            
-            If StrahdVariant And FindInterfaceCue("runAdventure\z14text.png", i, j, 1) {
+
+            SendRight()
+
+            if StrahdVariant And FindInterfaceCue("runAdventure\z14text.png", i, j, 1) {
                 ;numbers are based on what I am doing, I put familars on a few champs to get them to their specs fast
-                If StrahdVariant
+                if StrahdVariant {
                     DirectedInput("123456789") ;all
-                /*If MirtVariant
+                }
+                /*
+                if MirtVariant {
                     DirectedInput("123")
-                Else If VajraVariant
+                } else if VajraVariant {
                     DirectedInput("23456789") ;not 1
-                Else
+                } else {
                     DirectedInput("2346789") ;not 1 or 5
+                }
                 */
             }
 
-            Loop 4 {
-                DirectedInput("{right}")
-                Sleep 250
-            }
-            
-            Continue
+            SendRight()
+            continue
         }
         
-        Loop % HeroData.Length() {
-            If Not HeroData[A_Index][Specialized] {
+        loop % HeroData.Length() {
+            if Not HeroData[A_Index][Specialized] {
                 SearchHero(HeroData[A_Index])
             }
         }
@@ -428,12 +456,13 @@ WaitForResults() {
 
 BuildBrivStacks() {
     ;no reason to wait if no Briv
-    If Not StrahdVariant {
+    if Not StrahdVariant {
         DirectedInput("w")
+        DirectedInput("g")
         ;10000 takes awhile, but should add a second or more before the sleep
         ;I actually like this, could have it be calculated once though, if you want
-        ;1.15 is just meant to add a few secs on top of the stacks
-        Sleep % SimulateBriv(10000) * 60 * 1000 * 1.15
+        ;1.05 is just meant to add a few secs on top of the stacks
+        Sleep % SimulateBriv(10000) * 60 * 1000 * 1.05
     }
     RunCount += 1
 }
@@ -444,26 +473,26 @@ SimulateBriv(i) {
     chance := ((slot4percent / 100) + 1) * 0.25
     trueChance := chance
     skipLevels := Floor(chance + 1)
-    If (skipLevels > 1) {
+    if (skipLevels > 1) {
         trueChance := 0.5 + ((chance - Floor(chance)) / 2)
     }
     
     totalLevels := 0
     totalSkips := 0
     
-    Loop % i {
+    loop % i {
         level := 0.0
         skips := 0.0
-        Loop {
+        loop {
             Random, x, 0.0, 1.0
-            If (x < trueChance) {
+            if (x < trueChance) {
                 level += skipLevels
                 skips++
             }
             
             level++
         }
-        Until level > AreaLow
+        until level > AreaLow
         
         totalLevels += level
         totalSkips += skips
@@ -477,7 +506,21 @@ SimulateBriv(i) {
     roughTime := (multiplier * avgStacks) + additve
     brivWaitMinutes := roughTime / 60
     ;Briv normally dies if over 3 minutes
-    Return (brivWaitMinutes > 3) ? 3 : brivWaitMinutes
+    return (brivWaitMinutes > 3) ? 3 : brivWaitMinutes
+}
+
+FindGemsCue(filename, ByRef x, ByRef y, ByRef GemsEarned) {
+    ;based on Gladio Strico's https://discordapp.com/channels/357247482247380994/474639469916454922/700022596833640459
+    SafetyCheck()
+    
+    MouseMove, x+14, y+16, 0
+    fileToSearch := "gemsFound\" . filename
+    ImageSearch, i,, x, y, x+14, y+16, *30 %fileToSearch%.png
+    if (ErrorLevel = 0) {
+        x := i + 5
+        GemsEarned .= filename
+    }
+    return (ErrorLevel = 0)
 }
 
 CaptureResultsScreen() {
@@ -490,7 +533,7 @@ CaptureResultsScreen() {
     x := i+103
     y := j-3
     
-    Loop {
+    loop {
         Found := False
         
         Found |= FindGemsCue("1", x, y, GemsEarned)
@@ -504,26 +547,12 @@ CaptureResultsScreen() {
         Found |= FindGemsCue("9", x, y, GemsEarned)
         Found |= FindGemsCue("0", x, y, GemsEarned)
         
-        If Not Found {
-            Break
+        if Not Found {
+            break
         }
     }
     
     FileAppend, %CurrentTime%`t`t%GemsEarned%`n, MadWizard-Gems.txt
-}
-
-FindGemsCue(filename, ByRef x, ByRef y, ByRef GemsEarned) {
-    ;based on Gladio Strico's https://discordapp.com/channels/357247482247380994/474639469916454922/700022596833640459
-    SafetyCheck()
-    
-    MouseMove, x+14, y+16, 0
-    fileToSearch := "gemsFound\" . filename
-    ImageSearch, i,, x, y, x+14, y+16, *30 %fileToSearch%.png
-    If (ErrorLevel = 0) {
-        x := i + 5
-        GemsEarned .= filename
-    }
-Return (ErrorLevel = 0)
 }
 
 DataOut() {
@@ -533,12 +562,12 @@ DataOut() {
     lastRunTime := DateTimeDiff(dtLastRunTime, dtNow)
     totBosses := Floor(AreaLow / 5) * RunCount
     currentPatron := NpVariant ? "NP" : MirtVariant ? "Mirt" : VajraVariant ? "Vajra" : StrahdVariant ? "Strahd" : "How?"
+    InputBox, areaStopped, Area Stopped, Generaly stop on areas ending in`nz1 thru z4`nz6 thru z9
     ;meant for Google Sheets/Excel/Open Office
-    FileAppend,%currentDateTime%`t%AreaLow%`t%toWallRunTime%`t%lastRunTime%`t%RunCount%`t%totBosses%`t%currentPatron%`n, MadWizard-Bosses.txt
+    FileAppend,%currentDateTime%`t%AreaLow%`t%toWallRunTime%`t%lastRunTime%`t%RunCount%`t%totBosses%`t%currentPatron%`t%FailedCount%`t%areaStopped%`n, MadWizard-Bosses.txt
 }
 
-;time HELPERS
-{
+{ ;time HELPERS
     ;return String HH:mm:ss of the timespan
     DateTimeDiff(dtStart, dtEnd) {
         dtResult := dtEnd
@@ -579,4 +608,20 @@ DataOut() {
         
         return (nMinutes + (nHours * 60) + (nSeconds / 60))
     }
+}
+
+{ ;tooltips
+    LoadTooltip() {
+        ToolTip, % "Shortcuts`nF2: Run MW`nF9: Reload`nF10: Kill the script`nThere are others", 50, 250, 1
+        SetTimer, RemoveToolTip, -5000
+        return
+    }
+    LoopedTooltip(variants, currentRunTime) {
+        ToolTip, % "NpMiVaSt: " variants "`nMins since start: " currentRunTime, 50, 200, 2
+        SetTimer, RemoveToolTip, -1000
+        return
+    }
+    RemoveToolTip:
+        ToolTip
+    return
 }
