@@ -63,7 +63,9 @@ These scripts should be relatively simple to make work for you. They are very mu
 
 Is a script that tries to speed through Mad Wizard with the best champs allowed to me depending on patrons. It can pretty much be started for outside of adventures or inside and detects the patron that it should run. In all versions of Mad Wizard, not named Strahd, it uses Briv and is mostly designed around his speed up mechanic. Please read/edit the script if you want to use it and/or are lacking any of the champs at all in the game. Should not be to hard to figure out how to make it work for you as long as you get a few things about AHK and the game. You will have to test this to make sure you are getting the best results for you.
 
-- There is a buy silver or gold chest in this Script. It only works from their respective screens and you hit F6. It will buy keep buying till it runs out of gems.
+- This script records data when you hit F9 after one run to MadWizard-Bosses.txt
+
+  - There is another way to record the gem count that you get, but I normally do not use it
 
 - Basic Formation I run in a None Patron that does not use ults.
 
