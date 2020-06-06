@@ -120,12 +120,13 @@ ClickBasedFile(filename, x, y) {
 }
 
 BuyChests() {
+    if ClickBasedFile("uiWork\chestBuying\chestPrice.png", 60, 30) Or ClickBasedFile("chestBuying\chestPriceS.png", 60, 30) {
+        sleep, 1
+    }
     loop {
-        if ClickBasedFile("uiWork\chestBuying\chestPrice.png", 60, 30) Or ClickBasedFile("chestBuying\chestPriceS.png", 60, 30) {
-            sleep, 1
-        }
         if ClickBasedFile("uiWork\chestBuying\buyNow.png", 60, 30) Or ClickBasedFile("chestBuying\buyNowS.png", 60, 30) {
-            sleep, 1
+            sleep, 100
+            MouseMove, 550, 550
         }
     }
     return
@@ -187,7 +188,7 @@ BountyContracts() {
             if ClickBasedFile("uiWork\rightArrow.png", -20, 10) {
                 sleep, 100
                 if ClickBasedFile("uiWork\bountyContracts\useContracts.png", 20, 15) {
-                    sleep, 3000
+                    sleep, 1000
                 }
             }
         }
