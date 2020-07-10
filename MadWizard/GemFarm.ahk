@@ -599,16 +599,16 @@ DataOut() {
 
 UsePotions() {
     if (speedPotSmall > 0 Or speedPotMedium > 0 Or speedPotLarge > 0 Or speedPotHuge > 0) {
-        while (Not FindInterfaceCue("runAdventure\inventory.png", i, j, 1)) {
+        while (Not FindInterfaceCue("runAdventure\potions\inventory.png", i, j, 1)) {
             Sleep 50
         }
-        ResetStep("runAdventure\inventory.png", 5, 5)
+        ResetStep("runAdventure\potions\inventory.png", 5, 5)
         sleep 50
     }
-    UsePotion("runAdventure\speedSmall.png", speedPotSmall)
-    UsePotion("runAdventure\speedMedium.png", speedPotMedium)
-    UsePotion("runAdventure\speedLarge.png", speedPotLarge)
-    UsePotion("runAdventure\speedHuge.png", speedPotHuge)
+    UsePotion("runAdventure\potions\speedSmall.png", speedPotSmall)
+    UsePotion("runAdventure\potions\speedMedium.png", speedPotMedium)
+    UsePotion("runAdventure\potions\speedLarge.png", speedPotLarge)
+    UsePotion("runAdventure\potions\speedHuge.png", speedPotHuge)
 }
 
 UsePotion(fileName, numberToUse) {
@@ -616,7 +616,7 @@ UsePotion(fileName, numberToUse) {
         Loop 10 {
             if FindInterfaceCue(fileName, x, y, 1)
                 break
-            ResetStep("runAdventure\inventoryPage.png", 5, 5, 1)
+            ResetStep("runAdventure\potions\inventoryPage.png", 5, 5, 1)
             sleep 50
         }
         ResetStep(fileName, 5, 5)
@@ -626,10 +626,10 @@ UsePotion(fileName, numberToUse) {
                 break
             }
             potionCount++
-            ResetStep("runAdventure\potionIncrement.png", 5, 5, 1)
+            ResetStep("runAdventure\potions\potionIncrement.png", 5, 5, 1)
             sleep 5
         }
-        ResetStep("runAdventure\potionUse.png", 5, 5, 1)
+        ResetStep("runAdventure\potions\potionUse.png", 5, 5, 1)
         sleep 50
     }
 }
