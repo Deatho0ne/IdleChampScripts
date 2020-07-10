@@ -1,6 +1,6 @@
 ;Original version by Gladio Stricto - https://pastebin.com/Rd8wWSVC
 ;	actually has is most of the data
-Global slot4percent := 200, zone := 226
+Global slot4percent := 335.6, zone := 276
 $Esc::ExitApp
 $F5::Reload
 

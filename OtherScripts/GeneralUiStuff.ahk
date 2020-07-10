@@ -140,13 +140,13 @@ OpenChest(chestType) {
             if ClickBasedFile("uiWork\rightArrow.png", -20, 15) {
                 sleep, 100
                 if ClickBasedFile("uiWork\openingChest\openMultipleChest.png", 20, 10) {
-                    sleep, 3000
+                    sleep, 2000
                     if FindInterfaceCue("uiWork\openingChest\card.png", 0, 0) {
                         loop, 7 {
                             DirectedInput("{Space}")
                             sleep, 100
                         }
-                        sleep, 5000
+                        sleep, 3000
                         DirectedInput("{Space}")
                         loop {
                             if FindInterfaceCue("uiWork\openingChest\closeAllLoot.png", i, j) {
@@ -184,11 +184,11 @@ BountyContracts() {
     loop, %contractCount% {
         ;MouseMove, i+20, j+15 ;more for future reference
         if ClickBasedFile("" . contracts . "", 25, 25) {
-            sleep, 100
+            sleep, 1500
             if ClickBasedFile("uiWork\rightArrow.png", -20, 10) {
-                sleep, 100
+                sleep, 500
                 if ClickBasedFile("uiWork\bountyContracts\useContracts.png", 20, 15) {
-                    sleep, 1000
+                    sleep, 2000
                 }
             }
         }
