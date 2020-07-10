@@ -82,7 +82,7 @@ FindInterfaceCue(filename, ByRef i, ByRef j, k = 360) {
     SafetyCheck()
     WinGetPos,,, width, height, A
     Loop {
-        Sleep 333
+        Sleep, 333
         ImageSearch, i, j, 0, 0, %width%, %height%, *10 *Trans0x00FF00 %filename%
         If (ErrorLevel = 0) {
             Return True
@@ -272,9 +272,10 @@ WaitForResults() {
     Loop {
         If FullySpecialized(HeroData) {
             ;simple click incase of achievement or unlock of something new
+            /*
             SafetyCheck()
             MouseClick, L, 650, 450
-            
+            */
             If FindInterfaceCue(AreaWorking, i, j, 1) Or FindInterfaceCue(AreaComplete, i, j, 1) {
                 Break
             }

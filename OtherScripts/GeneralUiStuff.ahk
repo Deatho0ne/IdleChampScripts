@@ -135,22 +135,25 @@ BuyChests() {
 
 OpenChest(chestType) {
     chestToOpen := "uiWork\openingChest\" . chestType . ".png"
-    Loop {
-        If ClickBasedFile(chestToOpen, 110, 15) {
-            Sleep 100
-            If ClickBasedFile("uiWork\rightArrow.png", -20, 15) {
-                Sleep 100
-                If ClickBasedFile("uiWork\openingChest\openMultipleChest.png", 20, 10) {
-                    Sleep 3000
-                    If ClickBasedFile("uiWork\openingChest\card.png", 0, 0) {
-                        Loop, 7 {
-                            DirectedInput("Space")
-                            Sleep 100
+    loop {
+        if ClickBasedFile(chestToOpen, 110, 15) {
+            sleep, 100
+            if ClickBasedFile("uiWork\rightArrow.png", -20, 15) {
+                sleep, 100
+                if ClickBasedFile("uiWork\openingChest\openMultipleChest.png", 20, 10) {
+                    sleep, 2000
+                    if FindInterfaceCue("uiWork\openingChest\card.png", 0, 0) {
+                        loop, 7 {
+                            DirectedInput("{Space}")
+                            sleep, 100
                         }
-                        Sleep 5000
-                        If FindInterfaceCue("uiWork\openingChest\closeAllLoot.png", i, j, 1) {
-                            DirectedInput("Esc")
-                            Sleep 9000
+                        sleep, 3000
+                        DirectedInput("{Space}")
+                        loop {
+                            if FindInterfaceCue("uiWork\openingChest\closeAllLoot.png", i, j) {
+                                DirectedInput("{Esc}")
+                                break
+                            }
                         }
                     }                    
                 }
@@ -181,12 +184,12 @@ BountyContracts() {
     
     Loop, %contractCount% {
         ;MouseMove, i+20, j+15 ;more for future reference
-        If ClickBasedFile("" . contracts . "", 25, 25) {
-            Sleep 100
-            If ClickBasedFile("uiWork\rightArrow.png", -20, 10) {
-                Sleep 100
-                If ClickBasedFile("uiWork\bountyContracts\useContracts.png", 20, 15) {
-                    Sleep 3000
+        if ClickBasedFile("" . contracts . "", 25, 25) {
+            sleep, 1500
+            if ClickBasedFile("uiWork\rightArrow.png", -20, 10) {
+                sleep, 500
+                if ClickBasedFile("uiWork\bountyContracts\useContracts.png", 20, 15) {
+                    sleep, 2000
                 }
             }
         }
