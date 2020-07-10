@@ -79,9 +79,9 @@ Is a script that tries to speed through Mad Wizard with the best champs allowed 
 
   - If you go the ult route Havilar is going to be a pain in the neck  to make sure you get it right
   
-  - Animehimo has added a few failsafes and speed potion usage
+- Animehimo has added a few failsafes and speed potion usage
   
-    - I have tested this at the lowest end, but the code seems sound
+  - I have tested this at the lowest end, but the code seems sound
 
 ![Diretory for Mad Wizard](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/NonePatronsNoUltsFormation.PNG)
 
