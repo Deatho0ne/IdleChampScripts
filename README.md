@@ -69,7 +69,7 @@ Is a script that tries to speed through Mad Wizard with the best champs allowed 
 
 - Basic Formation I run in a None Patron that does not use ults.
 
-  - This is saved to formation slot 1/Q and can be changed
+  - This is formation is saved to formation save slot (1 or Q) and can be changed
 
     - I use Binwin in this image, he is 100% not needed, but is in the script
 
@@ -78,6 +78,10 @@ Is a script that tries to speed through Mad Wizard with the best champs allowed 
 	 - This is why you see Deekin has his Ult, he does not need it at all
 
   - If you go the ult route Havilar is going to be a pain in the neck  to make sure you get it right
+  
+  - Animehimo has added a few failsafes and speed potion usage
+  
+    - I have tested this at the lowest end, but the code seems sound
 
 ![Diretory for Mad Wizard](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/NonePatronsNoUltsFormation.PNG)
 
