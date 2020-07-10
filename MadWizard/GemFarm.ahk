@@ -30,6 +30,15 @@ SetMouseDelay, 30
 
 ;your Briv slot gear %
 Global slot4percent := 200.0
+;if using speed Pots, manually specify your Briv farming time in minutes
+Global speedBrivTime := 0
+Global overrideBrivTime := 0
+
+;Number of speed potions to use at the beginning of each run
+Global speedPotSmall := 0
+Global speedPotMedium := 0
+Global speedPotLarge := 0
+Global speedPotHuge := 0
 
 ;AreaLow used for None Strahd Patrons
 ;   Does use Briv has a stop at the final area to build up his stacks
@@ -147,8 +156,10 @@ BuildHeroData() {
 }
 
 SafetyCheck(Skip := False) {
-    if Not WinExist("ahk_exe IdleDragons.exe") {
-        ExitApp
+    While(Not WinExist("ahk_exe IdleDragons.exe")) {
+        Run, "C:\Program Files (x86)\Steam\steamapps\common\IdleChampions\IdleDragons.exe"
+        Sleep 30000
+        ZoomedOut := False
     }
     if Not Skip {
         WinActivate, ahk_exe IdleDragons.exe
@@ -177,11 +188,11 @@ FindInterfaceCue(filename, ByRef i, ByRef j, k = 360) {
     }
 }
 
-ResetStep(filename, k, l) {
+ResetStep(filename, k, l, clicks = 2) {
     if FindInterfaceCue(filename, i, j) {
         if FindInterfaceCue(filename, i, j) {
             SafetyCheck()
-            MouseClick, L, i+k, j+l, 2
+            MouseClick, L, i+k, j+l, clicks
             return
         }
     }
@@ -237,6 +248,14 @@ ResetAdventure() {
         BuildHeroData()
     }
     
+    If(Mod(RunCount, 30) == 29) {
+        PostMessage, 0x112, 0xF060,,, ahk_exe IdleDragons.exe
+        Sleep 20000
+        Run, "C:\Program Files (x86)\Steam\steamapps\common\IdleChampions\IdleDragons.exe"
+        Sleep 30000
+        ZoomedOut := False
+    }
+
     if (Not ZoomedOut) And FindInterfaceCue("noneAdventure\swordCoastCorrect.png", i, j, 1) {
         SafetyCheck()
         MouseClick, L, i+200, j+14, 2
@@ -382,6 +401,7 @@ WaitForResults() {
     variants := "" . NpVariant . "" . MirtVariant . "" . VajraVariant . "" . StrahdVariant
     cancel2 := True
     countLoops := 0
+    potionsUsed := False
     loop {
         countLoops += 1
         if (countLoops > 6) {
@@ -392,6 +412,10 @@ WaitForResults() {
         }
         
         if FullySpecialized() {
+            if (Not potionsUsed) {
+                UsePotions()
+                potionsUsed := True
+            }
             ;simple click incase of fire
             SafetyCheck()
             MouseClick, L, 650, 450, 2
@@ -462,7 +486,13 @@ BuildBrivStacks() {
         ;10000 takes awhile, but should add a second or more before the sleep
         ;I actually like this, could have it be calculated once though, if you want
         ;1.05 is just meant to add a few secs on top of the stacks
-        Sleep % SimulateBriv(10000) * 60 * 1000 * 1.05
+        ;Use different overrides for if speed pot is active, in a failure case the pots will be inactive and need to farm longer
+        if (FindInterfaceCue("runAdventure\speedUsed.png", i, j, 1) And speedBrivTime > 0)
+            Sleep % speedBrivTime * 60 * 1000 * 1.05
+        else if overrideBrivTime > 0 
+            Sleep % overrideBrivTime * 60 * 1000 * 1.05
+        else 
+            Sleep % SimulateBriv(10000) * 60 * 1000 * 1.05
     }
     RunCount += 1
 }
@@ -565,6 +595,43 @@ DataOut() {
     InputBox, areaStopped, Area Stopped, Generaly stop on areas ending in`nz1 thru z4`nz6 thru z9
     ;meant for Google Sheets/Excel/Open Office
     FileAppend,%currentDateTime%`t%AreaLow%`t%toWallRunTime%`t%lastRunTime%`t%RunCount%`t%totBosses%`t%currentPatron%`t%FailedCount%`t%areaStopped%`n, MadWizard-Bosses.txt
+}
+
+UsePotions() {
+    if (speedPotSmall > 0 Or speedPotMedium > 0 Or speedPotLarge > 0 Or speedPotHuge > 0) {
+        while (Not FindInterfaceCue("runAdventure\inventory.png", i, j, 1)) {
+            Sleep 50
+        }
+        ResetStep("runAdventure\inventory.png", 5, 5)
+        sleep 50
+    }
+    UsePotion("runAdventure\speedSmall.png", speedPotSmall)
+    UsePotion("runAdventure\speedMedium.png", speedPotMedium)
+    UsePotion("runAdventure\speedLarge.png", speedPotLarge)
+    UsePotion("runAdventure\speedHuge.png", speedPotHuge)
+}
+
+UsePotion(fileName, numberToUse) {
+    if (numberToUse > 0) {
+        Loop 10 {
+            if FindInterfaceCue(fileName, x, y, 1)
+                break
+            ResetStep("runAdventure\inventoryPage.png", 5, 5, 1)
+            sleep 50
+        }
+        ResetStep(fileName, 5, 5)
+        potionCount := 1
+        while numberToUse > potionCount {
+            if (potionCount = 10) {
+                break
+            }
+            potionCount++
+            ResetStep("runAdventure\potionIncrement.png", 5, 5, 1)
+            sleep 5
+        }
+        ResetStep("runAdventure\potionUse.png", 5, 5, 1)
+        sleep 50
+    }
 }
 
 { ;time HELPERS
