@@ -43,7 +43,7 @@ Global speedPotHuge := 0
 ;AreaLow used for None Strahd Patrons
 ;   Does use Briv has a stop at the final area to build up his stacks
 ;   11 complete is purely used for testing by me
-Global AreaLow := 226 ;z26 to z29 has portals, z41 & z16 has a portal also
+Global AreaLow := 276 ;z26 to z29 has portals, z41 & z16 has a portal also
 ;This variable is in minutes and you need to see how fast you run the above
 ;   It is a saftey net incase something breaks during a FP
 ;   The script will build Briv stacks even if it fails
@@ -54,7 +54,7 @@ Global TimeTillFailLow := 27 ;based on the time I see, plus some for patrons
 ;   Is based on Click damage
 ;	if you lack Briv this might not be the script for you
 ;	It can work, but you shall have to modify
-Global AreaHigh := 266
+Global AreaHigh := 276
 ;Same as TimeTillFailLow, but for Strahd
 ;   I do challenges first so only run the script after done with them
 ;   Minutes (area at when recorded)
