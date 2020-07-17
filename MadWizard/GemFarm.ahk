@@ -213,7 +213,9 @@ ResetTest() {
 
 ResetAdventure() {
     if (ResetTest Or ResetTest()) {
-        ResetStep("runAdventure\reset.png", 10, 10)
+        if FindInterfaceCue("runAdventure\reset.png", i, j) {
+            DirectedInput("r")
+        }
         Sleep 500
         ResetStep("runAdventure\complete.png", 40, 10)
         ResetStep("noneAdventure\skip.png", 20, 10)
@@ -417,6 +419,7 @@ WaitForResults() {
                 potionsUsed := True
             }
             ;simple click incase of fire
+            
             SafetyCheck()
             MouseClick, L, 650, 450, 2
             
