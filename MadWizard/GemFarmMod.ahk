@@ -122,10 +122,10 @@ WaitForResults() {
         if FindInterfaceCue("areas\1start.png", i, j) {
             RunCount += 1
             dtLastRunTime := A_Now
-			DirectedInput("234")
+			DirectedInput("23456")
 			CalcBossesPerHour()
             Sleep, 14990
-            DirectedInput("234")
+            DirectedInput("23456")
             brivStacked := false
         }
 
