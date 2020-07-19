@@ -173,7 +173,7 @@ DataOut() {
     currentPatron := "Modron" ;not really a Patron any more
 	InputBox, areaStopped, Area Stopped, Generaly stop on areas ending in`nz1 thru z4`nz6 thru z9
     ;meant for Google Sheets/Excel/Open Office
-    FileAppend,%currentDateTime%`t%currentPatron%`t%ResetArea%`t%totTime%`t%AreaStarted%`t%areaStopped%`t%Crashes%`n, MadWizard-BossesMod.txt
+    FileAppend,%currentDateTime%`t%currentPatron%`t%ResetArea%`t%totTime%`t%RunCount%`t%AreaStarted%`t%areaStopped%`t%Crashes%`n, MadWizard-BossesMod.txt
 }
 
 { ;time HELPERS
