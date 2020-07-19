@@ -116,6 +116,7 @@ WaitForResults() {
     workingArea := "areas\" . StackArea . "working.PNG" ;meant to stop on areaNum
     completeArea := "areas\" . StackArea . "complete.PNG" ;meant if skip areaNum
     brivStacked := false
+	dtLastRunTime := A_Now
 	num := 255
     loop {
         if FindInterfaceCue("areas\1start.png", i, j) {
