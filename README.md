@@ -79,6 +79,8 @@ Is a script that tries to speed through Mad Wizard with the best champs allowed 
 
   - If you go the ult route Havilar is going to be a pain in the neck  to make sure you get it right
   
+- I will try to update this script for those that do not have Modron, but it is going to be slightly harder after it fully comes online
+  
 - Animehimo has added a few failsafes and speed potion usage
   
   - I have tested this at the lowest end, but the code seems sound
@@ -106,3 +108,11 @@ Do not have a current Patron selected. You need to complete the oldest and secon
 - Example how to get every champ to run in any event, this part of the script has worked for two events
 
 ![Diretory for Mad Wizard](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/ExampleOfEvent.PNG)
+
+- Will likely remove this script after Modron is not still in the beta for CNE
+
+### GemFarmMod.ahk
+
+This is GemFarm modified to work with ingame Modron Automation. It is also just needs space on your monitors and for the most part will not take control, meaning you can play other games with this script. I use 16 familiars (10 on leveling champs & click damage and 6 on the field), most likely could manage with 11 (10 on leveling champs & click damage and 1 on the field) with this script. If you make changes due to you have less than 11 then that is mostly on you to figure out, but should just need a loop of leveling champs in area 1 for specs. Most of this is thanks to animehimo edits of the base GemFarm with some slight changes by me. There might be some slight errors due to changes of Modron or me just being dumb.
+
+![Modron Setup](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/ModronSetup.png)
