@@ -6,10 +6,10 @@ CoordMode, Pixel, Screen
 CoordMode, ToolTip, Screen
 
 ;VARIABLES BASED NEEDED TO BE CHANGED
-Global BrivTime := 145 / 60 ;BRIV BUILD TIME
+Global BrivTime := 205 / 60 ;BRIV BUILD TIME
 Global SpeedBrivTime := 0 ;0.5 ;potion speed
-Global ResetArea := 280 ;what you set Modron to reset at
-Global StackArea := 276 ;z26 to z29 has portals, z41 & z16 has a portal also
+Global ResetArea := 330 ;what you set Modron to reset at
+Global StackArea := 326 ;z26 to z29 has portals, z41 & z16 has a portal also
 
 ;VARIABLES TO CHANGE IF YOU ARE HAVING TIMING ISSUES
 Global ScriptSpeed := 1, DefaultSleep := 50
@@ -102,11 +102,10 @@ FindAndClick(filename, k, l, timeToRun := 0) {
 }
 
 CalcBossesPerHour() {
-	Bosses := round((RunCount - 1) * ResetArea / 5, 0)
 	if (RunCount) > 0 {
-		Bosses += round((ResetArea - AreaStarted) / 5, 0)
-	}
-	if (Bosses < 0) {
+		Bosses := round((RunCount - 1) * ResetArea / 5, 0)
+		Bosses += ceil((ResetArea - AreaStarted) / 5)
+	} else {
 		Bosses := 0
 	}
 	BossesPerHour := round(Bosses / (MinuteTimeDiff(dtStartTime, A_Now) / 60), 0)
@@ -128,6 +127,10 @@ WaitForResults() {
 			Sleep, 5000
 			DirectedInput("23456")
             brivStacked := false
+			Sleep, 5000
+			DirectedInput("e")
+			Sleep, 10
+			DirectedInput("e")
         }
 
         if (Not brivStacked And (FindInterfaceCue(workingArea, i, j) Or FindInterfaceCue(completeArea, i, j))) {

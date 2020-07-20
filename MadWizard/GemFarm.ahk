@@ -29,7 +29,7 @@ SetMouseDelay, 30
 ;VARIABLES BASED NEEDED TO BE CHANGED
 
 ;your Briv slot gear %
-Global slot4percent := 200.0
+Global slot4percent := 525.6
 ;if using speed Pots, manually specify your Briv farming time in minutes
 Global speedBrivTime := 0
 Global overrideBrivTime := 0
@@ -43,23 +43,23 @@ Global speedPotHuge := 0
 ;AreaLow used for None Strahd Patrons
 ;   Does use Briv has a stop at the final area to build up his stacks
 ;   11 complete is purely used for testing by me
-Global AreaLow := 276 ;z26 to z29 has portals, z41 & z16 has a portal also
+Global AreaLow := 326 ;z26 to z29 has portals, z41 & z16 has a portal also
 ;This variable is in minutes and you need to see how fast you run the above
 ;   It is a saftey net incase something breaks during a FP
 ;   The script will build Briv stacks even if it fails
 ;   This is to try to maintain the best speed the script can
-Global TimeTillFailLow := 27 ;based on the time I see, plus some for patrons
+Global TimeTillFailLow := 33 ;based on the time I see, plus some for patrons
 
 ;AreaHigh used for Strahd, does not use Briv.
 ;   Is based on Click damage
 ;	if you lack Briv this might not be the script for you
 ;	It can work, but you shall have to modify
-Global AreaHigh := 276
+Global AreaHigh := 326
 ;Same as TimeTillFailLow, but for Strahd
 ;   I do challenges first so only run the script after done with them
 ;   Minutes (area at when recorded)
 ;       31 143, 38 178, 41 211, 44 226
-Global TimeTillFailHigh := 70 ;guess based on the above numbers
+Global TimeTillFailHigh := 90 ;guess based on the above numbers
 ;This allows for gem count at the end of each run
 ;	This will add about .5secs to 3secs depending on speed of your computer to all runs
 ;	Might not work if the gem count over 999
