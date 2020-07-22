@@ -6,12 +6,24 @@ CoordMode, Pixel, Screen
 CoordMode, ToolTip, Screen
 
 ;VARIABLES BASED NEEDED TO BE CHANGED
+	;AREAS FOR RESETING
+Global StackArea := 326 ;z26 to z29 has portals, z41 & z16 has a portal also
+Global ResetArea := 330 ;what you set Modron to reset at
+
+	;HOW TO LEVEL
+Global FamiliarOrFkey := false ;true for Familiar, false for FKey
+	;change the following two vars to seats you want
+		;broken up for slighly better timing
+Global Fkey1 := "{F1}{F4}{F5}{F6}{F10}" ;Deekin, Sentry, Briv, Havilar
+Global Fkey2 := "{F12}{F2}{F3}{F8}" ;Melf, Celeste, Binwin, Hitch
+Global Havilar := true ;this does not Mater to much, but is if using Havilar
+
+	;BRIV RELATED
+Global BrivExist := true ;Set this to false if running Strahd or do not have Briv
 Global BrivTime := 205 / 60 ;BRIV BUILD TIME
 Global SpeedBrivTime := 0 ;0.5 ;potion speed
-Global ResetArea := 330 ;what you set Modron to reset at
-Global StackArea := 326 ;z26 to z29 has portals, z41 & z16 has a portal also
 
-;VARIABLES TO CHANGE IF YOU ARE HAVING TIMING ISSUES
+;VARIABLES TO CHANGE IF YOU ARE HAVING MAJOR TIMING ISSUES
 Global ScriptSpeed := 1, DefaultSleep := 50
 
 ;VARIABLES NOT NEEDED TO BE CHANGED
@@ -50,7 +62,6 @@ $`::Pause
     WinGetPos, X, Y, Width, Height, A
     WinMove, A,, (Max(Min(Floor((X + (Width / 2)) / A_ScreenWidth), 1), 0) * A_ScreenWidth) + ((A_ScreenWidth - Width) / 2), (A_ScreenHeight - Height) / 2
 return
-
 
 SafetyCheck(Skip := False) {
     While(Not WinExist("ahk_exe IdleDragons.exe")) {
@@ -93,11 +104,9 @@ FindInterfaceCue(filename, ByRef i, ByRef j, time = 0) {
 FindAndClick(filename, k, l, timeToRun := 0) {
     If FindInterfaceCue(filename, i, j, timeToRun) {
 		SafetyCheck(true)
-		MouseClick, L, i+k, j+l, clicks
+		FindInterfaceCue(filename, x, y, timeToRun)
+		MouseClick, L, x+k, y+l, 2
 		Sleep, 10
-	}
-	Else If (bool) {
-		Reload
 	}
 }
 
@@ -111,32 +120,60 @@ CalcBossesPerHour() {
 	BossesPerHour := round(Bosses / (MinuteTimeDiff(dtStartTime, A_Now) / 60), 0)
 }
 
+FamiliarLeveling() {
+	Sleep, 5000
+	DirectedInput("23456")
+	Sleep, 5000
+	DirectedInput("23456")
+	Sleep, 16000
+}
+
+FkeyLeveling() {
+	Sleep, 3000
+	if Havilar {
+		Loop, 3 {
+			DirectedInput("{F10}") ;Level up Havilar
+			Sleep, 5
+		}
+		Sleep, 1000
+		DirectedInput("123") ;Spawn Dembo (Havilar's Ult)
+		Sleep, 5
+	}
+	Loop, 35 {  ;Loop for Champion Spam
+		DirectedInput(Fkey1)
+		DirectedInput(Fkey2)
+	}
+}
+
 WaitForResults() {  
     workingArea := "areas\" . StackArea . "working.PNG" ;meant to stop on areaNum
     completeArea := "areas\" . StackArea . "complete.PNG" ;meant if skip areaNum
-    brivStacked := false
+    brivStacked := not BrivExist
 	dtLastRunTime := A_Now
 	num := 255
     loop {
-        if FindInterfaceCue("areas\1start.png", i, j) and brivStacked {
-            RunCount += 1
-            dtLastRunTime := A_Now
+        if (FindInterfaceCue("areas\1start.png", i, j) And brivStacked) {
+			dtLastRunTime := A_Now
+			brivStacked := Not BrivExist
+			RunCount += 1
 			CalcBossesPerHour()
-            Sleep, 15000
-            DirectedInput("23456")
-			Sleep, 5000
-			DirectedInput("23456")
-            brivStacked := false
-			Sleep, 5000
+			if FamiliarOrFkey {
+				FamiliarLeveling()
+			} else {
+				FkeyLeveling()
+			}
+			Sleep, 150
 			DirectedInput("e")
 			Sleep, 10
 			DirectedInput("e")
         }
-
-        if (Not brivStacked And (FindInterfaceCue(workingArea, i, j) Or FindInterfaceCue(completeArea, i, j))) {
-            BuildBrivStacks()
-            brivStacked := true
-        }
+		
+		if (BrivExist and Not brivStacked) {
+			if (FindInterfaceCue(workingArea, i, j) Or FindInterfaceCue(completeArea, i, j)) {
+				BuildBrivStacks()
+				brivStacked := true
+			}
+		}
 
 		FindAndClick("runAdventure\Okay.png", 5, 5)
             
@@ -164,8 +201,9 @@ BuildBrivStacks() {
         Sleep % SpeedBrivTime * 60 * 1000 * 1.05
     else
         Sleep % BrivTime * 60 * 1000 * 1.05
-    DirectedInput("q")
     DirectedInput("g")
+	Sleep, 5
+	DirectedInput("q")
     Sleep, 6000
     DirectedInput("q")
 }
