@@ -1,7 +1,9 @@
+#NoEnv
+SystemRoot := A_WinDir
 SetWorkingDir, %A_ScriptDir%
 SetDefaultMouseSpeed, 10
 SetMouseDelay, 10
-SetKeyDelay, 10
+SetKeyDelay, 15
 CoordMode, Pixel, Screen
 CoordMode, ToolTip, Screen
 
@@ -10,21 +12,24 @@ CoordMode, ToolTip, Screen
 Global StackArea := 326 ;z26 to z29 has portals, z41 & z16 has a portal also
 Global ResetArea := 330 ;what you set Modron to reset at
 
-	;HOW TO LEVEL
+	;LEVELING VARIABLES
+;have noticed Fkey leveling is generally faster
 Global FamiliarOrFkey := false ;true for Familiar, false for FKey
 	;change the following two vars to seats you want
 		;broken up for slighly better timing
 Global Fkey1 := "{F1}{F4}{F5}{F6}{F10}" ;Deekin, Sentry, Briv, Havilar
 Global Fkey2 := "{F12}{F2}{F3}{F8}" ;Melf, Celeste, Binwin, Hitch
 Global Havilar := true ;this does not Mater to much, but is if using Havilar
+;change next var based on what you see happen, it is in milliseconds 1000ms = 1sec
+Global SleepBeforeLeveling := 3000
 
 	;BRIV RELATED
 Global BrivExist := true ;Set this to false if running Strahd or do not have Briv
-Global BrivTime := 205 / 60 ;BRIV BUILD TIME
+Global BrivTime := 210 / 60 ;BRIV BUILD TIME
 Global SpeedBrivTime := 0 ;0.5 ;potion speed
 
 ;VARIABLES TO CHANGE IF YOU ARE HAVING MAJOR TIMING ISSUES
-Global ScriptSpeed := 1, DefaultSleep := 50
+Global ScriptSpeed := 2, DefaultSleep := 50
 
 ;VARIABLES NOT NEEDED TO BE CHANGED
 ;   If you make no major changes to the script
@@ -64,24 +69,23 @@ $`::Pause
 return
 
 SafetyCheck(Skip := False) {
-    While(Not WinExist("ahk_exe IdleDragons.exe")) {
+    while(Not WinExist("ahk_exe IdleDragons.exe")) {
         Run, "C:\Program Files (x86)\Steam\steamapps\common\IdleChampions\IdleDragons.exe"
         Sleep 30000
         Crashes++
-		DirectedInput("2345678")
-		Sleep, 5000
+		DirectedInput("2345678", 5000)
 		DirectedInput("2345678")
     }
-    if Skip {
+    if Skip
         WinActivate, ahk_exe IdleDragons.exe
-    }
 }
 
-DirectedInput(s) {
+DirectedInput(s, timeToWait := 0) {
 	SafetyCheck()
 	ControlFocus,, ahk_exe IdleDragons.exe
 	ControlSend, ahk_parent, {Blind}%s%, ahk_exe IdleDragons.exe
-	Sleep, %ScriptSpeed%
+	timeToWait += ScriptSpeed
+	Sleep, %timeToWait%
 }
 
 FindInterfaceCue(filename, ByRef i, ByRef j, time = 0) {
@@ -94,9 +98,8 @@ FindInterfaceCue(filename, ByRef i, ByRef j, time = 0) {
 			i := outx - x, j := outy - y
 			Return True
 		}
-		If ((A_TickCount - start)/1000 >= time) {
+		If ((A_TickCount - start)/1000 >= time)
 			Return False
-		}
 		Sleep, %ScriptSpeed%
 	}
 }
@@ -114,34 +117,30 @@ CalcBossesPerHour() {
 	if (RunCount) > 0 {
 		Bosses := round((RunCount - 1) * ResetArea / 5, 0)
 		Bosses += ceil((ResetArea - AreaStarted) / 5)
-	} else {
+	} else
 		Bosses := 0
-	}
 	BossesPerHour := round(Bosses / (MinuteTimeDiff(dtStartTime, A_Now) / 60), 0)
 }
 
 FamiliarLeveling() {
 	Sleep, 5000
-	DirectedInput("23456")
-	Sleep, 5000
-	DirectedInput("23456")
-	Sleep, 16000
+	DirectedInput("23456", 5000)
+	DirectedInput("23456", 16000)
+	DirectedInput("e", 10)
+	DirectedInput("e")
 }
 
 FkeyLeveling() {
-	Sleep, 3000
+	Sleep, SleepBeforeLeveling
 	if Havilar {
-		Loop, 3 {
-			DirectedInput("{F10}") ;Level up Havilar
-			Sleep, 5
-		}
+		Loop, 3
+			DirectedInput("{F10}", 5) ;Level up Havilar
 		Sleep, 1000
-		DirectedInput("123") ;Spawn Dembo (Havilar's Ult)
-		Sleep, 5
+		DirectedInput("123") ;Spawn Dembo
 	}
 	Loop, 35 {  ;Loop for Champion Spam
-		DirectedInput(Fkey1)
-		DirectedInput(Fkey2)
+		DirectedInput(Fkey1, 5)
+		DirectedInput(Fkey2, 5)
 	}
 }
 
@@ -157,15 +156,10 @@ WaitForResults() {
 			brivStacked := Not BrivExist
 			RunCount += 1
 			CalcBossesPerHour()
-			if FamiliarOrFkey {
+			if FamiliarOrFkey
 				FamiliarLeveling()
-			} else {
+			else
 				FkeyLeveling()
-			}
-			Sleep, 150
-			DirectedInput("e")
-			Sleep, 10
-			DirectedInput("e")
         }
 		
 		if (BrivExist and Not brivStacked) {
@@ -177,35 +171,29 @@ WaitForResults() {
 
 		FindAndClick("runAdventure\Okay.png", 5, 5)
             
-        if FindInterfaceCue("runAdventure\progress.png", i, j) {
+        if FindInterfaceCue("runAdventure\progress.png", i, j)
             DirectedInput("g")
-        }
 		
 		if (num > 29) {
 			LoopedTooltip(round(MinuteTimeDiff(dtLastRunTime, A_Now), 2))
 			num := 0
-		} else {
+		} else
 			num++
-		}
     }
 }
 
 BuildBrivStacks() {
     DirectedInput("w")
-    DirectedInput("g")
-    Sleep 5
-    DirectedInput("w")
-    Sleep 5
+    DirectedInput("g", 5)
+    DirectedInput("w", 5)
     DirectedInput("w")
     if (FindInterfaceCue("runAdventure\speedUsed.png", i, j, 1) And SpeedBrivTime > 0)
         Sleep % SpeedBrivTime * 60 * 1000 * 1.05
     else
         Sleep % BrivTime * 60 * 1000 * 1.05
-    DirectedInput("g")
-	Sleep, 5
-	DirectedInput("q")
-    Sleep, 6000
-    DirectedInput("q")
+    DirectedInput("e", 5)
+	DirectedInput("e", 6000)
+    DirectedInput("e")
 }
 
 DataOut() {
@@ -221,9 +209,7 @@ DataOut() {
     ;return String HH:mm:ss of the timespan
     DateTimeDiff(dtStart, dtEnd) {
         dtResult := dtEnd
-        
         EnvSub, dtResult, dtStart, Seconds
-        
         return TimeResult(dtResult)
     }
     
