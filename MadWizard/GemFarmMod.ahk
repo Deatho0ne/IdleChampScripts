@@ -25,7 +25,7 @@ Global SleepBeforeLeveling := 3000
 
 	;BRIV RELATED
 Global BrivExist := true ;Set this to false if running Strahd or do not have Briv
-Global BrivTime := 210 / 60 ;BRIV BUILD TIME
+Global BrivTime := 215 / 60 ;BRIV BUILD TIME
 Global SpeedBrivTime := 0 ;0.5 ;potion speed
 
 ;VARIABLES TO CHANGE IF YOU ARE HAVING MAJOR TIMING ISSUES
@@ -191,7 +191,8 @@ BuildBrivStacks() {
         Sleep % SpeedBrivTime * 60 * 1000 * 1.05
     else
         Sleep % BrivTime * 60 * 1000 * 1.05
-    DirectedInput("e", 5)
+	DirectedInput("e")
+    DirectedInput("g", 5)
 	DirectedInput("e", 6000)
     DirectedInput("e")
 }
