@@ -17,8 +17,14 @@ Global ResetArea := 330 ;what you set Modron to reset at
 Global FamiliarOrFkey := false ;true for Familiar, false for FKey
 	;change the following two vars to seats you want
 		;broken up for slighly better timing
-Global Fkey1 := "{F1}{F4}{F5}{F6}{F10}" ;Deekin, Sentry, Briv, Havilar
-Global Fkey2 := "{F12}{F2}{F3}{F8}" ;Melf, Celeste, Binwin, Hitch
+;only want one Fkey2 active
+Global Fkey1 := "{F3}{F4}{F5}{F6}{F12}" ;Binwin, Sentry, Briv, Shandie, Melf
+Global Fkey2 := "{F1}{F2}{F8}{F10}" ;Deekin, Celeste, Hitch, Havilar
+;mirt
+;Global Fkey2 := "{F2}{F7}{F8}{F10}" ;Celeste, Farideh, Hitch, Havilar
+;vajra
+;Global Fkey2 := "{F1}{F7}{F8}{F11}" ;Deekin, Farideh, Delina, Nova
+
 Global Havilar := true ;this does not Mater to much, but is if using Havilar
 ;change next var based on what you see happen, it is in milliseconds 1000ms = 1sec
 Global SleepBeforeLeveling := 3000
@@ -162,7 +168,7 @@ WaitForResults() {
 				FkeyLeveling()
         }
 		
-		if (BrivExist and Not brivStacked) {
+		if (BrivExist and (Not brivStacked)) {
 			if (FindInterfaceCue(workingArea, i, j) Or FindInterfaceCue(completeArea, i, j)) {
 				BuildBrivStacks()
 				brivStacked := true
