@@ -41,6 +41,7 @@ Global ScriptSpeed := 2, DefaultSleep := 50
 ;   If you make no major changes to the script
 Global RunCount := 0, Crashes := 0, AreaStarted := 0, Bosses := 0, BossesPerHour := 0
 Global dtStartTime := "00:00:00", dtFirstResetTime := "00:00:00"
+Global toolTipToggle := true
 
 LoadTooltip()
 
@@ -52,6 +53,10 @@ $F2::
     dtStartTime := A_Now
 	dtFirstResetTime := A_Now
 	WaitForResults()
+return
+
+$F5::
+    ToggleToolTip()
 return
 
 ;Reload the script
@@ -138,6 +143,8 @@ FamiliarLeveling() {
 
 FkeyLeveling() {
 	Sleep, SleepBeforeLeveling
+	DirectedInput("e", 10)
+	DirectedInput("e")
 	if Havilar {
 		Loop, 3
 			DirectedInput("{F10}", 5) ;Level up Havilar
@@ -148,6 +155,7 @@ FkeyLeveling() {
 		DirectedInput(Fkey1, 5)
 		DirectedInput(Fkey2, 5)
 	}
+	DirectedInput("e")
 }
 
 WaitForResults() {  
@@ -180,11 +188,13 @@ WaitForResults() {
         if FindInterfaceCue("runAdventure\progress.png", i, j)
             DirectedInput("g")
 		
-		if (num > 29) {
-			LoopedTooltip(round(MinuteTimeDiff(dtLastRunTime, A_Now), 2))
-			num := 0
-		} else
-			num++
+		if toolTipToggle {
+			if (num > 29) {
+				LoopedTooltip(round(MinuteTimeDiff(dtLastRunTime, A_Now), 2))
+				num := 0
+			} else
+				num++
+		}
     }
 }
 
@@ -264,6 +274,10 @@ DataOut() {
         ToolTip, % "Resets: " RunCount "`nCrashes: " Crashes "`nMins since start: " currentRunTime "`nBosses: " Bosses "`nBosses per hour: " BossesPerHour, % x + 50, % y + 200, 2
         SetTimer, RemoveToolTip, -1000
         return
+    }
+	ToggleToolTip() {
+		ToolTip,,,,2
+        toolTipToggle := Not toolTipToggle
     }
     RemoveToolTip:
         ToolTip,,,,
