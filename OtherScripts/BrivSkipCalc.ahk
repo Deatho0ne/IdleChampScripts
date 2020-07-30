@@ -2,7 +2,7 @@
 ;	actually has is most of the data
 Global slot4percent := 565.2, zone := 330
 $Esc::ExitApp
-$F5::Reload
+$F7::Reload
 
 $F6::
     MsgBox, % SimulateBriv(10000)
@@ -10,8 +10,17 @@ Return
 
 SimulateBriv(i) {
     chance := ((slot4percent / 100) + 1) * 0.25
-    trueChance := chance
-    skipLevels := Floor(chance + 1)
+	trueChance := chance
+	skipLevels := 1
+    if (chance > 2) {
+		while chance >= 1 {
+			skipLevels++
+			chance /= 2
+		}
+	} else {
+		skipLevels := Floor(chance + 1)
+	}
+		
     If (skipLevels > 1) {
         trueChance := 0.5 + ((chance - Floor(chance)) / 2)
     }
@@ -37,7 +46,8 @@ SimulateBriv(i) {
         totalSkips += skips
     }
     
-    chance := Round(chance, 2)
+	;chance := Round(chance, 2)
+	
     trueChance := Round(trueChance * 100, 2)
     
     avgSkips := Round(totalSkips / i, 2)
@@ -50,6 +60,6 @@ SimulateBriv(i) {
     multiplier := 0.1346894362, additve := 41.86396406
     roughTime := Round(((multiplier * avgStacks) + additve), 2)
     
-    message = With Briv skip %chance% until zone %zone%`n(%trueChance%`% chance to skip %skipLevels% zones)`n`n%i% simulations produced an average:`n%avgSkips% skips (%avgSkipped% zones skipped)`n%avgZones% end zone`n%avgSkipRate%`% true skip rate`n%avgStacks% required stacks with`n%roughTime% time in secs to build said stacks very rough guess
+    message = With Briv skip %skipLevels% until zone %zone%`n(%trueChance%`% chance to skip %skipLevels% zones)`n`n%i% simulations produced an average:`n%avgSkips% skips (%avgSkipped% zones skipped)`n%avgZones% end zone`n%avgSkipRate%`% true skip rate`n%avgStacks% required stacks with`n%roughTime% time in secs to build said stacks very rough guess
 	Return message
 }
