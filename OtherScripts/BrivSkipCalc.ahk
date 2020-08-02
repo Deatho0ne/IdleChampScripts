@@ -1,6 +1,10 @@
 ;Original version by Gladio Stricto - https://pastebin.com/Rd8wWSVC
 ;	actually has is most of the data
-Global slot4percent := 565.2, zone := 330
+Global slot4percent := 749.4, zone := 330
+;940.2 = 65.01 triple
+;749.4 = 53.09 triple
+;565.2 = 83.15 double ;mine
+;238.8 = 83.7 single
 $Esc::ExitApp
 $F7::Reload
 
@@ -12,19 +16,20 @@ SimulateBriv(i) {
     chance := ((slot4percent / 100) + 1) * 0.25
 	trueChance := chance
 	skipLevels := 1
-    if (chance > 2) {
+    
+	if (chance > 2) {
 		while chance >= 1 {
 			skipLevels++
 			chance /= 2
 		}
+		;trueChance := ((chance - Floor(chance)) / 2)
 	} else {
 		skipLevels := Floor(chance + 1)
+		If (skipLevels > 1) {
+			trueChance := 0.5 + ((chance - Floor(chance)) / 2)
+		}
 	}
-		
-    If (skipLevels > 1) {
-        trueChance := 0.5 + ((chance - Floor(chance)) / 2)
-    }
-    
+	
     totalLevels := 0
     totalSkips := 0
     
@@ -47,9 +52,11 @@ SimulateBriv(i) {
     }
     
 	;chance := Round(chance, 2)
+	if skipLevels < 3
+		trueChance := Round(trueChance * 100, 2)
+    else
+		trueChance := Round(chance * 100, 2)
 	
-    trueChance := Round(trueChance * 100, 2)
-    
     avgSkips := Round(totalSkips / i, 2)
     
     avgSkipped := Round(avgSkips * skipLevels, 2)
