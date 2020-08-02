@@ -183,7 +183,7 @@ WaitForResults() {
 			}
 		}
 
-		FindAndClick("runAdventure\Okay.png", 5, 5)
+		FindAndClick("runAdventure\offlineOkay.png", 5, 5)
             
         if FindInterfaceCue("runAdventure\progress.png", i, j)
             DirectedInput("g")
