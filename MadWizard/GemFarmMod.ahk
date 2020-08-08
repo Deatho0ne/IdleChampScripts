@@ -14,7 +14,7 @@ Global ResetArea := 330 ;what you set Modron to reset at
 
 	;LEVELING VARIABLES
 ;have noticed Fkey leveling is generally faster
-Global FamiliarOrFkey := false ;true for Familiar, false for FKey
+Global FamiliarOrFkey := False ;true for Familiar, false for FKey
 	;change the following two vars to seats you want
 		;broken up for slighly better timing
 ;only want one Fkey2 active
@@ -25,13 +25,13 @@ Global Fkey2 := "{F1}{F2}{F8}{F10}" ;Deekin, Celeste, Hitch, Havilar
 ;vajra
 ;Global Fkey2 := "{F1}{F7}{F8}{F11}" ;Deekin, Farideh, Delina, Nova
 
-Global Havilar := true ;this does not Mater to much, but is if using Havilar
+Global Havilar := True ;this does not Mater to much, but is if using Havilar
 ;change next var based on what you see happen, it is in milliseconds 1000ms = 1sec
 Global SleepBeforeLeveling := 3000
 
 	;BRIV RELATED
-Global BrivExist := true ;Set this to false if running Strahd or do not have Briv
-Global BrivTime := 215 ;BRIV BUILD TIME, should be rouhgly what the calc says, but test
+Global BrivExist := True ;Set this to false if running Strahd or do not have Briv
+Global BrivTime := 220 ;BRIV BUILD TIME, should be rouhgly what the calc says, but test
 Global SpeedBrivTime := 0 ;0.5 ;potion speed
 
 ;VARIABLES TO CHANGE IF YOU ARE HAVING MAJOR TIMING ISSUES
@@ -184,7 +184,10 @@ WaitForResults() {
 		}
 
 		FindAndClick("runAdventure\offlineOkay.png", 5, 5)
-            
+        
+		if (FindInterfaceCue("runAdventure\cancel.png", i, j) or FindInterfaceCue("runAdventure\onOtherTeam.png", i, j))
+            DirectedInput("{ESC}")
+		
         if FindInterfaceCue("runAdventure\progress.png", i, j)
             DirectedInput("g")
 		
