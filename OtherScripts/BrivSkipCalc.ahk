@@ -1,6 +1,6 @@
 ;Original version by Gladio Stricto - https://pastebin.com/Rd8wWSVC
 ;	actually has is most of the data
-Global slot4percent := 749.4, zone := 330
+Global slot4percent := 624, zone := 330
 ;940.2 = 65.01 triple
 ;749.4 = 53.09 triple
 ;565.2 = 83.15 double ;mine
