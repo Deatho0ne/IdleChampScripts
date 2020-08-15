@@ -1,9 +1,11 @@
 ;Original version by Gladio Stricto - https://pastebin.com/Rd8wWSVC
 ;	actually has is most of the data
-Global slot4percent := 624, zone := 330
+Global slot4percent := 677.7, zone := 330
+;1424.0 = 95.28 triple
 ;940.2 = 65.01 triple
 ;749.4 = 53.09 triple
-;565.2 = 83.15 double ;mine
+;677.6 = 97.2 double
+;565.2 = 83.15 double ;my old
 ;238.8 = 83.7 single
 $Esc::ExitApp
 $F7::Reload
