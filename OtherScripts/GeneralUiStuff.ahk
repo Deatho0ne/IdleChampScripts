@@ -1,6 +1,7 @@
 /*
 By Deatho0ne
-version 05.16.2020
+version 08.20.2020
+Still early phace it should work, but do not ask about it yet
 */
 
 /*
@@ -95,11 +96,11 @@ DirectedInput(s) {
     sleep, 100
 }
 
-FindInterfaceCue(filename, ByRef i, ByRef j, k = 360) {
+FindInterfaceCue(filename, ByRef i, ByRef j, k = 360, m = 333) {
     SafetyCheck()
     WinGetPos,,, width, height, A
     loop {
-        sleep, 333
+        sleep, m
         ImageSearch, i, j, 0, 0, %width%, %height%, *10 *Trans0x00FF00 %filename%
         if (ErrorLevel = 0) {
             return True
@@ -140,21 +141,16 @@ OpenChest(chestType) {
             if ClickBasedFile("uiWork\rightArrow.png", -20, 15) {
                 sleep, 100
                 if ClickBasedFile("uiWork\openingChest\openMultipleChest.png", 20, 10) {
-                    sleep, 2000
-                    if FindInterfaceCue("uiWork\openingChest\card.png", 0, 0) {
-                        loop, 7 {
-                            DirectedInput("{Space}")
-                            sleep, 100
-                        }
-                        sleep, 3000
-                        DirectedInput("{Space}")
-                        loop {
-                            if FindInterfaceCue("uiWork\openingChest\closeAllLoot.png", i, j) {
-                                DirectedInput("{Esc}")
-                                break
-                            }
-                        }
-                    }                    
+                    sleep, 1000
+					loop {
+						DirectedInput("{Space}")
+					} until FindInterfaceCue("uiWork\openingChest\closeAllLoot.png", i, j, 1, 0)
+					loop {
+						if FindInterfaceCue("uiWork\openingChest\closeAllLoot.png", i, j) {
+							DirectedInput("{Esc}")
+							break
+						}
+					}                   
                 }
             }
         }
