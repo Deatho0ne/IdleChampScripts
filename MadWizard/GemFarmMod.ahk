@@ -12,6 +12,10 @@ CoordMode, ToolTip, Screen
 Global StackArea := 326 ;z26 to z29 has portals, z41 & z16 has a portal also
 Global ResetArea := 330 ;what you set Modron to reset at
 
+	;FROMATION SAVES
+Global BrivStacking := "w" ;"w" is formation 2
+Global RuningForm := "e" ;"e" is formation 3
+
 	;LEVELING VARIABLES
 ;have noticed Fkey leveling is generally faster
 Global FamiliarOrFkey := False ;true for Familiar, false for FKey
@@ -29,10 +33,9 @@ Global Havilar := True ;this does not Mater to much, but is if using Havilar
 ;change next var based on what you see happen, it is in milliseconds 1000ms = 1sec
 Global SleepBeforeLeveling := 3000
 
-	;BRIV RELATED
-Global BrivExist := True ;Set this to false if running Strahd or do not have Briv
-Global BrivTime := 220 ;BRIV BUILD TIME, should be rouhgly what the calc says, but test
-Global SpeedBrivTime := 0 ;0.5 ;potion speed
+Global BrivExist := True ;Briv stack time
+	;BRIV BUILD TIME: Seconds - should be rouhgly what the calc says, but test a few times
+Global BrivTime := 235 ;235 norm ;155 speed pots in modron
 
 ;VARIABLES TO CHANGE IF YOU ARE HAVING MAJOR TIMING ISSUES
 Global ScriptSpeed := 2, DefaultSleep := 50
@@ -137,83 +140,95 @@ FamiliarLeveling() {
 	Sleep, 5000
 	DirectedInput("23456", 5000)
 	DirectedInput("23456", 16000)
-	DirectedInput("e", 10)
-	DirectedInput("e")
+	DirectedInput(RuningForm, 10)
+	DirectedInput(RuningForm, 10)
+	DirectedInput(RuningForm)
 }
 
 FkeyLeveling() {
 	Sleep, SleepBeforeLeveling
-	DirectedInput("e", 10)
-	DirectedInput("e")
+	DirectedInput(RuningForm, 20)
+	DirectedInput(RuningForm, 10)
 	if Havilar {
-		Loop, 3
+		Loop, 4
 			DirectedInput("{F10}", 5) ;Level up Havilar
 		Sleep, 1000
-		DirectedInput("123") ;Spawn Dembo
+		DirectedInput("123", 5000) ;Spawn Dembo
+		DirectedInput("123", 10)
 	}
 	Loop, 35 {  ;Loop for Champion Spam
 		DirectedInput(Fkey1, 5)
 		DirectedInput(Fkey2, 5)
 	}
-	DirectedInput("e")
+	DirectedInput(RuningForm, 300)
+	DirectedInput(RuningForm, 10)
+	DirectedInput(RuningForm, 10)
+	DirectedInput(RuningForm)
 }
 
 WaitForResults() {  
     workingArea := "areas\" . StackArea . "working.PNG" ;meant to stop on areaNum
     completeArea := "areas\" . StackArea . "complete.PNG" ;meant if skip areaNum
-    brivStacked := not BrivExist
 	dtLastRunTime := A_Now
+	brivStacked := false
+	firstRun := false
 	num := 255
     loop {
-        if (FindInterfaceCue("areas\1start.png", i, j) And brivStacked) {
+        if FindInterfaceCue("areas\1start.png", i, j) {
 			dtLastRunTime := A_Now
-			brivStacked := Not BrivExist
-			RunCount += 1
-			CalcBossesPerHour()
-			if FamiliarOrFkey
+			brivStacked := false
+			if firstRun {
+				RunCount += 1
+				CalcBossesPerHour()
+			}
+			if FamiliarOrFkey {
 				FamiliarLeveling()
-			else
+			}
+			else {
 				FkeyLeveling()
+			}
+			Sleep, 10000
+			firstRun := true
         }
 		
-		if (BrivExist and (Not brivStacked)) {
-			if (FindInterfaceCue(workingArea, i, j) Or FindInterfaceCue(completeArea, i, j)) {
+		if (FindInterfaceCue(workingArea, i, j) Or FindInterfaceCue(completeArea, i, j)) {
+			if BrivExist and (not brivStacked) {
 				BuildBrivStacks()
 				brivStacked := true
 			}
+			firstRun := true
 		}
-
-		FindAndClick("runAdventure\offlineOkay.png", 5, 5)
-        
-		if (FindInterfaceCue("runAdventure\cancel.png", i, j) or FindInterfaceCue("runAdventure\onOtherTeam.png", i, j))
-            DirectedInput("{ESC}")
 		
-        if FindInterfaceCue("runAdventure\progress.png", i, j)
-            DirectedInput("g")
-		
-		if toolTipToggle {
-			if (num > 29) {
-				LoopedTooltip(round(MinuteTimeDiff(dtLastRunTime, A_Now), 2))
-				num := 0
-			} else
-				num++
+		num++
+		if (mod(num, 3) = 1) {
+			DirectedInput("{right}")
+		}
+		if (mod(num, 4) = 1) {
+			FindAndClick("runAdventure\offlineOkay.png", 5, 5)
+		} else if (mod(num, 4) = 2) and FindInterfaceCue("runAdventure\progress.png", i, j) {
+			DirectedInput("g")
+		} else if ((mod(num, 4) = 3) and (FindInterfaceCue("runAdventure\cancel.png", i, j) or FindInterfaceCue("runAdventure\onOtherTeam.png", i, j))) {
+			DirectedInput("{ESC}")
+		}
+		if toolTipToggle and (mod(num, 30) = 1) {
+			LoopedTooltip(round(MinuteTimeDiff(dtLastRunTime, A_Now), 2))
+		}
+		if (num > 240) {
+			num := 0
 		}
     }
 }
 
 BuildBrivStacks() {
-    DirectedInput("w")
+    DirectedInput(BrivStacking)
     DirectedInput("g", 5)
-    DirectedInput("w", 5)
-    DirectedInput("w")
-    if (FindInterfaceCue("runAdventure\speedUsed.png", i, j, 1) And SpeedBrivTime > 0)
-        Sleep % SpeedBrivTime * 1000 * 1.05
-    else
-        Sleep % BrivTime * 1000 * 1.05
-	DirectedInput("e")
-    DirectedInput("g", 5)
-	DirectedInput("e", 6000)
-    DirectedInput("e")
+    DirectedInput(BrivStacking, 5)
+    DirectedInput(BrivStacking)
+    Sleep % BrivTime * 1000 * 1.05
+	DirectedInput(RuningForm, 10)
+    DirectedInput("g", 10)
+	DirectedInput(RuningForm, 6000)
+    DirectedInput(RuningForm)
 }
 
 DataOut() {
