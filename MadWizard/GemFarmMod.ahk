@@ -35,7 +35,7 @@ Global SleepBeforeLeveling := 3000
 
 Global BrivExist := True ;Briv stack time
 	;BRIV BUILD TIME: Seconds - should be rouhgly what the calc says, but test a few times
-Global BrivTime := 235 ;235 norm ;155 speed pots in modron
+Global BrivTime := 230 ;235 norm ;155 speed pots in modron
 
 ;VARIABLES TO CHANGE IF YOU ARE HAVING MAJOR TIMING ISSUES
 Global ScriptSpeed := 2, DefaultSleep := 50
@@ -192,9 +192,13 @@ WaitForResults() {
         }
 		
 		if (FindInterfaceCue(workingArea, i, j) Or FindInterfaceCue(completeArea, i, j)) {
-			if BrivExist and (not brivStacked) {
-				BuildBrivStacks()
-				brivStacked := true
+			if BrivExist {
+				if (not brivStacked) {
+					BuildBrivStacks()
+					brivStacked := true
+				} else if (mod(num, 2) = 1) {
+					DirectedInput(RuningForm, 10)
+				}
 			}
 			firstRun := true
 		}
