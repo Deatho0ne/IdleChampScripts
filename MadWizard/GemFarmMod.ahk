@@ -25,9 +25,9 @@ Global FamiliarOrFkey := False ;true for Familiar, false for FKey
 Global Fkey1 := "{F3}{F4}{F5}{F6}{F12}" ;Binwin, Sentry, Briv, Shandie, Melf
 Global Fkey2 := "{F1}{F2}{F8}{F10}" ;Deekin, Celeste, Hitch, Havilar
 ;mirt
-;Global Fkey2 := "{F2}{F7}{F8}{F10}" ;Celeste, Farideh, Hitch, Havilar
+;Fkey2 := "{F2}{F7}{F8}{F10}" ;Celeste, Farideh, Hitch, Havilar
 ;vajra
-;Global Fkey2 := "{F1}{F7}{F8}{F11}" ;Deekin, Farideh, Delina, Nova
+;Fkey2 := "{F1}{F7}{F8}{F11}" ;Deekin, Farideh, Delina, Nova
 
 Global Havilar := True ;this does not Mater to much, but is if using Havilar
 ;change next var based on what you see happen, it is in milliseconds 1000ms = 1sec
@@ -171,7 +171,7 @@ WaitForResults() {
     completeArea := "areas\" . StackArea . "complete.PNG" ;meant if skip areaNum
 	dtLastRunTime := A_Now
 	brivStacked := false
-	firstRun := false
+	firstRun := false, secondRun := false
 	num := 255
     loop {
         if FindInterfaceCue("areas\1start.png", i, j) {
@@ -293,7 +293,7 @@ DataOut() {
     }
     LoopedTooltip(currentRunTime) {
         WinGetPos, x, y, width, height, ahk_exe IdleDragons.exe
-        ToolTip, % "Resets: " RunCount "`nCrashes: " Crashes "`nMins since start: " currentRunTime "`nBosses: " Bosses "`nBosses per hour: " BossesPerHour, % x + 50, % y + 200, 2
+        ToolTip, % "Resets: " RunCount "`nCrashes: " Crashes "`nMins since start: " currentRunTime "`nBosses: " Bosses "`nBosses per hour: " BossesPerHour, % (x + width) / 1.95, % (y + height) / 15, 2
         SetTimer, RemoveToolTip, -1000
         return
     }
