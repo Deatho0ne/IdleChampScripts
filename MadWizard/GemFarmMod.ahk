@@ -287,13 +287,14 @@ DataOut() {
 
 { ;tooltips
     LoadTooltip() {
-        ToolTip, % "Shortcuts`nF2: Run MW`nF9: Reload`nF10: Kill the script`nThere are others", 50, 250, 1
+		WinGetPos, x, y, width, height, ahk_exe IdleDragons.exe
+        ToolTip, % "Shortcuts`nF2: Run MW`nF9: Reload`nF10: Kill the script`nThere are others", % x + (width / 3.5), % y + (height / 16), 1
         SetTimer, RemoveToolTip, -5000
         return
     }
     LoopedTooltip(currentRunTime) {
         WinGetPos, x, y, width, height, ahk_exe IdleDragons.exe
-        ToolTip, % "Resets: " RunCount "`nCrashes: " Crashes "`nMins since start: " currentRunTime "`nBosses: " Bosses "`nBosses per hour: " BossesPerHour, % (x + width) / 1.95, % (y + height) / 15, 2
+        ToolTip, % "Resets: " RunCount "`nCrashes: " Crashes "`nMins since start: " currentRunTime "`nBosses: " Bosses "`nBosses per hour: " BossesPerHour, % x + (width / 3.5), % y + (height / 16), 2
         SetTimer, RemoveToolTip, -1000
         return
     }

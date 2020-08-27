@@ -1,1 +1,2 @@
 Date/Time	Area	Time	Time start + F9	Run Count	Total Bosses	Patron	Failed Count	Area Stopped
+08/24/2020 15:32:32	326	00:37:17	00:19:33	1	65	NP	1	161
