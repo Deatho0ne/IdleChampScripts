@@ -1,0 +1,1 @@
+Date/Time	Patron	ResetArea	TotalTime	RunCount	AreaStarted	AreaStopped	Crashes
