@@ -206,7 +206,7 @@ WaitForResults() {
 			}
 			Sleep, 10000
 			firstRun := true
-			if ((A_TickCount - timeSinceLastRestart) > TimeBetweenResets) {
+			if (TimeBetweenResets > 0 and (A_TickCount - timeSinceLastRestart) > TimeBetweenResets) {
 				CloseAndReopen()
 			}
         }
