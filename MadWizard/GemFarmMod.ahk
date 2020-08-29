@@ -37,6 +37,8 @@ Global BrivExist := True ;Briv stack time
 	;BRIV BUILD TIME: Seconds - should be rouhgly what the calc says, but test a few times
 Global BrivTime := 230 ;235 norm ;155 speed pots in modron
 
+Global TimeBetweenResets := 8 ;in hours
+
 ;VARIABLES TO CHANGE IF YOU ARE HAVING MAJOR TIMING ISSUES
 Global ScriptSpeed := 2, DefaultSleep := 50
 
@@ -45,6 +47,7 @@ Global ScriptSpeed := 2, DefaultSleep := 50
 Global RunCount := 0, Crashes := 0, AreaStarted := 0, Bosses := 0, BossesPerHour := 0
 Global dtStartTime := "00:00:00", dtFirstResetTime := "00:00:00"
 Global toolTipToggle := true
+Global timeSinceLastRestart := A_TickCount
 
 LoadTooltip()
 
@@ -85,13 +88,25 @@ return
 SafetyCheck(Skip := False) {
     while(Not WinExist("ahk_exe IdleDragons.exe")) {
         Run, "C:\Program Files (x86)\Steam\steamapps\common\IdleChampions\IdleDragons.exe"
-        Sleep 30000
+        Sleep, 30000
         Crashes++
+		timeSinceLastRestart := A_TickCount
 		DirectedInput("2345678", 5000)
 		DirectedInput("2345678")
     }
     if Skip
         WinActivate, ahk_exe IdleDragons.exe
+}
+
+CloseAndReopen() {
+	PostMessage, 0x112, 0xF060,,, ahk_exe IdleDragons.exe
+	Sleep, 20000
+	Run, "C:\Program Files (x86)\Steam\steamapps\common\IdleChampions\IdleDragons.exe"
+	Sleep, 10000
+	timeSinceLastRestart := A_TickCount
+	Sleep, 10000
+	DirectedInput("2345678", 5000)
+	DirectedInput("2345678")
 }
 
 DirectedInput(s, timeToWait := 0) {
@@ -173,6 +188,8 @@ WaitForResults() {
 	brivStacked := false
 	firstRun := false, secondRun := false
 	num := 255
+	TimeBetweenResets := TimeBetweenResets * 60 * 60 * 1000
+	timeSinceLastRestart := A_TickCount
     loop {
         if FindInterfaceCue("areas\1start.png", i, j) {
 			dtLastRunTime := A_Now
@@ -189,6 +206,9 @@ WaitForResults() {
 			}
 			Sleep, 10000
 			firstRun := true
+			if ((A_TickCount - timeSinceLastRestart) > TimeBetweenResets) {
+				CloseAndReopen()
+			}
         }
 		
 		if (FindInterfaceCue(workingArea, i, j) Or FindInterfaceCue(completeArea, i, j)) {
