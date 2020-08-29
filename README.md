@@ -22,13 +22,15 @@ Most scripts use F12
 
 ### Settings
 
-Should help getting Pokota's Scripts, Bootch's Script, Montrose's Script, and the included (modified Bootch's script, GemFarm.ahk and EventFarm.ahk to work).
+Should help getting Pokota's Scripts, Bootch's Script, Montrose's Script, and the included (modified Bootch's script, GemFarmMod.ahk, GemFarm.ahk, and EventFarm.ahk) to work.
 
 ![Settings For Scripts to Follow](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/SettingsUsed.PNG)
 
 ### BrivSkipCalc.ahk
 
-Should give you a rough idea of stacks needed for your next run and roughly the time needed to get those stacks on a portal area before you reset. Need to edit to get your numbers.
+Should give you a rough idea of stacks needed for your next run and roughly the time needed to get those stacks on a portal area before you reset. Need to edit to get your numbers. Please read script.
+
+Known issues lower than 100% on slot 4 item and low actual %s triple and above.
 
 ### GeneralUiStuff.ahk
 
@@ -46,22 +48,30 @@ There are some user interface (UI) stuff that just feels none user experience (U
 - Use Bounty Contracts
   - Uses bounty contracts of whatever type in groups of 10
     - not sure what happens if you only have one left
-  - There are some input boxes that should direct
+  - There are some input boxes that should help direct
   - Uses F4
-
-PS: I made some changes I have not been fully test yet in this script, but just watch them for a bit. I do think they should work for the most though.
 
 ## What this repository was really created for
 
-GemFarm.ahk and EventFarm.ahk please understand something about AHK scripts (google is your friend), if you do not I will point you to other scripts on Discord. They both need about e20 favor to run, but should be able to get away with lower favor I am just not sure how much is needed for both. They just need to get to the spec choices by the area to end, if this does not happen there is at least a time out in GemFarm to restart.
+GemFarmMod.ahk, GemFarm.ahk and EventFarm.ahk please understand something about AHK scripts (google is your friend), if you do not I will point you to other scripts on Discord.
 
-These scripts should be relatively simple to make work for you. They are very much image based and need the images to do what they do for the most part. Most images need to be pixel perfect for this to work, if failing at some point after the start use something like Snipping Tool to grab a new image and replace the ones provided. The settings should help with most of this, but all computers are differnt.
+These scripts should be relatively simple to make work for you. They are very much image based and need the images to do what they do for the most part. Most images need to be near pixel perfect for this to work, if failing at some point after the start use something like Snipping Tool to grab a new image and replace the ones provided. The settings should help with most of this, but all computers are slightly differnt.
 
 ![Diretory for Mad Wizard](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/MadWizardDirectory.PNG)
 
+### GemFarmMod.ahk
+
+This is GemFarm modified to work with ingame Modron Automation. It is also just needs space on your monitors and for the most part will not take control, meaning you can play other games with this script. This can work if you just want familiars to level or F{keys}. Most of this is thanks to animehimo edits of the base GemFarm with some slight changes by me. There might be some slight errors due to changes of Modron or me just being dumb.
+
+There are a few settings that you will need to change to get everything working. Just need to start on the FP you want to run, even though it was designed around Mad Wizard it does not care about MW at all. Most of the output from GemFarm.ahk is implemetend here, but maybe slightly differently.
+
+![Modron Setup](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/ModronSetup.png)
+
 ### GemFarm.ahk
 
-Is a script that tries to speed through Mad Wizard with the best champs allowed to me depending on patrons. It can pretty much be started for outside of adventures or inside and detects the patron that it should run. In all versions of Mad Wizard, not named Strahd, it uses Briv and is mostly designed around his speed up mechanic. Please read/edit the script if you want to use it and/or are lacking any of the champs at all in the game. Should not be to hard to figure out how to make it work for you as long as you get a few things about AHK and the game. You will have to test this to make sure you are getting the best results for you.
+Use this script if you do not have Modron unlocked. It might require a bit of favor for it to work, but this is what you get.
+
+Is a script that tries to speed through Mad Wizard with the best champs allowed to you depending on patrons. It can pretty much be started for outside of adventures or inside and detects the patron that it should run. In all versions of Mad Wizard, not named Strahd, it uses Briv and is mostly designed around his speed up mechanic. Please read/edit the script if you want to use it and/or are lacking any of the champs at all in the game. Should not be to hard to figure out how to make it work for you as long as you get a few things about AHK and the game. You will have to test this to make sure you are getting the best results for you.
 
 - This script records data when you hit F9 after one run to MadWizard-Bosses.txt
 
@@ -109,10 +119,4 @@ Do not have a current Patron selected. You need to complete the oldest and secon
 
 ![Diretory for Mad Wizard](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/ExampleOfEvent.PNG)
 
-- Will likely remove this script after Modron is not still in the beta for CNE
-
-### GemFarmMod.ahk
-
-This is GemFarm modified to work with ingame Modron Automation. It is also just needs space on your monitors and for the most part will not take control, meaning you can play other games with this script. I use 16 familiars (10 on leveling champs & click damage and 6 on the field), most likely could manage with 11 (10 on leveling champs & click damage and 1 on the field) with this script. If you make changes due to you have less than 11 then that is mostly on you to figure out, but should just need a loop of leveling champs in area 1 for specs. Most of this is thanks to animehimo edits of the base GemFarm with some slight changes by me. There might be some slight errors due to changes of Modron or me just being dumb.
-
-![Modron Setup](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/ModronSetup.png)
+- I will most likely not update this script any more. Modron works great for what I wanted of this script, but I will leave it around for those that doe not have Modron yet
