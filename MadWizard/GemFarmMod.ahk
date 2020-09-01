@@ -21,12 +21,11 @@ Global RuningForm := "e" ;"e" is formation 3
 Global FamiliarOrFkey := False ;true for Familiar, false for FKey
 	;change the following two vars to seats you want
 		;broken up for slighly better timing
-;only want one Fkey2 active
 Global Fkey1 := "{F3}{F4}{F5}{F6}{F12}" ;Binwin, Sentry, Briv, Shandie, Melf
 Global Fkey2 := "{F1}{F2}{F8}{F10}" ;Deekin, Celeste, Hitch, Havilar
-;mirt
+;enable below for Mirt leveling
 ;Fkey2 := "{F2}{F7}{F8}{F10}" ;Celeste, Farideh, Hitch, Havilar
-;vajra
+;enable below for Vajra leveling
 ;Fkey2 := "{F1}{F7}{F8}{F11}" ;Deekin, Farideh, Delina, Nova
 
 Global Havilar := True ;this does not Mater to much, but is if using Havilar
@@ -35,7 +34,7 @@ Global SleepBeforeLeveling := 3000
 
 Global BrivExist := True ;Briv stack time
 	;BRIV BUILD TIME: Seconds - should be rouhgly what the calc says, but test a few times
-Global BrivTime := 230 ;235 norm ;155 speed pots in modron
+Global BrivTime := 130 ;235 norm ;155 speed pots in modron
 
 Global TimeBetweenResets := 8 ;in hours
 
@@ -100,13 +99,10 @@ SafetyCheck(Skip := False) {
 
 CloseAndReopen() {
 	PostMessage, 0x112, 0xF060,,, ahk_exe IdleDragons.exe
-	Sleep, 20000
+	Sleep, 30000
 	Run, "C:\Program Files (x86)\Steam\steamapps\common\IdleChampions\IdleDragons.exe"
 	Sleep, 10000
 	timeSinceLastRestart := A_TickCount
-	Sleep, 10000
-	DirectedInput("2345678", 5000)
-	DirectedInput("2345678")
 }
 
 DirectedInput(s, timeToWait := 0) {
@@ -139,6 +135,8 @@ FindAndClick(filename, k, l, timeToRun := 0) {
 		FindInterfaceCue(filename, x, y, timeToRun)
 		MouseClick, L, x+k, y+l, 2
 		Sleep, 10
+		DirectedInput("2345678", 5000)
+		DirectedInput("2345678")
 	}
 }
 
@@ -227,6 +225,7 @@ WaitForResults() {
 		if (mod(num, 3) = 1) {
 			DirectedInput("{right}")
 		}
+		
 		if (mod(num, 4) = 1) {
 			FindAndClick("runAdventure\offlineOkay.png", 5, 5)
 		} else if (mod(num, 4) = 2) and FindInterfaceCue("runAdventure\progress.png", i, j) {
