@@ -29,7 +29,7 @@ SetMouseDelay, 30
 ;VARIABLES BASED NEEDED TO BE CHANGED
 
 ;your Briv slot gear %
-Global slot4percent := 525.6
+Global slot4percent := 1060.0
 ;if using speed Pots, manually specify your Briv farming time in minutes
 Global speedBrivTime := 0
 Global overrideBrivTime := 0
@@ -504,12 +504,21 @@ SimulateBriv(i) {
     ;Original version by Gladio Stricto - https://pastebin.com/Rd8wWSVC
     ;	this is modified to work within the GemFarm
     chance := ((slot4percent / 100) + 1) * 0.25
-    trueChance := chance
-    skipLevels := Floor(chance + 1)
-    if (skipLevels > 1) {
-        trueChance := 0.5 + ((chance - Floor(chance)) / 2)
-    }
+	trueChance := chance
+	skipLevels := 1
     
+	if (chance > 2) {
+		while chance >= 1 {
+			skipLevels++
+			chance /= 2
+		}
+	} else {
+		skipLevels := Floor(chance + 1)
+		If (skipLevels > 1) {
+			trueChance := 0.5 + ((chance - Floor(chance)) / 2)
+		}
+	}
+	
     totalLevels := 0
     totalSkips := 0
     
