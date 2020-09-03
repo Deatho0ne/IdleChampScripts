@@ -45,7 +45,7 @@ Global ScriptSpeed := 2, DefaultSleep := 50
 ;   If you make no major changes to the script
 Global RunCount := 0, Crashes := 0, AreaStarted := 0, Bosses := 0, BossesPerHour := 0
 Global dtStartTime := "00:00:00", dtFirstResetTime := "00:00:00"
-Global toolTipToggle := true
+Global toolTipToggle := true, Crashed := true
 Global timeSinceLastRestart := A_TickCount
 
 LoadTooltip()
@@ -60,6 +60,7 @@ $F2::
 	WaitForResults()
 return
 
+;Toggle the tooltip
 $F5::
     ToggleToolTip()
 return
@@ -77,6 +78,7 @@ $F10::
         DataOut()
 ExitApp
 
+;pauses the script
 $`::Pause
 
 #c::
@@ -85,27 +87,28 @@ $`::Pause
 return
 
 SafetyCheck(Skip := False) {
+	;makes sure IC is running
     while(Not WinExist("ahk_exe IdleDragons.exe")) {
         Run, "C:\Program Files (x86)\Steam\steamapps\common\IdleChampions\IdleDragons.exe"
         Sleep, 30000
-        Crashes++
-		timeSinceLastRestart := A_TickCount
-		DirectedInput("2345678", 5000)
-		DirectedInput("2345678")
+		if Crashed {
+			Crashes++
+		}
+		Crashed := true
     }
     if Skip
         WinActivate, ahk_exe IdleDragons.exe
 }
 
 CloseAndReopen() {
+	;closes the IC, tells SafetyCheck it is not a crash and that function reopens
 	PostMessage, 0x112, 0xF060,,, ahk_exe IdleDragons.exe
-	Sleep, 30000
-	Run, "C:\Program Files (x86)\Steam\steamapps\common\IdleChampions\IdleDragons.exe"
-	Sleep, 10000
 	timeSinceLastRestart := A_TickCount
+	Crashed := false
 }
 
 DirectedInput(s, timeToWait := 0) {
+	;Sends keystrokes to IC that do not take focus
 	SafetyCheck()
 	ControlFocus,, ahk_exe IdleDragons.exe
 	ControlSend, ahk_parent, {Blind}%s%, ahk_exe IdleDragons.exe
@@ -114,6 +117,7 @@ DirectedInput(s, timeToWait := 0) {
 }
 
 FindInterfaceCue(filename, ByRef i, ByRef j, time = 0) {
+	;looks for images and returns True or False, and location
 	SafetyCheck()
 	WinGetPos, x, y, width, height, ahk_exe IdleDragons.exe
 	start := A_TickCount
@@ -130,6 +134,7 @@ FindInterfaceCue(filename, ByRef i, ByRef j, time = 0) {
 }
 
 FindAndClick(filename, k, l, timeToRun := 0) {
+	;needs to make IC active to click on the screen
     If FindInterfaceCue(filename, i, j, timeToRun) {
 		SafetyCheck(true)
 		FindInterfaceCue(filename, x, y, timeToRun)
@@ -179,7 +184,7 @@ FkeyLeveling() {
 	DirectedInput(RuningForm)
 }
 
-WaitForResults() {  
+WaitForResults() {
     workingArea := "areas\" . StackArea . "working.PNG" ;meant to stop on areaNum
     completeArea := "areas\" . StackArea . "complete.PNG" ;meant if skip areaNum
 	dtLastRunTime := A_Now
@@ -307,7 +312,7 @@ DataOut() {
 { ;tooltips
     LoadTooltip() {
 		WinGetPos, x, y, width, height, ahk_exe IdleDragons.exe
-        ToolTip, % "Shortcuts`nF2: Run MW`nF9: Reload`nF10: Kill the script`nThere are others", % x + (width / 3.5), % y + (height / 16), 1
+        ToolTip, % "GemFarmMod`nF2: Run MW`nF9: Reload`nF10: Kill the script`nThere are others", % x + (width / 3.5), % y + (height / 16), 1
         SetTimer, RemoveToolTip, -5000
         return
     }

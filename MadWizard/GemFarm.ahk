@@ -691,12 +691,14 @@ UsePotion(fileName, numberToUse) {
 
 { ;tooltips
     LoadTooltip() {
-        ToolTip, % "Shortcuts`nF2: Run MW`nF9: Reload`nF10: Kill the script`nThere are others", 50, 250, 1
+		WinGetPos, x, y, width, height, ahk_exe IdleDragons.exe
+        ToolTip, % "GemFarm`nF2: Run MW`nF9: Reload`nF10: Kill the script`nThere are others", % x + (width / 3.5), % y + (height / 16), 1
         SetTimer, RemoveToolTip, -5000
         return
     }
     LoopedTooltip(variants, currentRunTime) {
-        ToolTip, % "NpMiVaSt: " variants "`nMins since start: " currentRunTime, 50, 200, 2
+		WinGetPos, x, y, width, height, ahk_exe IdleDragons.exe
+        ToolTip, % "NpMiVaSt: " variants "`nMins since start: " currentRunTime, % x + (width / 3.5), % y + (height / 16), 2
         SetTimer, RemoveToolTip, -1000
         return
     }
