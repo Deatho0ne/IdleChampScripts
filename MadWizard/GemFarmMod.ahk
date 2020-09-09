@@ -195,6 +195,7 @@ WaitForResults() {
 	num := 255
 	TimeBetweenResets := TimeBetweenResets * 60 * 60 * 1000
 	timeSinceLastRestart := A_TickCount
+	transitionTime := A_TickCount
     loop {
         if FindInterfaceCue("areas\1start.png", i, j) {
 			dtLastRunTime := A_Now
@@ -228,6 +229,17 @@ WaitForResults() {
 			}
 			firstRun := true
 		}
+		
+		/* for black screen of death, not sure if I want to use it though
+		if FindInterfaceCue("runAdventure\areaTransition.PNG", i, j) {
+			if ((A_TickCount - transitionTime) > (30 * 1000)) {
+				CloseAndReopen()
+			}
+		}
+		else {
+			transitionTime := A_TickCount
+		}
+		*/
 		
 		num++
 		if (mod(num, 3) = 1) {
