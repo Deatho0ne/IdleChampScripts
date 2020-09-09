@@ -233,7 +233,7 @@ WaitForResults() {
 		
 		; for black screen of death, not sure if I want to use it though
 		if FindInterfaceCue("runAdventure\areaTransition.PNG", i, j) {
-			if ((A_TickCount - transitionTime) > (30 * 1000)) {
+			if ((A_TickCount - transitionTime) > (120 * 1000)) {
 				CloseAndReopen()
 				transitionTime := A_TickCount
 			}
