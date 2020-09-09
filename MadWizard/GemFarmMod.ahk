@@ -216,6 +216,7 @@ WaitForResults() {
 				CloseAndReopen()
 			}
 			loopTime := A_TickCount
+			transitionTime := A_TickCount
         }
 		
 		if (FindInterfaceCue(workingArea, i, j) Or FindInterfaceCue(completeArea, i, j)) {
@@ -230,16 +231,16 @@ WaitForResults() {
 			firstRun := true
 		}
 		
-		/* for black screen of death, not sure if I want to use it though
+		; for black screen of death, not sure if I want to use it though
 		if FindInterfaceCue("runAdventure\areaTransition.PNG", i, j) {
 			if ((A_TickCount - transitionTime) > (30 * 1000)) {
 				CloseAndReopen()
+				transitionTime := A_TickCount
 			}
 		}
 		else {
 			transitionTime := A_TickCount
 		}
-		*/
 		
 		num++
 		if (mod(num, 3) = 1) {
