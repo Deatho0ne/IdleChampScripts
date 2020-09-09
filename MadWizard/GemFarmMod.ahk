@@ -9,8 +9,9 @@ CoordMode, ToolTip, Screen
 
 ;VARIABLES BASED NEEDED TO BE CHANGED
 	;AREAS FOR RESETING
-Global StackArea := 326 ;z26 to z29 has portals, z41 & z16 has a portal also
-Global ResetArea := 330 ;what you set Modron to reset at
+	;226, 276, 326, 376
+Global StackArea := 376 ;z26 to z29 has portals, z41 & z16 has a portal also
+Global ResetArea := 380 ;what you set Modron to reset at
 
 	;FROMATION SAVES
 Global BrivStacking := "w" ;"w" is formation 2
@@ -34,9 +35,9 @@ Global SleepBeforeLeveling := 3000
 
 Global BrivExist := True ;Briv stack time
 	;BRIV BUILD TIME: Seconds - should be rouhgly what the calc says, but test a few times
-Global BrivTime := 130 ;235 norm ;155 speed pots in modron
+Global BrivTime := 170 ;235 norm ;155 speed pots in modron
 
-Global TimeBetweenResets := 8 ;in hours
+Global TimeBetweenResets := 6 ;in hours
 
 ;VARIABLES TO CHANGE IF YOU ARE HAVING MAJOR TIMING ISSUES
 Global ScriptSpeed := 2, DefaultSleep := 50
@@ -122,7 +123,7 @@ FindInterfaceCue(filename, ByRef i, ByRef j, time = 0) {
 	WinGetPos, x, y, width, height, ahk_exe IdleDragons.exe
 	start := A_TickCount
 	Loop {
-		ImageSearch, outx, outy, x, y, % x + width, % y + height, *15 *Trans0x00FF00 %filename%
+		ImageSearch, outx, outy, x, y, % x + width, % y + height, *5 *Trans0x00FF00 %filename%
 		If (ErrorLevel = 0) {
 			i := outx - x, j := outy - y
 			Return True
@@ -187,6 +188,7 @@ FkeyLeveling() {
 WaitForResults() {
     workingArea := "areas\" . StackArea . "working.PNG" ;meant to stop on areaNum
     completeArea := "areas\" . StackArea . "complete.PNG" ;meant if skip areaNum
+	
 	dtLastRunTime := A_Now
 	brivStacked := false
 	firstRun := false, secondRun := false
@@ -212,6 +214,7 @@ WaitForResults() {
 			if (TimeBetweenResets > 0 and (A_TickCount - timeSinceLastRestart) > TimeBetweenResets) {
 				CloseAndReopen()
 			}
+			loopTime := A_TickCount
         }
 		
 		if (FindInterfaceCue(workingArea, i, j) Or FindInterfaceCue(completeArea, i, j)) {
