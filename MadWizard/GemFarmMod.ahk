@@ -101,11 +101,11 @@ SafetyCheck(Skip := False) {
         WinActivate, ahk_exe IdleDragons.exe
 }
 
-CloseAndReopen() {
+CloseAndReopen(crash) {
 	;closes the IC, tells SafetyCheck it is not a crash and that function reopens
 	PostMessage, 0x112, 0xF060,,, ahk_exe IdleDragons.exe
 	timeSinceLastRestart := A_TickCount
-	Crashed := false
+	Crashed := crash
 }
 
 DirectedInput(s, timeToWait := 0) {
@@ -213,7 +213,7 @@ WaitForResults() {
 			Sleep, 10000
 			firstRun := true
 			if (TimeBetweenResets > 0 and (A_TickCount - timeSinceLastRestart) > TimeBetweenResets) {
-				CloseAndReopen()
+				CloseAndReopen(false)
 			}
 			loopTime := A_TickCount
 			transitionTime := A_TickCount
@@ -231,16 +231,19 @@ WaitForResults() {
 			firstRun := true
 		}
 		
-		; for black screen of death, not sure if I want to use it though
+		/*
+		;for black screen of death, not sure if I want to use it though
+		;	might kick you to the map on randome occasions
 		if FindInterfaceCue("runAdventure\areaTransition.PNG", i, j) {
 			if ((A_TickCount - transitionTime) > (120 * 1000)) {
-				CloseAndReopen()
+				CloseAndReopen(true)
 				transitionTime := A_TickCount
 			}
 		}
 		else {
 			transitionTime := A_TickCount
 		}
+		*/
 		
 		num++
 		if (mod(num, 3) = 1) {
