@@ -1,7 +1,7 @@
 /*
 By Deatho0ne
-version 08.20.2020
-Still early phace it should work, but do not ask about it yet
+version 09.21.2020
+most should be working as is
 */
 
 /*
@@ -15,9 +15,13 @@ ShowHelpTip()
 $F10::ExitApp
 
 ;Buy chest
+/*
+// leaving for some reason
+// just buy from the gem shop
 $F1::
     BuyChests()
 return
+*/
 
 ;open Multiple Silver Chest
 $F2::
@@ -121,6 +125,7 @@ ClickBasedFile(filename, x, y) {
 }
 
 BuyChests() {
+    /*
     if ClickBasedFile("uiWork\chestBuying\chestPrice.png", 60, 30) Or ClickBasedFile("chestBuying\chestPriceS.png", 60, 30) {
         sleep, 1
     }
@@ -131,6 +136,7 @@ BuyChests() {
         }
     }
     return
+    */
 }
 
 OpenChest(chestType) {

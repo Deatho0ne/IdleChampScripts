@@ -23,7 +23,7 @@ Global FamiliarOrFkey := False ;true for Familiar, false for FKey
 	;change the following two vars to seats you want
 		;broken up for slighly better timing
 Global Fkey1 := "{F3}{F4}{F5}{F6}{F12}" ;Binwin, Sentry, Briv, Shandie, Melf
-Global Fkey2 := "{F1}{F2}{F8}{F10}" ;Deekin, Celeste, Hitch, Havilar
+Global Fkey2 := "{F1}{F7}{F8}{F10}" ;Deekin, Black Viper, Hitch, Havilar
 ;enable below for Mirt leveling
 ;Fkey2 := "{F2}{F7}{F8}{F10}" ;Celeste, Farideh, Hitch, Havilar
 ;enable below for Vajra leveling
