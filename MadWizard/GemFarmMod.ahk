@@ -29,13 +29,12 @@ Global Fkey2 := "{F1}{F7}{F8}{F10}" ;Deekin, Black Viper, Hitch, Havilar
 ;enable below for Vajra leveling
 ;Fkey2 := "{F1}{F7}{F8}{F11}" ;Deekin, Farideh, Delina, Nova
 
-Global Havilar := True ;this does not Mater to much, but is if using Havilar
 ;change next var based on what you see happen, it is in milliseconds 1000ms = 1sec
 Global SleepBeforeLeveling := 3000
 
 Global BrivExist := True ;Briv stack time
 	;BRIV BUILD TIME: Seconds - should be rouhgly what the calc says, but test a few times
-Global BrivTime := 170 ;235 norm ;155 speed pots in modron
+Global BrivTime := 114 ;235 norm ;155 speed pots in modron
 
 Global TimeBetweenResets := 6 ;in hours
 
@@ -168,13 +167,6 @@ FkeyLeveling() {
 	Sleep, SleepBeforeLeveling
 	DirectedInput(RuningForm, 20)
 	DirectedInput(RuningForm, 10)
-	if Havilar {
-		Loop, 4
-			DirectedInput("{F10}", 5) ;Level up Havilar
-		Sleep, 1000
-		DirectedInput("123", 5000) ;Spawn Dembo
-		DirectedInput("123", 10)
-	}
 	Loop, 35 {  ;Loop for Champion Spam
 		DirectedInput(Fkey1, 5)
 		DirectedInput(Fkey2, 5)

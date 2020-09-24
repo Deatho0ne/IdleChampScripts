@@ -166,11 +166,12 @@ SafetyCheck(Skip := False) {
     }
 }
 
-DirectedInput(s) {
+DirectedInput(s, t := 0) {
     SafetyCheck(True)
     ControlFocus,, ahk_exe IdleDragons.exe
     ControlSend,, {Blind}%s%, ahk_exe IdleDragons.exe
-    Sleep 250
+	sleepTime := 250 + t
+    Sleep, sleepTime
 }
 
 FindInterfaceCue(filename, ByRef i, ByRef j, k = 360) {
@@ -286,8 +287,7 @@ WaitForLoading() {
         }
     }
     
-    DirectedInput("q")
-    Sleep 1500
+    DirectedInput("q", 1500)
     
     if FindInterfaceCue("runAdventure\wait.png", i, j, 1) {
         SafetyCheck()
@@ -345,12 +345,8 @@ InitializeRun() {
     loop 10 {
         DirectedInput(LoopedInput)
     }
-    DirectedInput("{F1}{F2}{F3}{F4}{F5}{F6}{F7}{F8}{F9}{F10}{F11}{F12}")
-    Sleep 100
-    DirectedInput("q")
-    Sleep 100
-    DirectedInput("12345678") ;assuming Melf is used, since have seen him still have his MM
-    Sleep 100
+    DirectedInput("{F1}{F2}{F3}{F4}{F5}{F6}{F7}{F8}{F9}{F10}{F11}{F12}", 100)
+    DirectedInput("q", 100)
     DirectedInput("q")
 }
 
@@ -389,8 +385,7 @@ FullySpecialized() {
 
 SendRight() {
     Sleep 10
-    DirectedInput("{Right}")
-    Sleep 10
+    DirectedInput("{Right}", 10)
     Send {Right}
 }
 
