@@ -156,8 +156,6 @@ CalcBossesPerHour() {
 
 FamiliarLeveling() {
 	Sleep, 5000
-	DirectedInput("23456", 5000)
-	DirectedInput("23456", 16000)
 	DirectedInput(RuningForm, 10)
 	DirectedInput(RuningForm, 10)
 	DirectedInput(RuningForm)

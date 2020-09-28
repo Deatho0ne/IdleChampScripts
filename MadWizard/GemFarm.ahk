@@ -29,7 +29,7 @@ SetMouseDelay, 30
 ;VARIABLES BASED NEEDED TO BE CHANGED
 
 ;your Briv slot gear %
-Global slot4percent := 1060.0
+Global slot4percent := 1631.0
 ;if using speed Pots, manually specify your Briv farming time in minutes
 Global speedBrivTime := 0
 Global overrideBrivTime := 0
@@ -43,7 +43,7 @@ Global speedPotHuge := 0
 ;AreaLow used for None Strahd Patrons
 ;   Does use Briv has a stop at the final area to build up his stacks
 ;   11 complete is purely used for testing by me
-Global AreaLow := 326 ;z26 to z29 has portals, z41 & z16 has a portal also
+Global AreaLow := 376 ;z26 to z29 has portals, z41 & z16 has a portal also
 ;This variable is in minutes and you need to see how fast you run the above
 ;   It is a saftey net incase something breaks during a FP
 ;   The script will build Briv stacks even if it fails
@@ -135,6 +135,7 @@ return
 BuildHeroData() {
     HeroData.push([ False, "{F6}", "specChoices\shandie.png" ])
     HeroData.push([ False, "{F12}", "specChoices\melf.PNG" ])
+	HeroData.push([ False, "{F7}", "specChoices\blackViper.png" ])
     if Not VajraVariant {
         HeroData.push([ False, "{F8}", "specChoices\hitch.png" ])
     }
@@ -150,7 +151,7 @@ BuildHeroData() {
         HeroData.push([ False, "{F1}", "specChoices\deekin.png" ])
     }
     if Not (VajraVariant Or StrahdVariant) {
-        HeroData.push([ False, "{F2}", "specChoices\celeste.PNG" ])
+        ;HeroData.push([ False, "{F2}", "specChoices\celeste.PNG" ])
         HeroData.push([ False, "{F10}", "specChoices\havilar.png" ])
     }
 }
