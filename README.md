@@ -108,15 +108,3 @@ Is a script that tries to speed through Mad Wizard with the best champs allowed 
     - You do not want anyone killing ultimately at this point
 
 ![Diretory for Mad Wizard](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/BrivStacking.png)
-
-### EventFarm.ahk
-
-Is a script built off of GemFarm's images, but is built to run any event champ Free Play to area 51 and repeat. I do not use Briv in this, since it is way harder to build stacks on him at area 51 to 54 after picking his Spec. This script works mostly off of clicking a spot relative to one image to start an event FP. Please read/edit the script to get it do what you want.
-
-Do not have a current Patron selected. You need to complete the oldest and second oldest champs variants, this is part of the reason for e20 favor, to run all event champs. Melf at roughly e10 favor will not be at spec by area 50, I do know this. If enough edits can get away with just click damage getting you past area 51, but not sure at all what this is.
-
-- Example how to get every champ to run in any event, this part of the script has worked for two events
-
-![Diretory for Mad Wizard](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/ExampleOfEvent.PNG)
-
-- I will most likely not update this script any more. Modron works great for what I wanted of this script, but I will leave it around for those that doe not have Modron yet
