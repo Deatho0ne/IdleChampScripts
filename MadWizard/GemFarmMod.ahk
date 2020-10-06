@@ -11,7 +11,7 @@ CoordMode, ToolTip, Screen
 	;AREAS FOR RESETING
 	;226, 276, 326, 376
 Global StackArea := 376 ;z26 to z29 has portals, z41 & z16 has a portal also
-Global ResetArea := 380 ;what you set Modron to reset at
+Global ResetArea := 431 ;what you set Modron to reset at
 
 	;FROMATION SAVES
 Global BrivStacking := "w" ;"w" is formation 2
@@ -25,10 +25,11 @@ Global FamiliarOrFkey := False ;true for Familiar, false for FKey
 Global Fkey1 := "{F3}{F4}{F5}{F6}{F12}" ;Binwin, Sentry, Briv, Shandie, Melf
 Global Fkey2 := "{F1}{F7}{F8}{F10}" ;Deekin, Black Viper, Hitch, Havilar
 ;enable below for Mirt leveling
-;Fkey2 := "{F2}{F7}{F8}{F10}" ;Celeste, Farideh, Hitch, Havilar
+Fkey2 := "{F2}{F7}{F8}{F10}" ;Celeste, Farideh, Hitch, Havilar
 ;enable below for Vajra leveling
 ;Fkey2 := "{F1}{F7}{F8}{F11}" ;Deekin, Farideh, Delina, Nova
 
+Global Havilar := True ;this does not Mater to much, but is if using Havilar
 ;change next var based on what you see happen, it is in milliseconds 1000ms = 1sec
 Global SleepBeforeLeveling := 3000
 
@@ -156,6 +157,8 @@ CalcBossesPerHour() {
 
 FamiliarLeveling() {
 	Sleep, 5000
+	DirectedInput("23456", 5000)
+	DirectedInput("23456", 16000)
 	DirectedInput(RuningForm, 10)
 	DirectedInput(RuningForm, 10)
 	DirectedInput(RuningForm)
@@ -165,6 +168,13 @@ FkeyLeveling() {
 	Sleep, SleepBeforeLeveling
 	DirectedInput(RuningForm, 20)
 	DirectedInput(RuningForm, 10)
+	if Havilar {
+		Loop, 4
+			DirectedInput("{F10}", 5) ;Level up Havilar
+		Sleep, 1000
+		DirectedInput("123", 5000) ;Spawn Dembo
+		DirectedInput("123", 10)
+	}
 	Loop, 35 {  ;Loop for Champion Spam
 		DirectedInput(Fkey1, 5)
 		DirectedInput(Fkey2, 5)
@@ -212,6 +222,8 @@ WaitForResults() {
 		if (FindInterfaceCue(workingArea, i, j) Or FindInterfaceCue(completeArea, i, j)) {
 			if BrivExist {
 				if (not brivStacked) {
+					FindAndClick(completeArea, 5, 5)
+					sleep, 2000
 					BuildBrivStacks()
 					brivStacked := true
 				} else if (mod(num, 2) = 1) {
