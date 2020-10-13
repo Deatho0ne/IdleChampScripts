@@ -133,7 +133,7 @@ global gFormation_V 			:= "Q"	;Values: Q/W/E sets which formation to use when Va
 	
 ;variables for checking if a transition is occurring (center of screen and towards top)
 	global transition_y 	:= 35 				
-	global transition_c1	:= 0x000000 		
+	global transition_c1	:= 0x0F0F0F
 
 ;Searchbox to find the Reset Button
 	global reset_complete_T		:= 475
