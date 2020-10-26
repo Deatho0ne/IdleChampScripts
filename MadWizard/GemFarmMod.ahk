@@ -25,7 +25,7 @@ Global FamiliarOrFkey := False ;true for Familiar, false for FKey
 Global Fkey1 := "{F3}{F4}{F5}{F6}{F12}" ;Binwin, Sentry, Briv, Shandie, Melf
 Global Fkey2 := "{F1}{F7}{F8}{F10}" ;Deekin, Black Viper, Hitch, Havilar
 ;enable below for Mirt leveling
-Fkey2 := "{F2}{F7}{F8}{F10}" ;Celeste, Farideh, Hitch, Havilar
+;Fkey2 := "{F2}{F7}{F8}{F10}" ;Celeste, Farideh, Hitch, Havilar
 ;enable below for Vajra leveling
 ;Fkey2 := "{F1}{F7}{F8}{F11}" ;Deekin, Farideh, Delina, Nova
 
@@ -222,9 +222,7 @@ WaitForResults() {
 		if (FindInterfaceCue(workingArea, i, j) Or FindInterfaceCue(completeArea, i, j)) {
 			if BrivExist {
 				if (not brivStacked) {
-					FindAndClick(completeArea, 5, 5)
-					sleep, 2000
-					BuildBrivStacks()
+					BuildBrivStacks(completeArea)
 					brivStacked := true
 				} else if (mod(num, 2) = 1) {
 					DirectedInput(RuningForm, 10)
@@ -268,9 +266,14 @@ WaitForResults() {
     }
 }
 
-BuildBrivStacks() {
+BuildBrivStacks(completeArea) {
     DirectedInput(BrivStacking)
     DirectedInput("g", 5)
+	if (FindInterfaceCue(completeArea, i, j)) {
+		Sleep, 400
+		DirectedInput("{left}")
+		Sleep, 2000
+	}
     DirectedInput(BrivStacking, 5)
     DirectedInput(BrivStacking)
     Sleep % BrivTime * 1000 * 1.05
