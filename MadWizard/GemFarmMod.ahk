@@ -269,10 +269,10 @@ WaitForResults() {
 BuildBrivStacks(completeArea) {
     DirectedInput(BrivStacking)
     DirectedInput("g", 5)
-	if (FindInterfaceCue(completeArea, i, j)) {
+	if (FindInterfaceCue(completeArea, i, j, 500)) {
 		Sleep, 400
-		DirectedInput("{left}")
-		Sleep, 2000
+		DirectedInput("{left}", 500)
+		DirectedInput("{left}", 500)
 	}
     DirectedInput(BrivStacking, 5)
     DirectedInput(BrivStacking)
