@@ -28,8 +28,9 @@ SetMouseDelay, 30
 
 ;VARIABLES BASED NEEDED TO BE CHANGED
 
+Global brivExist := true
 ;your Briv slot gear %
-Global slot4percent := 1631.0
+Global slot4percent := 3073.0
 ;if using speed Pots, manually specify your Briv farming time in minutes
 Global speedBrivTime := 0
 Global overrideBrivTime := 0
@@ -43,7 +44,7 @@ Global speedPotHuge := 0
 ;AreaLow used for None Strahd Patrons
 ;   Does use Briv has a stop at the final area to build up his stacks
 ;   11 complete is purely used for testing by me
-Global AreaLow := 376 ;z26 to z29 has portals, z41 & z16 has a portal also
+Global AreaLow := 476 ;z26 to z29 has portals, z41 & z16 has a portal also
 ;This variable is in minutes and you need to see how fast you run the above
 ;   It is a saftey net incase something breaks during a FP
 ;   The script will build Briv stacks even if it fails
@@ -54,7 +55,7 @@ Global TimeTillFailLow := 33 ;based on the time I see, plus some for patrons
 ;   Is based on Click damage
 ;	if you lack Briv this might not be the script for you
 ;	It can work, but you shall have to modify
-Global AreaHigh := 326
+Global AreaHigh := 476
 ;Same as TimeTillFailLow, but for Strahd
 ;   I do challenges first so only run the script after done with them
 ;   Minutes (area at when recorded)
@@ -96,7 +97,7 @@ $F2::
         StartAdventure()
         WaitForLoading()
         WaitForResults()
-        BuildBrivStacks()
+		BuildBrivStacks()
         ResetAdventure()
     }
 return
@@ -133,27 +134,19 @@ $`::Pause
 return
 
 BuildHeroData() {
-    HeroData.push([ False, "{F6}", "specChoices\shandie.png" ])
-    HeroData.push([ False, "{F12}", "specChoices\melf.PNG" ])
+	HeroData.push([ False, "{F1}", "specChoices\deekin.png" ])
+	HeroData.push([ False, "{F2}", "specChoices\regis1.png" ])
+	HeroData.push([ False, "{F2}", "specChoices\regis2.png" ])
+	;HeroData.push([ False, "{F3}", "specChoices\binwin.png" ])
+	HeroData.push([ False, "{F4}", "specChoices\sentry.png" ])
+	HeroData.push([ False, "{F5}", "specChoices\briv.png" ])
+	HeroData.push([ False, "{F6}", "specChoices\shandie.png" ])
 	HeroData.push([ False, "{F7}", "specChoices\blackViper.png" ])
-    if Not VajraVariant {
-        HeroData.push([ False, "{F8}", "specChoices\hitch.png" ])
-    }
-    else if VajraVariant {
-        ;HeroData.push([ False, "{F7}", "specChoices\minsc.png" ])
-    }
-    if Not StrahdVariant {
-        HeroData.push([ False, "{F4}", "specChoices\sentry.png" ])
-        HeroData.push([ False, "{F5}", "specChoices\briv.png" ])
-        HeroData.push([ False, "{F3}", "specChoices\binwin.png" ])
-    }
-    if Not (MirtVariant Or StrahdVariant) {
-        HeroData.push([ False, "{F1}", "specChoices\deekin.png" ])
-    }
-    if Not (VajraVariant Or StrahdVariant) {
-        ;HeroData.push([ False, "{F2}", "specChoices\celeste.PNG" ])
-        HeroData.push([ False, "{F10}", "specChoices\havilar.png" ])
-    }
+	;HeroData.push([ False, "{F8}", "specChoices\hitch.png" ])
+	HeroData.push([ False, "{F9}", "specChoices\drizzt.png" ])
+	HeroData.push([ False, "{F10}", "specChoices\havilar.png" ])
+	;HeroData.push([ False, "{F11}", "specChoices\hitch.png" ]) ;
+	HeroData.push([ False, "{F12}", "specChoices\melf.PNG" ])
 }
 
 SafetyCheck(Skip := False) {
@@ -256,7 +249,7 @@ ResetAdventure() {
         PostMessage, 0x112, 0xF060,,, ahk_exe IdleDragons.exe
         Sleep 20000
         Run, "C:\Program Files (x86)\Steam\steamapps\common\IdleChampions\IdleDragons.exe"
-        Sleep 30000
+        Sleep, 30000
         ZoomedOut := False
     }
 
@@ -265,7 +258,7 @@ ResetAdventure() {
         MouseClick, L, i+200, j+14, 2
         loop 15	 {
             MouseClick, WheelDown
-            Sleep 5
+            Sleep, 5
         }
         
         ResetTest := True
@@ -293,9 +286,9 @@ WaitForLoading() {
     if FindInterfaceCue("runAdventure\wait.png", i, j, 1) {
         SafetyCheck()
         MouseClick, L, i+5, j+5, 2, D
-        Sleep 150
+        Sleep, 150
         MouseClick,,,,, U
-        Sleep 100
+        Sleep, 100
     }
 }
 
@@ -311,24 +304,27 @@ SearchHero(ByRef Hero) {
         }
         
         SafetyCheck()
-        MouseClick, L, i+32, j+162, 2, D
-        Sleep 150
+        MouseClick, L, i+32, j+162, 1, D
+        Sleep, 150
         MouseClick,,,,, U
-        Sleep 250
+        Sleep, 1000
         
         if FindInterfaceCue(Hero[SliceName], x, y, 1) {
             if (i = x And j = y) {
                 SafetyCheck()
-                MouseClick, L, i+32, j+162, 2, D
-                Sleep 150
+                MouseClick, L, i+32, j+162, 1, D
+                Sleep, 150
                 MouseClick,,,,, U
-                Sleep 150
+                Sleep, 150
             }
         }
         
         Hero[Specialized] := True
         WinGetPos,,, Width, Height, A
         MouseMove, Width/2, Height/2
+		if (Hero[SliceName] = "specChoices\havilar.png") {
+			DirectedInput("23456789")
+		}
         return
     }
     DirectedInput(Hero[LevelKey])
@@ -470,6 +466,7 @@ WaitForResults() {
         }
         
         loop % HeroData.Length() {
+			SendRight()
             if Not HeroData[A_Index][Specialized] {
                 SearchHero(HeroData[A_Index])
             }
@@ -479,7 +476,7 @@ WaitForResults() {
 
 BuildBrivStacks() {
     ;no reason to wait if no Briv
-    if Not StrahdVariant {
+    if (Not StrahdVariant And brivExist) {
         DirectedInput("w")
         DirectedInput("g")
         ;10000 takes awhile, but should add a second or more before the sleep
