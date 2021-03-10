@@ -4,7 +4,7 @@ All images are pulled from Idle Champions and are owned by [Codename Entertainme
 
 I have written a [guide](https://docs.google.com/document/d/1V3vviSagVLMXZ-pCFpraEnMpOIv9QlgFQY7J55tBt6s/edit#) which will explain some things about the game and some champs to get. This should help you understand why some of the coding is done in the scripts.
 
-I do support this game with real money and suggest if you are reading this do so also. I do enjoy this game not only for scripting purposes, but the game itself. Making formations, talking about the game in general, and the community are some of the things that make this game fun for me.
+I have support this game with real money and suggest, if you are reading this you do so also. I do enjoy this game not only for scripting purposes, but the game itself. Making formations, talking about the game in general, and the community are some of the things that make this game fun for me.
 
 ## General Info
 
@@ -55,7 +55,7 @@ There are some user interface (UI) stuff that just feels none user experience (U
 
 GemFarmMod.ahk, GemFarm.ahk and EventFarm.ahk please understand something about AHK scripts (google is your friend), if you do not I will point you to other scripts on Discord.
 
-These scripts should be relatively simple to make work for you. They are very much image based and need the images to do what they do for the most part. Most images need to be near pixel perfect for this to work, if failing at some point after the start use something like Snipping Tool to grab a new image and replace the ones provided. The settings should help with most of this, but all computers are slightly differnt.
+These scripts should be relatively simple to make work for you. They are very much image based and need the images to do what they do for the most part. Most images need to be near pixel perfect for this to work, if failing at some point after the start use something like Snipping Tool to grab a new image and replace the ones provided. The settings should help with most of this, but all computers are slightly differnt. Images will most likely have to be updated, since I have not grabbed new ones in quite some time.
 
 ![Diretory for Mad Wizard](https://github.com/Deatho0ne/IdleChamp-Deatho0ne/blob/master/ImagesForReadme/MadWizardDirectory.PNG)
 
