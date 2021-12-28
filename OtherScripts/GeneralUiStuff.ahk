@@ -14,14 +14,10 @@ ShowHelpTip()
 
 $F10::ExitApp
 
-;Buy chest
-/*
-// leaving for some reason
-// just buy from the gem shop
+;use Multiple bountyContracts
 $F1::
-    BuyChests()
+    BountyContracts()
 return
-*/
 
 ;open Multiple Silver Chest
 $F2::
@@ -33,17 +29,6 @@ return
 $F3::
     ;can act a bit weird
     OpenChest("goldChest")
-return
-
-;use Multiple bountyContracts
-$F4::
-    BountyContracts()
-return
-
-;read comments below
-$F6::
-    ; Used for testing when needed
-    ;CaptureResultsScreen()
 return
 
 ;Reload the script
@@ -65,7 +50,7 @@ return
         gShowHelpTip := !gShowHelpTip
         
         if (gShowHelpTip) {
-            ToolTip, % "F1: Buy Chest`nF2: Open Silver Chest`nF3: Open Gold Chest`nF4: Use Bounty Contracts`nF9: Reload the Script`nF10: Exit the Script", 25, 325, 3
+            ToolTip, % "F9: Reload the Script`n`nF1: Use Bounty Contracts`nF2: Open Silver Chest`nF3: Open Gold Chest`nF10: Exit the Script", 25, 325, 3
             SetTimer, ClearToolTip, -10000 
         }
         else {
@@ -124,21 +109,6 @@ ClickBasedFile(filename, x, y) {
     return False
 }
 
-BuyChests() {
-    /*
-    if ClickBasedFile("uiWork\chestBuying\chestPrice.png", 60, 30) Or ClickBasedFile("chestBuying\chestPriceS.png", 60, 30) {
-        sleep, 1
-    }
-    loop {
-        if ClickBasedFile("uiWork\chestBuying\buyNow.png", 60, 30) Or ClickBasedFile("chestBuying\buyNowS.png", 60, 30) {
-            sleep, 100
-            MouseMove, 550, 550
-        }
-    }
-    return
-    */
-}
-
 OpenChest(chestType) {
     chestToOpen := "uiWork\openingChest\" . chestType . ".png"
     loop {
@@ -166,7 +136,7 @@ OpenChest(chestType) {
 
 BountyContracts() {
     InputBox, contractType, Contract type, small: 1`nmedium: 2`nlarge: 3
-    InputBox, contractCount, Contracts to use, Put the number you want to use in`nbut will floor the number put in by 10`nmax of 100000
+    InputBox, contractCount, Contracts to use, Put the number you want to use in`nbut will floor the number put in by 50`nmax of 100000
     contract := (contractType = 1) ? "small" : contractType = 2 ? "medium" : contractType = 3 ? "large" : 0
 
     if (contract = 0) {
@@ -181,16 +151,16 @@ BountyContracts() {
     MsgBox, Contracts Type to use: %contracts%`nCountract Count User entered: %contractCount%`nHit F9 if this is higher wrong before hitting Enter or clicking OK
 
     contracts := "uiWork\bountyContracts\" . contract . ".png"
-    contractCount := floor(contractCount / 10)
+    contractCount := floor(contractCount / 50)
     
     loop, %contractCount% {
         ;MouseMove, i+20, j+15 ;more for future reference
         if ClickBasedFile("" . contracts . "", 25, 25) {
-            sleep, 1500
-            if ClickBasedFile("uiWork\rightArrow.png", -20, 10) {
-                sleep, 500
+            sleep, 500
+            if ClickBasedFile("uiWork\rightArrow.png", -17, 10) {
+                sleep, 250
                 if ClickBasedFile("uiWork\bountyContracts\useContracts.png", 20, 15) {
-                    sleep, 2000
+                    sleep, 500
                 }
             }
         }
